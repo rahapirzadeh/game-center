@@ -1,3 +1,3 @@
-## Game Center
-# CPSC 353
-# Jonathan Bahm, Brandon Fabre, Raha Pirzadeh
+# Game Center
+## Jonathan Bahm, Brandon Fabre, Raha Pirzadeh
+### CPSC 353
