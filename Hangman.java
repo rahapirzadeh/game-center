@@ -8,13 +8,13 @@ public class Hangman {
 
   private String wordToGuess;
   private int winStreak;
-  private int gamesPlayed;
-  private int gamesWon;
-  private int gamesLost;
+  private int numGamesPlayed;
+  private int numGamesWon;
+  private int numGamesLost;
 
   public Hangman() {
     wordToGuess = selectWordOrPhrase();
-    winStreak = gamesPlayed = gamesWon = gamesLost = 0;
+    winStreak = numGamesPlayed = numGamesWon = numGamesLost = 0;
   }
 
   public static void playGame() {
