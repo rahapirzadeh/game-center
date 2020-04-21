@@ -64,7 +64,7 @@ public class Hangman {
   }
 
   public void printGuessWordOrPhrasePrompt() {
-    System.out.println("Word or Phrase: " + getWordOrPhraseToGuess().convertWordToUnderscores() +
+    System.out.println("Word or Phrase: " + convertWordToUnderscores(getWordOrPhraseToGuess()) +
     "\nGuess a letter: ");
   }
 
