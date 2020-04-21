@@ -12,7 +12,10 @@ public class Hangman {
   private int gamesWon;
   private int gamesLost;
 
-  public Hangman() {} //TODO default construct
+  public Hangman() {
+    wordToGuess = selectWordOrPhrase();
+    winStreak = gamesPlayed = gamesWon = gamesLost = 0;
+  }
 
   public static void playGame() {
     //TODO refactor
