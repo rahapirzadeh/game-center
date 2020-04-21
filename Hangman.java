@@ -63,8 +63,7 @@ public class Hangman {
     System.out.println("Guess multiple letters by separating them with commas (ex: 'a,s,d,f')." +
     "\nGuess the whole word by typing in your entire guess (ex: 'computer')." +
     "\nFor a hint, type 'hint'." +
-    "\nTo give up, type 'quit'." +
-    "\nGo on, guess a letter!");
+    "\nTo give up, type 'quit'.");
   }
 
   public void printWelcomeMessage() {
