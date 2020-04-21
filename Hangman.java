@@ -25,11 +25,8 @@ public class Hangman {
   }
 
   public String selectWordOrPhrase() {
-    Random rand = new Random();
-    int indexOfWordOrPhrase = rand.nextInt(34); //34 is the number of words or phrases listed in ./hangmanWordsAndPhrases.txt
-    FileIO io = new FileIO();
-    String wordOrPhrase = io.getLineFromFile("hangmanWordsAndPhrases.txt", indexOfWordOrPhrase);
-    return wordOrPhrase;
+    int indexOfWordOrPhrase = new Random().nextInt(34); //34 is the number of words or phrases listed in ./hangmanWordsAndPhrases.txt
+    return FileIO.getLineFromFile("hangmanWordsAndPhrases.txt", indexOfWordOrPhrase);
   }
 
   public static String convertWordToUnderscores(String word) {
