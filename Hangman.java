@@ -55,7 +55,7 @@ public class Hangman {
     numGamesLost++;
   }
 
-  public setNewWordOrPhraseToGuess() {
+  public void setNewWordOrPhraseToGuess() {
     wordOrPhraseToGuess = selectWordOrPhrase();
   }
 
