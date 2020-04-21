@@ -6,6 +6,12 @@ public class Hangman {
     playGame();
   }
 
+  private String wordToGuess;
+  private int winStreak;
+  private int gamesPlayed;
+  private int gamesWon;
+  private int gamesLost;
+
   public Hangman() {} //TODO default construct
 
   public static void playGame() {
@@ -43,4 +49,6 @@ public class Hangman {
     "a word or phrase, and you must guess it by selecting letters! \nGuess the word or phrase " +
     "within a certain number of guesses, or you lose!");
   }
+
+  //TODO hint command "would you like a hint?"
 }
