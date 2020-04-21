@@ -33,9 +33,9 @@ public class Hangman {
   }
 
   public static String convertWordToUnderscores(String word) {
-    //TODO keep dashes as-is
-    String convertedWord = word.replaceAll("\\s", "   ").replaceAll("\\S", "_ "); //adds two extra spaces to whitespace characters and replaces all non-whitespace characters with underscore and space '_ '
-    return convertedWord;
+    // Adds two extra spaces to whitespace characters and replaces all non-whitespace characters with underscore and space '_ '
+    // Extra spaces are for readability purposes and to distinguish different underscores
+    return word.replaceAll("\\s", "   ").replaceAll("\\S", "_ ");
   }
 
   public void printInstructions() {
