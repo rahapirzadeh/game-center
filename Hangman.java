@@ -28,7 +28,7 @@ public class Hangman {
 
   public String selectWordOrPhrase() {
     Random rand = new Random();
-    int indexOfWordOrPhrase = rand.nextInt(35); //35 is the number of words or phrases listed in ./hangmanWordsAndPhrases.txt
+    int indexOfWordOrPhrase = rand.nextInt(34); //34 is the number of words or phrases listed in ./hangmanWordsAndPhrases.txt
     FileIO io = new FileIO();
     String wordOrPhrase = io.getLineFromFile("hangmanWordsAndPhrases.txt", indexOfWordOrPhrase);
     return wordOrPhrase;
