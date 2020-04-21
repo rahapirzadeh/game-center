@@ -62,6 +62,12 @@ public class Hangman {
   public String getWordOrPhraseToGuess() {
     return wordOrPhraseToGuess;
   }
+
+  public void printGuessWordOrPhrasePrompt() {
+    System.out.println("Word or Phrase: " + getWordOrPhraseToGuess().convertWordToUnderscores() +
+    "\nGuess a letter: ");
+  }
+
   public void printInstructions() {
     System.out.println("Guess multiple letters by separating them with commas (ex: 'a,s,d,f')." +
     "\nGuess the whole word by typing in your entire guess (ex: 'computer')." +
