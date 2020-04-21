@@ -5,7 +5,6 @@ programming
 hardware
 machine learning
 artificial intelligence
-object-oriented programming
 polymorphism
 abstraction
 encapsulation
