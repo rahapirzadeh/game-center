@@ -6,14 +6,14 @@ public class Hangman {
     playGame();
   }
 
-  private String wordToGuess;
+  private String wordOrPhraseToGuess;
   private int winStreak;
   private int numGamesPlayed;
   private int numGamesWon;
   private int numGamesLost;
 
   public Hangman() {
-    wordToGuess = selectWordOrPhrase();
+    wordOrPhraseToGuess = selectWordOrPhrase();
     winStreak = numGamesPlayed = numGamesWon = numGamesLost = 0;
   }
 
@@ -33,6 +33,30 @@ public class Hangman {
     // Adds two extra spaces to whitespace characters and replaces all non-whitespace characters with underscore and space '_ '
     // Extra spaces are for readability purposes and to distinguish different underscores
     return word.replaceAll("\\s", "   ").replaceAll("\\S", "_ ");
+  }
+
+  public void incrementWinStreak() {
+    winStreak++;
+  }
+
+  public void resetWinStreak() {
+    winStreak = 0;
+  }
+
+  public void incrementNumGamesPlayed() {
+    numGamesPlayed++;
+  }
+
+  public void incrementNumGamesWon() {
+    numGamesWon++;
+  }
+
+  public void incrementNumGamesLost() {
+    numGamesLost++;
+  }
+
+  public setNewWordOrPhraseToGuess() {
+    wordOrPhraseToGuess = selectWordOrPhrase();
   }
 
   public void printInstructions() {
