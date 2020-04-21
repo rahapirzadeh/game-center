@@ -21,9 +21,7 @@ public class Hangman {
     //TODO refactor
     Hangman hm = new Hangman();
     hm.printWelcomeMessage();
-    String wordOrPhrase = hm.selectWordOrPhrase();
-    System.out.println("Word or phrase: " + convertWordToUnderscores(wordOrPhrase));
-    hm.userPickLetter(wordOrPhrase);
+    hm.printInstructions();
   }
 
   public String selectWordOrPhrase() {
@@ -40,11 +38,12 @@ public class Hangman {
     return convertedWord;
   }
 
-  public void userPickLetter(String wordOrPhrase) {
-    System.out.println("Go on, guess a letter! " +
-    "\nGuess multiple letters by separating them with commas (ex: a,s,d,f)." +
-    "\nTo give up, type 'quit'.");
-    System.out.println("Your Guess: ");
+  public void printInstructions() {
+    System.out.println("Guess multiple letters by separating them with commas (ex: 'a,s,d,f')." +
+    "\nGuess the whole word by typing in your entire guess (ex: 'computer')." +
+    "\nFor a hint, type 'hint'." +
+    "\nTo give up, type 'quit'." +
+    "\nGo on, guess a letter!");
   }
 
   public void printWelcomeMessage() {
