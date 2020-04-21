@@ -59,6 +59,9 @@ public class Hangman {
     wordOrPhraseToGuess = selectWordOrPhrase();
   }
 
+  public String getWordOrPhraseToGuess() {
+    return wordOrPhraseToGuess;
+  }
   public void printInstructions() {
     System.out.println("Guess multiple letters by separating them with commas (ex: 'a,s,d,f')." +
     "\nGuess the whole word by typing in your entire guess (ex: 'computer')." +
