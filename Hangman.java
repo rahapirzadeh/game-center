@@ -173,6 +173,16 @@ public class Hangman {
       }
     }
   }
+
+  public boolean isCharacterInWord(char character) {
+    if(getWordToGuess().contains(Character.toString(character))) {
+      incrementNumCorrectGuesses();
+      return true;
+    } else {
+      incrementNumIncorrectGuesses();
+      return false;
+    }
+  }
     System.out.println("Guess multiple letters by separating them with commas (ex: 'a,s,d,f')." +
     "\nGuess the whole word by typing in your entire guess (ex: 'computer')." +
     "\nFor a hint, type 'hint'." +
