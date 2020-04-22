@@ -241,10 +241,12 @@ public class Hangman {
     promptEnterKey();
   }
 
-  public void printWelcomeMessage() {
+  public static void printWelcomeMessage() {
     System.out.println("Hello, and welcome to Hangman! In this game, the computer will generate " +
     "a word or phrase, and you must guess it by selecting letters! \nGuess the word or phrase " +
     "within a certain number of guesses, or you lose!");
+    promptEnterKey();
+  }
   }
 
   //TODO hint command "would you like a hint?"
