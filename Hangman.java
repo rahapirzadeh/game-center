@@ -183,6 +183,18 @@ public class Hangman {
       return false;
     }
   }
+  public void playerWin() {
+    incrementWinStreak();
+    incrementNumGamesWon();
+    printWinMessage();
+  }
+
+  public void playerLoss() {
+    resetWinStreak();
+    incrementNumGamesLost();
+    printLossMessage();
+  }
+
   public void printStats() {
     System.out.println("=== ROUND STATS ===" +
     "\nThe word or phrase was: " + getWordToGuess() +
