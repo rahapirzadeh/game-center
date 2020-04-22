@@ -34,10 +34,17 @@ public class Hangman {
   }
 
   public static void playGame() {
-    //TODO refactor
     Hangman hm = new Hangman();
-    hm.printWelcomeMessage();
-    hm.printInstructions();
+    printWelcomeMessage();
+    printInstructions();
+    System.out.println("Word: " + hm.getWordToGuess()); //TODO delete after debugging complete
+    // while win and input == exit are false && hasGuessesRemaining == true
+    while(true) {
+      hm.printGuessWordPrompt();
+      hm.setCurrGuess(hm.getUserGuess());
+      hm.checkIfGuessCorrect(hm.getCurrGuess());
+      // hm.checkWinAndLossConditions();
+    }
   }
 
   public String selectWordOrPhrase() {
