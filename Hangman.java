@@ -66,6 +66,14 @@ public class Hangman {
     winStreak = 0;
   }
 
+  public void resetWordToGuess() {
+    wordToGuess = selectWordToGuess();
+  }
+
+  public void incrementWinStreak() {
+    winStreak++;
+  }
+
   public void incrementNumGamesPlayed() {
     numGamesPlayed++;
   }
@@ -78,12 +86,52 @@ public class Hangman {
     numGamesLost++;
   }
 
-  public void setNewWordOrPhraseToGuess() {
-    wordOrPhraseToGuess = selectWordOrPhrase();
+  public void incrementNumIncorrectGuesses() {
+    numIncorrectGuesses++;
   }
 
-  public String getWordOrPhraseToGuess() {
-    return wordOrPhraseToGuess;
+  public void incrementNumCorrectGuesses() {
+    numCorrectGuesses++;
+  }
+
+  public void setCurrGuess(String newGuess) {
+    currGuess = newGuess;
+  }
+
+  public String getCurrGuess() {
+    return currGuess;
+  }
+
+  public int getWinStreak() {
+    return winStreak;
+  }
+
+  public String getWordToGuess() {
+    return wordToGuess;
+  }
+
+  public int getNumTotalGuesses() {
+    return numTotalGuesses;
+  }
+
+  public int getNumCorrectGuesses() {
+    return numCorrectGuesses;
+  }
+
+  public int getNumIncorrectGuesses() {
+    return numIncorrectGuesses;
+  }
+
+  public int getNumTotalGamesPlayed() {
+    return numGamesPlayed;
+  }
+
+  public int getNumGamesWon() {
+    return numGamesWon;
+  }
+
+  public int getNumGamesLost() {
+    return numGamesLost;
   }
 
   public void printGuessWordOrPhrasePrompt() {
