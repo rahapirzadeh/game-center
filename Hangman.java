@@ -7,10 +7,20 @@ public class Hangman {
   }
 
   private String wordOrPhraseToGuess;
+  private static final int NUM_ALLOWED_INCORRECT_GUESSES = 8;
+
+  private String wordToGuess;
+  private String currGuess;
+  private int numTotalGuesses;
+  private int numCorrectGuesses;
+  private int numIncorrectGuesses;
   private int winStreak;
   private int numGamesPlayed;
   private int numGamesWon;
   private int numGamesLost;
+  private char[] correctlyGuessedLetters;
+  private boolean hasWon;
+  private boolean hasGuessesRemaining;
 
   public Hangman() {
     wordOrPhraseToGuess = selectWordOrPhrase();
