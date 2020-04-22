@@ -7,7 +7,6 @@ public class Hangman {
     playGame();
   }
 
-  private String wordOrPhraseToGuess;
   private static final int NUM_ALLOWED_INCORRECT_GUESSES = 8;
 
   private String wordToGuess;
