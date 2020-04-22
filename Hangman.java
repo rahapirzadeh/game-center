@@ -247,6 +247,11 @@ public class Hangman {
     "within a certain number of guesses, or you lose!");
     promptEnterKey();
   }
+
+  public static void promptEnterKey() {
+    System.out.println("Press Enter to continue...");
+    Scanner scanner = new Scanner(System.in);
+    scanner.nextLine();
   }
 
   //TODO hint command "would you like a hint?"
