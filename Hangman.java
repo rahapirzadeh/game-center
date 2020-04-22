@@ -148,6 +148,31 @@ public class Hangman {
     }
     return guess.strip(); // Strips leading and trailing whitespace
   }
+
+  public void checkIfGuessCorrect(String guess) {
+    if(guess.equals("") || guess.equals("help")) {
+      printInstructions();
+    } else if(guess.length() > 1) {
+      if(guess.contains(",")) {
+        char[] characterGuesses = parseAndReturnCommaSeparatedGuess(guess);
+        for (char character : characterGuesses) {
+          if(isCharacterInWord(character)) {
+            replaceUnderscoresWithCorrectlyGuessedLetter(character);
+          } else {
+            incrementNumIncorrectGuesses();
+          }
+        }
+      } else if(getWordToGuess().equals(guess)) {
+        playerWin();
+      }
+    } else if(guess.length() == 1) {
+      if(isCharacterInWord(guess.charAt(0))) {
+        replaceUnderscoresWithCorrectlyGuessedLetter(guess.charAt(0));
+      } else {
+        incrementNumIncorrectGuesses();
+      }
+    }
+  }
     System.out.println("Guess multiple letters by separating them with commas (ex: 'a,s,d,f')." +
     "\nGuess the whole word by typing in your entire guess (ex: 'computer')." +
     "\nFor a hint, type 'hint'." +
