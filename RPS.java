@@ -17,7 +17,6 @@ public class RPS {
 
 	//Get the game Result
 	public static void getResult(String user1Move, String user2Move) {
-		//int player1wins=0;
 
 		if (user1Move.equals(user2Move))
 	  	System.out.println("It's a tie!\n");
@@ -33,20 +32,16 @@ public class RPS {
 		else if (user1Move.equals(PAPER)) {
     	if (user2Move.equals(ROCK))
 		  	System.out.println(++player1wins + "Player 1 Wins!!\n"+"Player 2 Looses...\n"+"Paper eats rock.\n");
-				//player1wins++;
 	    else if (user2Move.equals(SCISSORS))
 		    System.out.println(player2wins++ + "Player 2 Wins!!\n"+"Player 1 Looses...\n"+"Scissor cuts paper.\n");
-				//player2wins++;
 			else
 				System.out.println("Invalid input player 2.\n");
     }
     else if (user1Move.equals(SCISSORS)) {
 	  	if (user2Move.equals(PAPER))
 		  	System.out.println(++player1wins + "Player 1 Wins!!\n"+"Player 2 Looses...\n"+"Scissor cuts paper.\n");
-				//player1wins++;
 	    else if (user2Move.equals(ROCK))
 		  	System.out.println(player2wins++ + "Player 2 Wins!!\n"+"Player 1 Looses...\n"+"Rock crushes scissors.\n");
-				//player2wins++;
 			else
 				System.out.println("Invalid input player 2.\n");
     }
