@@ -47,6 +47,12 @@ public class Hangman {
     }
   }
 
+  public String correctlyGuessedLettersArrayToString() {
+    String s = "";
+    for(char character : correctlyGuessedLetters) {
+      s += character;
+    }
+    return s;
   }
 
   public String selectWordToGuess() {
