@@ -183,6 +183,13 @@ public class Hangman {
       return false;
     }
   }
+  public void printWinMessage() {
+    System.out.println("Congratulations.. you won!");
+  }
+
+  public void printLossMessage() {
+    System.out.println("Sorry.. you lost!");
+  }
     System.out.println("Guess multiple letters by separating them with commas (ex: 'a,s,d,f')." +
     "\nGuess the whole word by typing in your entire guess (ex: 'computer')." +
     "\nFor a hint, type 'hint'." +
