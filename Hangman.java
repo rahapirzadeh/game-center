@@ -192,6 +192,14 @@ public class Hangman {
     }
     return characterGuesses;
   }
+
+  public void replaceUnderscoresWithCorrectlyGuessedLetter(char c) {
+    for(int pos = 0; pos < getWordToGuess().length(); pos++) {
+      if(wordToGuess.charAt(pos) == c) {
+        correctlyGuessedLetters[pos] = c;
+      }
+    }
+  }
   public void playerWin() {
     incrementWinStreak();
     incrementNumGamesWon();
