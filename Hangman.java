@@ -134,9 +134,9 @@ public class Hangman {
     return numGamesLost;
   }
 
-  public void printGuessWordOrPhrasePrompt() {
-    System.out.println("Word or Phrase: " + convertWordToUnderscores(getWordOrPhraseToGuess()) +
-    "\nGuess a letter: ");
+  public void printGuessWordPrompt() {
+    System.out.print("Word or Phrase: " + correctlyGuessedLettersArrayToString() +
+    "\nYour Guess: ");
   }
 
   public void printInstructions() {
