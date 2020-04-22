@@ -183,6 +183,19 @@ public class Hangman {
       return false;
     }
   }
+  public void printStats() {
+    System.out.println("=== ROUND STATS ===" +
+    "\nThe word or phrase was: " + getWordToGuess() +
+    "\nTotal # of Guesses: " + getNumTotalGuesses() +
+    "\nTotal Correct Guesses: " + getNumCorrectGuesses() +
+    "\nTotal Incorrect Guesses: " + getNumIncorrectGuesses() +
+    "=== GAME STATS ===" +
+    "\nCurrent Win Streak: " + getWinStreak() +
+    "\nTotal # of Games Played: " + getNumTotalGamesPlayed() +
+    "\nTotal # of Games Won: " + getNumGamesWon() +
+    "\nTotal # of Games Lost: " + getNumGamesLost());
+  }
+
   public void printWinMessage() {
     System.out.println("Congratulations.. you won!");
   }
