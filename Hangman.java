@@ -143,7 +143,6 @@ public class Hangman {
     "\nYour Guess: ");
   }
 
-  public void printInstructions() {
   public String getUserGuess() {
     String guess = "";
     Scanner scanner = new Scanner(System.in);
