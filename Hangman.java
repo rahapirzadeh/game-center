@@ -50,17 +50,11 @@ public class Hangman {
 
   }
 
-  public static String convertWordToUnderscores(String word) {
-    // Adds two extra spaces to whitespace characters and replaces all non-whitespace characters with underscore and space '_ '
-    // Extra spaces are for readability purposes and to distinguish different underscores
-    return word.replaceAll("\\s", "   ").replaceAll("\\S", "_ ");
   public String selectWordToGuess() {
     int indexOfWord = new Random().nextInt(19); //19 is the number of words or phrases listed in ./hangmanWordsAndPhrases.txt
     return FileIO.getLineFromFile("hangmanWords.txt", indexOfWord);
   }
 
-  public void incrementWinStreak() {
-    winStreak++;
   }
 
   public void resetWinStreak() {
