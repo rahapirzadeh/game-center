@@ -140,6 +140,14 @@ public class Hangman {
   }
 
   public void printInstructions() {
+  public String getUserGuess() {
+    String guess = "";
+    Scanner scanner = new Scanner(System.in);
+    if(scanner.hasNextLine()) {
+      guess = scanner.nextLine();
+    }
+    return guess.strip(); // Strips leading and trailing whitespace
+  }
     System.out.println("Guess multiple letters by separating them with commas (ex: 'a,s,d,f')." +
     "\nGuess the whole word by typing in your entire guess (ex: 'computer')." +
     "\nFor a hint, type 'hint'." +
