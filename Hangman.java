@@ -183,6 +183,15 @@ public class Hangman {
       return false;
     }
   }
+
+  public static char[] parseAndReturnCommaSeparatedGuess(String guess) {
+    guess.replaceAll("\\s", "").replaceAll("[,]", "");
+    char[] characterGuesses = new char[guess.length()];
+    for (int pos = 0; pos < guess.length(); pos++) {
+      characterGuesses[pos] = guess.charAt(pos);
+    }
+    return characterGuesses;
+  }
   public void playerWin() {
     incrementWinStreak();
     incrementNumGamesWon();
