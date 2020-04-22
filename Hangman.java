@@ -60,6 +60,10 @@ public class Hangman {
     return FileIO.getLineFromFile("hangmanWords.txt", indexOfWord);
   }
 
+  public static String convertWordToUnderscores(String word) {
+    // Replaces all underscores to underscore and space '_ '
+    // Extra space is for readability purposes and to distinguish different underscores
+    return word.replaceAll("[_]", "_ ");
   }
 
   public void resetWinStreak() {
