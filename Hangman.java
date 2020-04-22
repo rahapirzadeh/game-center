@@ -23,8 +23,14 @@ public class Hangman {
   private boolean hasGuessesRemaining;
 
   public Hangman() {
-    wordOrPhraseToGuess = selectWordOrPhrase();
-    winStreak = numGamesPlayed = numGamesWon = numGamesLost = 0;
+    wordToGuess = selectWordToGuess();
+    currGuess = "";
+    winStreak = numCorrectGuesses = numIncorrectGuesses = numGamesPlayed = numGamesWon = numGamesLost = 0;
+    correctlyGuessedLetters = new char[wordToGuess.length()];
+    // Sets all characters in correctlyGuessedLetters to underscores, indicating that no letters have been correctly guessed yet
+    Arrays.fill(correctlyGuessedLetters, '_');
+    hasWon = false;
+    hasGuessesRemaining = true;
   }
 
   public static void playGame() {
