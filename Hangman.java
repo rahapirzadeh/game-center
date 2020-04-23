@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
@@ -12,34 +13,42 @@ public class Hangman {
 
   private String wordToGuess;
   private String currGuess;
-  private int numTotalGuesses;
-  private int numCorrectGuesses;
-  private int numIncorrectGuesses;
+  private int numRoundTotalGuesses;
+  private int numRoundCorrectGuesses;
+  private int numRoundIncorrectGuesses;
   private int winStreak;
-  private int numGamesPlayed;
-  private int numGamesWon;
-  private int numGamesLost;
+  private int numRoundsPlayed;
+  private int numRoundsWon;
+  private int numRoundsLost;
   private char[] correctlyGuessedLetters;
+  private boolean firstGame;
 
   public Hangman() {
-    wordToGuess = selectWordToGuess();
+    selectWordToGuess();
     currGuess = "";
-    winStreak = numCorrectGuesses = numIncorrectGuesses = numGamesPlayed = numGamesWon = numGamesLost = 0;
+    firstGame = true;
     correctlyGuessedLetters = new char[wordToGuess.length()];
     Arrays.fill(correctlyGuessedLetters, '_'); // Sets all characters in correctlyGuessedLetters to underscores, indicating that no letters have been correctly guessed yet
   }
 
   public void playGame() {
-    printWelcomeMessage();
-    printInstructions();
-    promptEnterKey();
+    if(firstGame) {
+      printWelcomeMessage();
+      printInstructions();
+      promptEnterKey();
+    }
     printGuessWord(); //TODO delete after debugging complete
     while(!hasWon() && !hasLost()) {
-      this.printGuessWordPrompt();
-      this.setCurrGuess(this.getUserInput());
-      this.checkIfGuessCorrect(this.getCurrGuess());
-    } gameFinish();
-    //TODO ask if user wants to play again
+      printNumIncorrectGuessesRemaining();
+      printGuessWordPrompt();
+      setCurrGuess(getUserInput());
+      checkIfGuessCorrect(getCurrGuess());
+    } roundFinish();
+    if(promptUserPlayAgain().equals("y")) {
+      newRound();
+    } else {
+      printGameStats();
+    }
   }
 
   public String charArrayToString() {
@@ -50,9 +59,9 @@ public class Hangman {
     return s;
   }
 
-  public String selectWordToGuess() {
+  public void selectWordToGuess() {
     int indexOfWord = new Random().nextInt(19); //19 is the number of words or phrases listed in ./hangmanWordsAndPhrases.txt
-    return FileIO.getLineFromFile("hangmanWords.txt", indexOfWord);
+    wordToGuess = FileIO.getLineFromFile("hangmanWords.txt", indexOfWord);
   }
 
   public static String convertStringToUnderscores(String s) {
@@ -65,32 +74,41 @@ public class Hangman {
     winStreak = 0;
   }
 
-  public void resetWordToGuess() {
-    wordToGuess = selectWordToGuess();
+  public void resetGuesses() {
+    numRoundTotalGuesses = numRoundIncorrectGuesses = numRoundCorrectGuesses = 0;
+  }
+
+  public void resetCorrectlyGuessedLetters() {
+    correctlyGuessedLetters = new char[wordToGuess.length()];
+    Arrays.fill(correctlyGuessedLetters, '_');
   }
 
   public void incrementWinStreak() {
     winStreak++;
   }
 
-  public void incrementNumGamesPlayed() {
-    numGamesPlayed++;
+  public void incrementNumRoundsPlayed() {
+    numRoundsPlayed++;
   }
 
-  public void incrementNumGamesWon() {
-    numGamesWon++;
+  public void incrementNumRoundsWon() {
+    numRoundsWon++;
   }
 
-  public void incrementNumGamesLost() {
-    numGamesLost++;
+  public void incrementNumRoundsLost() {
+    numRoundsLost++;
+  }
+
+  public void incrementNumTotalGuesses() {
+    numRoundTotalGuesses++;
   }
 
   public void incrementNumIncorrectGuesses() {
-    numIncorrectGuesses++;
+    numRoundIncorrectGuesses++;
   }
 
   public void incrementNumCorrectGuesses() {
-    numCorrectGuesses++;
+    numRoundCorrectGuesses++;
   }
 
   public void setCurrGuess(String newGuess) {
@@ -110,31 +128,31 @@ public class Hangman {
   }
 
   public String getGuessWordProgress() {
-    return convertStringToUnderscores(charArrayToString()).replaceAll("\\B", " ");
+    return convertStringToUnderscores(charArrayToString()).replaceAll("\\B", " "); //.replaceAll() adds spaces after each character
   }
 
-  public int getNumTotalGuesses() {
-    return numTotalGuesses;
+  public int getNumRoundTotalGuesses() {
+    return numRoundTotalGuesses;
   }
 
-  public int getNumCorrectGuesses() {
-    return numCorrectGuesses;
+  public int getNumRoundCorrectGuesses() {
+    return numRoundCorrectGuesses;
   }
 
-  public int getNumIncorrectGuesses() {
-    return numIncorrectGuesses;
+  public int getNumRoundIncorrectGuesses() {
+    return numRoundIncorrectGuesses;
   }
 
-  public int getNumTotalGamesPlayed() {
-    return numGamesPlayed;
+  public int getNumRoundsPlayed() {
+    return numRoundsPlayed;
   }
 
-  public int getNumGamesWon() {
-    return numGamesWon;
+  public int getNumRoundsWon() {
+    return numRoundsWon;
   }
 
-  public int getNumGamesLost() {
-    return numGamesLost;
+  public int getNumRoundsLost() {
+    return numRoundsLost;
   }
 
   public void printGuessWordPrompt() {
@@ -208,7 +226,7 @@ public class Hangman {
   }
 
   public boolean hasLost() {
-    if(numIncorrectGuesses == NUM_ALLOWED_INCORRECT_GUESSES) {
+    if(numRoundIncorrectGuesses == NUM_ALLOWED_INCORRECT_GUESSES) {
       return true;
     }
     return false;
@@ -216,24 +234,32 @@ public class Hangman {
 
   public void playerWin() {
     incrementWinStreak();
-    incrementNumGamesWon();
+    incrementNumRoundsWon();
     printWinMessage();
   }
 
   public void playerLoss() {
     resetWinStreak();
-    incrementNumGamesLost();
+    incrementNumRoundsLost();
     printLossMessage();
   }
 
-  public void gameFinish() {
+  public void roundFinish() {
     if(hasWon()) {
       playerWin();
     } else {
       playerLoss();
     }
-    incrementNumGamesPlayed();
-    printStats();
+    incrementNumRoundsPlayed();
+    printRoundStats();
+  }
+
+  public void newRound() {
+    selectWordToGuess();
+    resetGuesses();
+    resetCorrectlyGuessedLetters();
+    firstGame = false;
+    playGame();
   }
 
   public void correctGuess(char guess) {
@@ -242,26 +268,34 @@ public class Hangman {
   }
 
   public void incorrectGuess(String guess) {
+    incrementNumTotalGuesses();
     incrementNumIncorrectGuesses();
     //TODO add guess to previous guesses
   }
 
   public void incorrectGuess(char guess) {
+    incrementNumTotalGuesses();
     incrementNumIncorrectGuesses();
     //TODO add guess to previous guesses
   }
 
-  public void printStats() {
-    System.out.println("=== ROUND STATS ===" +
-    "\nThe word or phrase was: " + getWordToGuess() +
-    "\nTotal # of Guesses: " + getNumTotalGuesses() +
-    "\nTotal Correct Guesses: " + getNumCorrectGuesses() +
-    "\nTotal Incorrect Guesses: " + getNumIncorrectGuesses() +
-    "\n=== GAME STATS ===" +
+  public void printNumIncorrectGuessesRemaining() {
+    System.out.println("You have " + (NUM_ALLOWED_INCORRECT_GUESSES - numRoundIncorrectGuesses) + " incorrect guesses remaining.");
+  }
+
+  public void printRoundStats() {
+    System.out.println("===== ROUND STATS =====" +
     "\nCurrent Win Streak: " + getWinStreak() +
-    "\nTotal # of Games Played: " + getNumTotalGamesPlayed() +
-    "\nTotal # of Games Won: " + getNumGamesWon() +
-    "\nTotal # of Games Lost: " + getNumGamesLost());
+    "\nTotal # of Guesses: " + getNumRoundTotalGuesses() +
+    "\nTotal Correct Guesses: " + getNumRoundCorrectGuesses() +
+    "\nTotal Incorrect Guesses: " + getNumRoundIncorrectGuesses());
+  }
+
+  public void printGameStats() {
+    System.out.println("===== GAME STATS =====" +
+    "\nTotal # of Rounds Played: " + getNumRoundsPlayed() +
+    "\nTotal # of Rounds Won: " + getNumRoundsWon() +
+    "\nTotal # of Rounds Lost: " + getNumRoundsLost());
   }
 
   public void printWinMessage() {
@@ -275,7 +309,7 @@ public class Hangman {
   }
 
   public void printGuessWord() {
-    System.out.println("The word was " + getWordToGuess());
+    System.out.println("The word was: " + getWordToGuess());
   }
 
   public static void printInstructions() {
@@ -299,7 +333,7 @@ public class Hangman {
   }
 
   public String promptUserPlayAgain() {
-    System.out.println("Would you like to play again?");
+    System.out.println("Would you like to play again? Enter 'y' to play again or 'n' to exit.");
     return getUserInput();
   }
 
