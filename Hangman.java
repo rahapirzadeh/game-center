@@ -187,7 +187,7 @@ public class Hangman {
       if(guess.contains(",")) {
         char[] charGuesses = parseCommaSeparatedValue(guess);
         for (char character : charGuesses) {
-          if(getWordToGuess().indexOf(charGuess) != -1) {
+          if(getWordToGuess().indexOf(character) != -1) {
             correctGuess(character);
           } else {
             incorrectGuess(character);
