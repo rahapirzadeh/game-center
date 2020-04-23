@@ -185,9 +185,9 @@ public class Hangman {
     //TODO refactor
     if(guess.length() > 1) {
       if(guess.contains(",")) {
-        char[] characterGuesses = parseCommaSeparatedValue(guess);
-        for (char character : characterGuesses) {
-          if(isCharacterInWord(character)) {
+        char[] charGuesses = parseCommaSeparatedValue(guess);
+        for (char character : charGuesses) {
+          if(getWordToGuess().indexOf(charGuess) != -1) {
             correctGuess(character);
           } else {
             incorrectGuess(character);
@@ -202,19 +202,12 @@ public class Hangman {
       }
     } else if(guess.length() == 1) {
       char charGuess = guess.charAt(0);
-      if(isCharacterInWord(charGuess)) {
+      if(getWordToGuess().indexOf(charGuess) != -1) {
         correctGuess(charGuess);
       } else {
         incorrectGuess(charGuess);
       }
     }
-  }
-
-  public boolean isCharacterInWord(char c) {
-    if(getWordToGuess().contains(Character.toString(c))) {
-      return true;
-    }
-    return false;
   }
 
   public static char[] parseCommaSeparatedValue(String s) {
@@ -267,6 +260,7 @@ public class Hangman {
     } else {
       playerLoss();
     }
+    printGuessWord();
     incrementNumRoundsPlayed();
     printRoundStats();
   }
@@ -323,12 +317,10 @@ public class Hangman {
 
   public void printWinMessage() {
     System.out.println("Congratulations.. you won!");
-    printGuessWord();
   }
 
   public void printLossMessage() {
     System.out.println("Sorry.. you lost!");
-    printGuessWord();
   }
 
   public void printGuessWord() {
