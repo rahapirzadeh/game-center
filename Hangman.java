@@ -51,16 +51,16 @@ public class Hangman {
     }
   }
 
-  public String charArrayToString() {
+  public String charArrayToString(char[] arr) {
     String s = "";
-    for(char c : correctlyGuessedLetters) {
+    for(char c : arr) {
       s += c;
     }
     return s;
   }
 
   public void selectWordToGuess() {
-    int indexOfWord = new Random().nextInt(19); //19 is the number of words or phrases listed in ./hangmanWordsAndPhrases.txt
+    int indexOfWord = new Random().nextInt(19); //19 is the number of words or phrases listed in ./hangmanWords.txt
     wordToGuess = FileIO.getLineFromFile("hangmanWords.txt", indexOfWord);
   }
 
@@ -128,7 +128,10 @@ public class Hangman {
   }
 
   public String getGuessWordProgress() {
-    return convertStringToUnderscores(charArrayToString()).replaceAll("\\B", " "); //.replaceAll() adds spaces after each character
+    //convertStringToUnderscores() converts unguessed letters in guessWord to underscores
+    //charArrayToString(correctlyGuessedLetters) converts correct guesses to string form for display purposes
+    //replaceAll("\\B", " ") adds spaces after each character
+    return convertStringToUnderscores(charArrayToString(correctlyGuessedLetters)).replaceAll("\\B", " ");
   }
 
   public int getNumRoundTotalGuesses() {
@@ -181,6 +184,12 @@ public class Hangman {
             incorrectGuess(character);
           }
         }
+      } else {
+        if(getWordToGuess().equals(currGuess)) {
+          correctGuess(currGuess);
+        } else {
+          incorrectGuess(currGuess);
+        }
       }
     } else if(guess.length() == 1) {
       char charGuess = guess.charAt(0);
@@ -189,8 +198,6 @@ public class Hangman {
       } else {
         incorrectGuess(charGuess);
       }
-    } else {
-      incorrectGuess(guess);
     }
   }
 
@@ -202,15 +209,15 @@ public class Hangman {
   }
 
   public static char[] parseCommaSeparatedValue(String s) {
-    s.replaceAll("\\s", "").replaceAll("[,]", "");
+    s = s.replaceAll(",", "").replaceAll("\\s+", ""); //reference: https://programming.guide/java/remove-trailing-comma-from-comma-separated-string.html
     char[] parsedArray = new char[s.length()];
     for (int pos = 0; pos < s.length(); pos++) {
-      parsedArray[pos] = s.charAt(pos);
+      parsedArray[pos] = s.charAt(pos); //adds characters in s to indexes in parsedArray
     }
     return parsedArray;
   }
 
-  public void replaceUnderscoresWithCorrectlyGuessedLetter(char c) {
+  public void insertCorrectLetterGuess(char c) {
     for(int pos = 0; pos < getWordToGuess().length(); pos++) {
       if(wordToGuess.charAt(pos) == c) {
         correctlyGuessedLetters[pos] = c;
@@ -219,7 +226,7 @@ public class Hangman {
   }
 
   public boolean hasWon() {
-    if (getWordToGuess().equals(currGuess) || getWordToGuess().equals(charArrayToString())) {
+    if (getWordToGuess().equals(currGuess) || getWordToGuess().equals(charArrayToString(correctlyGuessedLetters))) {
       return true;
     }
     return false;
@@ -263,7 +270,12 @@ public class Hangman {
   }
 
   public void correctGuess(char guess) {
-    replaceUnderscoresWithCorrectlyGuessedLetter(guess);
+    incrementNumTotalGuesses();
+    insertCorrectLetterGuess(guess);
+    incrementNumCorrectGuesses();
+  }
+  public void correctGuess(String guess) {
+    incrementNumTotalGuesses();
     incrementNumCorrectGuesses();
   }
 
