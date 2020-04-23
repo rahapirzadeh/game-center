@@ -13,6 +13,7 @@ public class Hangman {
 
   private String wordToGuess;
   private String currGuess;
+  private int points;
   private int numRoundTotalGuesses;
   private int numRoundCorrectGuesses;
   private int numRoundIncorrectGuesses;
@@ -111,6 +112,10 @@ public class Hangman {
     numRoundCorrectGuesses++;
   }
 
+  public void incrementPoints() {
+    points++;
+  }
+
   public void setCurrGuess(String newGuess) {
     currGuess = newGuess;
   }
@@ -156,6 +161,10 @@ public class Hangman {
 
   public int getNumRoundsLost() {
     return numRoundsLost;
+  }
+
+  public int getPoints() {
+    return points;
   }
 
   public void printGuessWordPrompt() {
@@ -243,6 +252,7 @@ public class Hangman {
     incrementWinStreak();
     incrementNumRoundsWon();
     printWinMessage();
+    points += 3; //bonus for correctly guessing word
   }
 
   public void playerLoss() {
@@ -273,7 +283,9 @@ public class Hangman {
     incrementNumTotalGuesses();
     insertCorrectLetterGuess(guess);
     incrementNumCorrectGuesses();
+    incrementPoints();
   }
+
   public void correctGuess(String guess) {
     incrementNumTotalGuesses();
     incrementNumCorrectGuesses();
@@ -295,6 +307,7 @@ public class Hangman {
 
   public void printRoundStats() {
     System.out.println("===== ROUND STATS =====" +
+    "\nPoints: " + getPoints() +
     "\nCurrent Win Streak: " + getWinStreak() +
     "\nTotal # of Guesses: " + getNumRoundTotalGuesses() +
     "\nTotal Correct Guesses: " + getNumRoundCorrectGuesses() +
