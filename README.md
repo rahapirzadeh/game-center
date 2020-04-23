@@ -5,5 +5,4 @@ Raha: Rock, Paper, Scissors code is playable. Next sprint will include networkin
 
 Jonathan: Right now, tik tac toe displays the board, and allows player input. Next sprint will include working win conditions and proper networking features
 
-Brandon: Currently, Hangman introduces the game to the user, selects a random word or phrase from a text file of technology-related buzz words, converts it to underscores and whitespace, and prompts the user to guess. Next sprint should allow user to enter single and multiple guesses, give up, and win the game. 
-
+Brandon: Currently, users can play through multiple rounds of Hangman, receive game statistics, and gain points for correct guesses. Next sprint should include dual player functionality, help and give up commands, increased commenting, and code refactoring.
