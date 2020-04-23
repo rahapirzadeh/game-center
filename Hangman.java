@@ -270,13 +270,11 @@ public class Hangman {
   public void incorrectGuess(String guess) {
     incrementNumTotalGuesses();
     incrementNumIncorrectGuesses();
-    //TODO add guess to previous guesses
   }
 
   public void incorrectGuess(char guess) {
     incrementNumTotalGuesses();
     incrementNumIncorrectGuesses();
-    //TODO add guess to previous guesses
   }
 
   public void printNumIncorrectGuessesRemaining() {
