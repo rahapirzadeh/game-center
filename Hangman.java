@@ -332,7 +332,7 @@ public class Hangman {
 
   public String promptUserPlayAgain() {
     System.out.println("Would you like to play again? Enter 'y' to play again or 'n' to exit.");
-    return getUserInput();
+    return getUserInput().toLowerCase();
   }
 
   //TODO hint command "would you like a hint?"
