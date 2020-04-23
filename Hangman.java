@@ -4,7 +4,8 @@ import java.util.Scanner;
 
 public class Hangman {
   public static void main(String[] args) {
-    playGame();
+    Hangman hm = new Hangman();
+    hm.playGame();
   }
 
   private static final int NUM_ALLOWED_INCORRECT_GUESSES = 8;
@@ -19,38 +20,32 @@ public class Hangman {
   private int numGamesWon;
   private int numGamesLost;
   private char[] correctlyGuessedLetters;
-  private boolean hasWon;
-  private boolean hasGuessesRemaining;
 
   public Hangman() {
     wordToGuess = selectWordToGuess();
     currGuess = "";
     winStreak = numCorrectGuesses = numIncorrectGuesses = numGamesPlayed = numGamesWon = numGamesLost = 0;
     correctlyGuessedLetters = new char[wordToGuess.length()];
-    // Sets all characters in correctlyGuessedLetters to underscores, indicating that no letters have been correctly guessed yet
-    Arrays.fill(correctlyGuessedLetters, '_');
-    hasWon = false;
-    hasGuessesRemaining = true;
+    Arrays.fill(correctlyGuessedLetters, '_'); // Sets all characters in correctlyGuessedLetters to underscores, indicating that no letters have been correctly guessed yet
   }
 
-  public static void playGame() {
-    Hangman hm = new Hangman();
+  public void playGame() {
     printWelcomeMessage();
     printInstructions();
-    System.out.println("Word: " + hm.getWordToGuess()); //TODO delete after debugging complete
-    // while win and input == exit are false && hasGuessesRemaining == true
-    while(true) {
-      hm.printGuessWordPrompt();
-      hm.setCurrGuess(hm.getUserGuess());
-      hm.checkIfGuessCorrect(hm.getCurrGuess());
-      // hm.checkWinAndLossConditions();
-    }
+    promptEnterKey();
+    printGuessWord(); //TODO delete after debugging complete
+    while(!hasWon() && !hasLost()) {
+      this.printGuessWordPrompt();
+      this.setCurrGuess(this.getUserInput());
+      this.checkIfGuessCorrect(this.getCurrGuess());
+    } gameFinish();
+    //TODO ask if user wants to play again
   }
 
-  public String correctlyGuessedLettersArrayToString() {
+  public String charArrayToString() {
     String s = "";
-    for(char character : correctlyGuessedLetters) {
-      s += character;
+    for(char c : correctlyGuessedLetters) {
+      s += c;
     }
     return s;
   }
@@ -60,10 +55,10 @@ public class Hangman {
     return FileIO.getLineFromFile("hangmanWords.txt", indexOfWord);
   }
 
-  public static String convertWordToUnderscores(String word) {
+  public static String convertStringToUnderscores(String s) {
     // Replaces all underscores to underscore and space '_ '
     // Extra space is for readability purposes and to distinguish different underscores
-    return word.replaceAll("[_]", "_ ");
+    return s.replaceAll("[_]", "_ ");
   }
 
   public void resetWinStreak() {
@@ -114,6 +109,10 @@ public class Hangman {
     return wordToGuess;
   }
 
+  public String getGuessWordProgress() {
+    return convertStringToUnderscores(charArrayToString()).replaceAll("\\B", " ");
+  }
+
   public int getNumTotalGuesses() {
     return numTotalGuesses;
   }
@@ -139,61 +138,58 @@ public class Hangman {
   }
 
   public void printGuessWordPrompt() {
-    System.out.print("Word or Phrase: " + correctlyGuessedLettersArrayToString() +
+    System.out.print("Word or Phrase: " + getGuessWordProgress() +
     "\nYour Guess: ");
   }
 
-  public String getUserGuess() {
-    String guess = "";
+  public String getUserInput() {
+    String input = "";
     Scanner scanner = new Scanner(System.in);
     if(scanner.hasNextLine()) {
-      guess = scanner.nextLine();
+      input = scanner.nextLine();
     }
-    return guess.strip(); // Strips leading and trailing whitespace
+    return input.strip().toLowerCase();
   }
 
   public void checkIfGuessCorrect(String guess) {
-    if(guess.equals("") || guess.equals("help")) {
-      printInstructions();
-    } else if(guess.length() > 1) {
+    //TODO refactor
+    if(guess.length() > 1) {
       if(guess.contains(",")) {
-        char[] characterGuesses = parseAndReturnCommaSeparatedGuess(guess);
+        char[] characterGuesses = parseCommaSeparatedValue(guess);
         for (char character : characterGuesses) {
           if(isCharacterInWord(character)) {
-            replaceUnderscoresWithCorrectlyGuessedLetter(character);
+            correctGuess(character);
           } else {
-            incrementNumIncorrectGuesses();
+            incorrectGuess(character);
           }
         }
-      } else if(getWordToGuess().equals(guess)) {
-        playerWin();
       }
     } else if(guess.length() == 1) {
-      if(isCharacterInWord(guess.charAt(0))) {
-        replaceUnderscoresWithCorrectlyGuessedLetter(guess.charAt(0));
+      char charGuess = guess.charAt(0);
+      if(isCharacterInWord(charGuess)) {
+        correctGuess(charGuess);
       } else {
-        incrementNumIncorrectGuesses();
+        incorrectGuess(charGuess);
       }
-    }
-  }
-
-  public boolean isCharacterInWord(char character) {
-    if(getWordToGuess().contains(Character.toString(character))) {
-      incrementNumCorrectGuesses();
-      return true;
     } else {
-      incrementNumIncorrectGuesses();
-      return false;
+      incorrectGuess(guess);
     }
   }
 
-  public static char[] parseAndReturnCommaSeparatedGuess(String guess) {
-    guess.replaceAll("\\s", "").replaceAll("[,]", "");
-    char[] characterGuesses = new char[guess.length()];
-    for (int pos = 0; pos < guess.length(); pos++) {
-      characterGuesses[pos] = guess.charAt(pos);
+  public boolean isCharacterInWord(char c) {
+    if(getWordToGuess().contains(Character.toString(c))) {
+      return true;
     }
-    return characterGuesses;
+    return false;
+  }
+
+  public static char[] parseCommaSeparatedValue(String s) {
+    s.replaceAll("\\s", "").replaceAll("[,]", "");
+    char[] parsedArray = new char[s.length()];
+    for (int pos = 0; pos < s.length(); pos++) {
+      parsedArray[pos] = s.charAt(pos);
+    }
+    return parsedArray;
   }
 
   public void replaceUnderscoresWithCorrectlyGuessedLetter(char c) {
@@ -203,6 +199,21 @@ public class Hangman {
       }
     }
   }
+
+  public boolean hasWon() {
+    if (getWordToGuess().equals(currGuess) || getWordToGuess().equals(charArrayToString())) {
+      return true;
+    }
+    return false;
+  }
+
+  public boolean hasLost() {
+    if(numIncorrectGuesses == NUM_ALLOWED_INCORRECT_GUESSES) {
+      return true;
+    }
+    return false;
+  }
+
   public void playerWin() {
     incrementWinStreak();
     incrementNumGamesWon();
@@ -215,13 +226,38 @@ public class Hangman {
     printLossMessage();
   }
 
+  public void gameFinish() {
+    if(hasWon()) {
+      playerWin();
+    } else {
+      playerLoss();
+    }
+    incrementNumGamesPlayed();
+    printStats();
+  }
+
+  public void correctGuess(char guess) {
+    replaceUnderscoresWithCorrectlyGuessedLetter(guess);
+    incrementNumCorrectGuesses();
+  }
+
+  public void incorrectGuess(String guess) {
+    incrementNumIncorrectGuesses();
+    //TODO add guess to previous guesses
+  }
+
+  public void incorrectGuess(char guess) {
+    incrementNumIncorrectGuesses();
+    //TODO add guess to previous guesses
+  }
+
   public void printStats() {
     System.out.println("=== ROUND STATS ===" +
     "\nThe word or phrase was: " + getWordToGuess() +
     "\nTotal # of Guesses: " + getNumTotalGuesses() +
     "\nTotal Correct Guesses: " + getNumCorrectGuesses() +
     "\nTotal Incorrect Guesses: " + getNumIncorrectGuesses() +
-    "=== GAME STATS ===" +
+    "\n=== GAME STATS ===" +
     "\nCurrent Win Streak: " + getWinStreak() +
     "\nTotal # of Games Played: " + getNumTotalGamesPlayed() +
     "\nTotal # of Games Won: " + getNumGamesWon() +
@@ -230,31 +266,41 @@ public class Hangman {
 
   public void printWinMessage() {
     System.out.println("Congratulations.. you won!");
+    printGuessWord();
   }
 
   public void printLossMessage() {
     System.out.println("Sorry.. you lost!");
+    printGuessWord();
   }
+
+  public void printGuessWord() {
+    System.out.println("The word was " + getWordToGuess());
+  }
+
   public static void printInstructions() {
     System.out.println("Guess multiple letters by separating them with commas (ex: 'a,s,d,f')." +
-    "\nGuess the whole word by typing in your entire guess (ex: 'computer')." +
-    "\nFor a hint, type 'hint'." +
+    "\nGuess the whole word by typing in your entire guess (ex: 'computer').");
+    // TODO "\nFor a hint, type 'hint'." +
     // TODO "\nTo print these instructions again, type 'help'." +
-    "\nTo exit the game, type 'exit'.");
-    promptEnterKey();
+    // TODO "\nTo exit the game, type 'exit'.");
   }
 
   public static void printWelcomeMessage() {
     System.out.println("Hello, and welcome to Hangman! In this game, the computer will generate " +
     "a word or phrase, and you must guess it by selecting letters! \nGuess the word or phrase " +
     "within a certain number of guesses, or you lose!");
-    promptEnterKey();
   }
 
   public static void promptEnterKey() {
     System.out.println("Press Enter to continue...");
     Scanner scanner = new Scanner(System.in);
     scanner.nextLine();
+  }
+
+  public String promptUserPlayAgain() {
+    System.out.println("Would you like to play again?");
+    return getUserInput();
   }
 
   //TODO hint command "would you like a hint?"
