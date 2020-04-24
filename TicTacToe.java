@@ -51,14 +51,14 @@ class TicTacToe
       System.out.println("Player " + player + " Enter the row:");
       String input = in.nextLine();
       while(checkInput(input) == false){
-        System.out.println("Error: Invalid Input. Try again");
+        System.out.println("Error: Invalid Input. Must be 1, 2 or 3");
         input = in.nextLine();
       }
       int row = Integer.parseInt(input);
       System.out.println("Player " + player + " Enter the col:");
       input = in.nextLine();
       while(checkInput(input) == false){
-        System.out.println("Error: Invalid Input. Try again");
+        System.out.println("Error: Invalid Input. Must be 1, 2 or 3");
         input = in.nextLine();
       }
       int col = Integer.parseInt(input);
