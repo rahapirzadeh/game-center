@@ -1,12 +1,13 @@
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
 
-public class Hangman {
+public class Hangman extends Game {
   public static void main(String[] args) {
     Hangman hm = new Hangman();
-    hm.playGame();
+    hm.play();
   }
 
   private static final int NUM_ALLOWED_INCORRECT_GUESSES = 8;
@@ -32,23 +33,25 @@ public class Hangman {
     Arrays.fill(correctlyGuessedLetters, '_'); // Sets all characters in correctlyGuessedLetters to underscores, indicating that no letters have been correctly guessed yet
   }
 
-  public void playGame() {
+  public void play() {
     if(firstGame) {
       printWelcomeMessage();
       printInstructions();
       promptEnterKey();
     }
     printGuessWord(); //TODO delete after debugging complete
-    while(!hasWon() && !hasLost()) {
+    while(!hasPlayerWon() && !hasPlayerLost()) {
       printNumIncorrectGuessesRemaining();
       printGuessWordPrompt();
-      setCurrGuess(getUserInput());
+      promptNextMove();
       checkIfGuessCorrect(getCurrGuess());
+      switchTurn();
     } roundFinish();
     if(promptUserPlayAgain().equals("y")) {
       newRound();
     } else {
       printGameStats();
+      returnToLobby();
     }
   }
 
@@ -167,20 +170,6 @@ public class Hangman {
     return points;
   }
 
-  public void printGuessWordPrompt() {
-    System.out.print("Word or Phrase: " + getGuessWordProgress() +
-    "\nYour Guess: ");
-  }
-
-  public String getUserInput() {
-    String input = "";
-    Scanner scanner = new Scanner(System.in);
-    if(scanner.hasNextLine()) {
-      input = scanner.nextLine();
-    }
-    return input.strip().toLowerCase();
-  }
-
   public void checkIfGuessCorrect(String guess) {
     //TODO refactor
     if(guess.length() > 1) {
@@ -251,14 +240,14 @@ public class Hangman {
     }
   }
 
-  public boolean hasWon() {
+  public boolean hasPlayerWon() {
     if (getWordToGuess().equals(currGuess) || getWordToGuess().equals(charArrayToString(correctlyGuessedLetters))) {
       return true;
     }
     return false;
   }
 
-  public boolean hasLost() {
+  public boolean hasPlayerLost() {
     if(numRoundIncorrectGuesses == NUM_ALLOWED_INCORRECT_GUESSES) {
       return true;
     }
@@ -279,7 +268,7 @@ public class Hangman {
   }
 
   public void roundFinish() {
-    if(hasWon()) {
+    if(hasPlayerWon()) {
       playerWin();
     } else {
       playerLoss();
@@ -294,7 +283,7 @@ public class Hangman {
     resetGuesses();
     resetCorrectlyGuessedLetters();
     firstGame = false;
-    playGame();
+    play();
   }
 
   public void correctGuess(char guess) {
@@ -369,15 +358,19 @@ public class Hangman {
     "within a certain number of guesses, or you lose!");
   }
 
+  public void printGuessWordPrompt() {
+    System.out.println("Word or Phrase: " + getGuessWordProgress());
+  }
+
+  public void promptNextMove() {
+    printWhoseTurn();
+    setCurrGuess(getUserInput());
+  }
+
   public static void promptEnterKey() {
     System.out.println("Press Enter to continue...");
     Scanner scanner = new Scanner(System.in);
     scanner.nextLine();
-  }
-
-  public String promptUserPlayAgain() {
-    System.out.println("Would you like to play again? Enter 'y' to play again or 'n' to exit.");
-    return getUserInput().toLowerCase();
   }
 
   //TODO hint command "would you like a hint?"
