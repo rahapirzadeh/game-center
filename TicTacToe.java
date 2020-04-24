@@ -49,11 +49,19 @@ class TicTacToe
     public static int[] makeMove(int player){
       Scanner in = new Scanner(System.in);
       System.out.println("Player " + player + " Enter the row:");
-      int row = in.nextInt();
-      System.out.println(row);
+      String input = in.nextLine();
+      while(checkInput(input) == false){
+        System.out.println("Error: Invalid Input. Try again");
+        input = in.nextLine();
+      }
+      int row = Integer.parseInt(input);
       System.out.println("Player " + player + " Enter the col:");
-      int col = in.nextInt();
-      System.out.println(col);
+      input = in.nextLine();
+      while(checkInput(input) == false){
+        System.out.println("Error: Invalid Input. Try again");
+        input = in.nextLine();
+      }
+      int col = Integer.parseInt(input);
       int[] move = {row, col};
       return move;
     }
@@ -61,6 +69,13 @@ class TicTacToe
     public static boolean[] checkWin(String[][] board){
       boolean[] results = {false, false};
       return results;
+    }
+
+    public static boolean checkInput(String input){
+      if(input.equals("1") || input.equals("2") || input.equals("3")){
+        return true;
+      }
+      return false;
     }
 
 
