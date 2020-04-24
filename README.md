@@ -8,6 +8,6 @@ Jonathan: Right now, tik tac toe displays the board, and allows player input. Ne
 Brandon: Currently, users can play through multiple rounds of Hangman, receive game statistics, and gain points for correct guesses. Next sprint should include dual player functionality, help and give up commands, increased commenting, and code refactoring.
 
 References:
-https://stackoverflow.com/questions/24305830/java-auto-increment-id
-https://programming.guide/java/remove-trailing-comma-from-comma-separated-string.html
-https://github.com/ChapmanCPSC353/mtchat
+* https://stackoverflow.com/questions/24305830/java-auto-increment-id
+* https://programming.guide/java/remove-trailing-comma-from-comma-separated-string.html
+* https://github.com/ChapmanCPSC353/mtchat
