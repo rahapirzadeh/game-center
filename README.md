@@ -10,3 +10,4 @@ Brandon: Currently, users can play through multiple rounds of Hangman, receive g
 References:
 https://stackoverflow.com/questions/24305830/java-auto-increment-id
 https://programming.guide/java/remove-trailing-comma-from-comma-separated-string.html
+https://github.com/ChapmanCPSC353/mtchat
