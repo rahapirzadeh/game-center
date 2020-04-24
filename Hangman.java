@@ -187,27 +187,51 @@ public class Hangman {
       if(guess.contains(",")) {
         char[] charGuesses = parseCommaSeparatedValue(guess);
         for (char character : charGuesses) {
-          if(getWordToGuess().indexOf(character) != -1) {
-            correctGuess(character);
-          } else {
-            incorrectGuess(character);
-          }
+          assertCorrectOrIncorrectGuess(character);
         }
       } else {
-        if(getWordToGuess().equals(currGuess)) {
-          correctGuess(currGuess);
-        } else {
-          incorrectGuess(currGuess);
-        }
+        assertCorrectOrIncorrectGuess(getCurrGuess());
       }
     } else if(guess.length() == 1) {
       char charGuess = guess.charAt(0);
-      if(getWordToGuess().indexOf(charGuess) != -1) {
-        correctGuess(charGuess);
-      } else {
-        incorrectGuess(charGuess);
+      assertCorrectOrIncorrectGuess(charGuess);
+    } else {
+      printInvalidGuess();
+    }
+  }
+
+  public void assertCorrectOrIncorrectGuess(char c) {
+    if(characterInGuessWord(c)) {
+      if(guessNotInPreviousGuesses(c)) {
+        correctGuess(c);
+      }
+    } else {
+      incorrectGuess(c);
+    }
+  }
+
+  public void assertCorrectOrIncorrectGuess(String s) {
+    if(getWordToGuess().equals(s)) {
+      correctGuess(s);
+    } else {
+      incorrectGuess(s);
+    }
+  }
+
+  public boolean characterInGuessWord(char c) {
+    if(getWordToGuess().indexOf(c) != -1) {
+      return true;
+    }
+    return false;
+  }
+
+  public boolean guessNotInPreviousGuesses(char c) {
+    for(char character : correctlyGuessedLetters) {
+      if(character == c) {
+        return false;
       }
     }
+    return true;
   }
 
   public static char[] parseCommaSeparatedValue(String s) {
@@ -325,6 +349,10 @@ public class Hangman {
 
   public void printGuessWord() {
     System.out.println("The word was: " + getWordToGuess());
+  }
+
+  public static void printInvalidGuess() {
+    System.out.println("Sorry, that guess is invalid. Try again");
   }
 
   public static void printInstructions() {
