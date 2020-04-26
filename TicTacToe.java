@@ -11,28 +11,39 @@ class TicTacToe
     }
 
     public static void TicTacToe(){
-      boolean[] gameOver = {false, false};
+      boolean gameOver = false;
       int turns = 0;
       String[][] board = {{"-", "-", "-"}, {"-", "-", "-"}, {"-", "-", "-"}};
+      boolean[][] isPlaced = {{false, false, false}, {false, false, false}, {false, false, false}};
       int [] move = new int[2];
+
       printBoard(board);
-      while(turns < 3){
+      while(gameOver == false){
         move = makeMove(1);
+        while(isPlaced[move[0]-1][move[1]-1] == true){
+          System.out.println("Someone already took that square, enter a different move");
+          move = makeMove(1);
+        }
         board[move[0]-1][move[1]-1] = "X";
+        isPlaced[move[0]-1][move[1]-1] = true;
         printBoard(board);
-        //gameOver = checkWin(board);
-        move = makeMove(2);
-        board[move[0]-1][move[1]-1] = "O";
-        printBoard(board);
-        //gameOver = checkWin(board);
-        turns++;
+        gameOver = checkWin(board);
+
+        if(gameOver == false){
+          move = makeMove(2);
+          while(isPlaced[move[0]-1][move[1]-1] == true){
+            System.out.println("Someone already took that square, enter a different move");
+            move = makeMove(2);
+          }
+          board[move[0]-1][move[1]-1] = "O";
+          isPlaced[move[0]-1][move[1]-1] = true;
+          printBoard(board);
+          turns++;
+          gameOver = checkWin(board);
+        }
+
       }
-      //if(gameOver[1] == true){
-      //  System.out.println("Player 1 wins!");
-    //  }
-      //if(gameOver[1] == false){
-      //  System.out.println("Player 2 wins!");
-      //}
+
     }
 
     public static void printBoard(String[][] board){
@@ -66,17 +77,122 @@ class TicTacToe
       return move;
     }
 
-    public static boolean[] checkWin(String[][] board){
-      boolean[] results = {false, false};
-      return results;
-    }
-
     public static boolean checkInput(String input){
       if(input.equals("1") || input.equals("2") || input.equals("3")){
         return true;
       }
       return false;
     }
+
+    public static boolean checkWin(String[][] board){
+      //Checks the
+      //[-][-][-]
+      //[ ][ ][ ]
+      //[ ][ ][ ]
+      //Win condition
+      if(board[0][0].equals("X") && board[0][1].equals("X") && board[0][2].equals("X")){
+        System.out.println("Game Over! Player 1 wins!");
+        return true;
+      }
+      if(board[0][0].equals("O") && board[0][1].equals("O") && board[0][2].equals("O")){
+        System.out.println("Game Over! Player 2 wins!");
+        return true;
+      }
+      //Checks the
+      //[ ][ ][ ]
+      //[-][-][-]
+      //[ ][ ][ ]
+      //Win condition
+      if(board[1][0].equals("X") && board[1][1].equals("X") && board[1][2].equals("X")){
+        System.out.println("Game Over! Player 1 wins!");
+        return true;
+      }
+      if(board[1][0].equals("O") && board[1][1].equals("O") && board[1][2].equals("O")){
+        System.out.println("Game Over! Player 2 wins!");
+        return true;
+      }
+      //Checks the
+      //[ ][ ][ ]
+      //[ ][ ][ ]
+      //[-][-][-]
+      //Win condition
+      if(board[2][0].equals("X") && board[2][1].equals("X") && board[2][2].equals("X")){
+        System.out.println("Game Over! Player 1 wins!");
+        return true;
+      }
+      if(board[2][0].equals("O") && board[2][1].equals("O") && board[2][2].equals("O")){
+        System.out.println("Game Over! Player 2 wins!");
+        return true;
+      }
+      //Checks the
+      //[-][ ][ ]
+      //[-][ ][ ]
+      //[-][ ][ ]
+      //Win condition
+      if(board[0][0].equals("X") && board[1][0].equals("X") && board[2][0].equals("X")){
+        System.out.println("Game Over! Player 1 wins!");
+        return true;
+      }
+      if(board[0][0].equals("O") && board[1][0].equals("O") && board[2][0].equals("O")){
+        System.out.println("Game Over! Player 2 wins!");
+        return true;
+      }
+      //Checks the
+      //[ ][-][ ]
+      //[ ][-][ ]
+      //[ ][-][ ]
+      //Win condition
+      if(board[0][1].equals("X") && board[1][1].equals("X") && board[2][1].equals("X")){
+        System.out.println("Game Over! Player 1 wins!");
+        return true;
+      }
+      if(board[0][1].equals("O") && board[1][1].equals("O") && board[2][1].equals("O")){
+        System.out.println("Game Over! Player 2 wins!");
+        return true;
+      }
+      //Checks the
+      //[ ][ ][-]
+      //[ ][ ][-]
+      //[ ][ ][-]
+      //Win condition
+      if(board[0][2].equals("X") && board[1][2].equals("X") && board[2][2].equals("X")){
+        System.out.println("Game Over! Player 1 wins!");
+        return true;
+      }
+      if(board[0][2].equals("O") && board[1][2].equals("O") && board[2][2].equals("O")){
+        System.out.println("Game Over! Player 2 wins!");
+        return true;
+      }
+      //Checks the
+      //[-][ ][ ]
+      //[ ][-][ ]
+      //[ ][ ][-]
+      //Win condition
+      if(board[0][0].equals("X") && board[1][1].equals("X") && board[2][2].equals("X")){
+        System.out.println("Game Over! Player 1 wins!");
+        return true;
+      }
+      if(board[0][0].equals("O") && board[1][1].equals("O") && board[2][2].equals("O")){
+        System.out.println("Game Over! Player 2 wins!");
+        return true;
+      }
+      //Checks the
+      //[ ][ ][-]
+      //[ ][-][ ]
+      //[-][ ][ ]
+      //Win condition
+      if(board[2][0].equals("X") && board[1][1].equals("X") && board[0][2].equals("X")){
+        System.out.println("Game Over! Player 1 wins!");
+        return true;
+      }
+      if(board[2][0].equals("O") && board[1][1].equals("O") && board[0][2].equals("O")){
+        System.out.println("Game Over! Player 2 wins!");
+        return true;
+      }
+      return false;
+
+    }
+
 
 
 }
