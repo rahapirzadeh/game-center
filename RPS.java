@@ -22,28 +22,43 @@ public class RPS {
 	  	System.out.println("It's a tie!\n");
 
     else if (user1Move.equals(ROCK)) {
-			if (user2Move.equals(SCISSORS))
-				System.out.println(++player1wins + "Player 1 Wins!!\n"+"Player 2 Looses...\n"+"Rock crushes scissors.\n");
-	    else if (user2Move.equals(PAPER))
-		    System.out.println(player2wins++ + "Player 2 Wins!!\n"+"Player 1 Looses...\n"+"Paper eats rock.\n");
-			else
+			if (user2Move.equals(SCISSORS)) {
+				player1wins++;
+				System.out.println("Player 1 Wins!!\n"+"Player 2 Looses...\n"+"Rock crushes scissors.\n");
+			}
+	    else if (user2Move.equals(PAPER)){
+		    System.out.println("Player 2 Wins!!\n"+"Player 1 Looses...\n"+"Paper eats rock.\n");
+				player2wins++;
+			}
+			else{
 				System.out.println("Invalid input player 2.\n");
+			}
 		}
 		else if (user1Move.equals(PAPER)) {
-    	if (user2Move.equals(ROCK))
-		  	System.out.println(++player1wins + "Player 1 Wins!!\n"+"Player 2 Looses...\n"+"Paper eats rock.\n");
-	    else if (user2Move.equals(SCISSORS))
-		    System.out.println(player2wins++ + "Player 2 Wins!!\n"+"Player 1 Looses...\n"+"Scissor cuts paper.\n");
-			else
+    	if (user2Move.equals(ROCK)) {
+		  	System.out.println("Player 1 Wins!!\n"+"Player 2 Looses...\n"+"Paper eats rock.\n");
+				player1wins++;
+			}
+	    else if (user2Move.equals(SCISSORS)){
+		    System.out.println("Player 2 Wins!!\n"+"Player 1 Looses...\n"+"Scissor cuts paper.\n");
+				player2wins++;
+			}
+			else {
 				System.out.println("Invalid input player 2.\n");
+			}
     }
     else if (user1Move.equals(SCISSORS)) {
-	  	if (user2Move.equals(PAPER))
-		  	System.out.println(++player1wins + "Player 1 Wins!!\n"+"Player 2 Looses...\n"+"Scissor cuts paper.\n");
-	    else if (user2Move.equals(ROCK))
-		  	System.out.println(player2wins++ + "Player 2 Wins!!\n"+"Player 1 Looses...\n"+"Rock crushes scissors.\n");
-			else
+	  	if (user2Move.equals(PAPER)) {
+		  	System.out.println("Player 1 Wins!!\n"+"Player 2 Looses...\n"+"Scissor cuts paper.\n");
+				player1wins++;
+			}
+	    else if (user2Move.equals(ROCK)) {
+		  	System.out.println("Player 2 Wins!!\n"+"Player 1 Looses...\n"+"Rock crushes scissors.\n");
+				player2wins++;
+			}
+			else {
 				System.out.println("Invalid input player 2.\n");
+			}
     }
     else
     	System.out.println("Invalid input player 1.\n");
