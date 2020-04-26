@@ -57,6 +57,6 @@ public class Lobby {
     if(scanner.hasNextLine()) {
       input = scanner.nextLine();
     }
-    return input.strip().toLowerCase();
+    return scanner.next().toLowerCase();
   }
 }
