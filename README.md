@@ -1,4 +1,4 @@
-# helpers.Game Center
+# Game Center
 ## Jonathan Bahm, Brandon Fabre, Raha Pirzadeh
 ### CPSC 353
 Raha: Rock, Paper, Scissors code is playable. Next sprint will include networking features
