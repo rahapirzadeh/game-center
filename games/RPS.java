@@ -1,3 +1,5 @@
+package games;
+
 import java.util.Scanner;
 
 public class RPS {
@@ -24,10 +26,10 @@ public class RPS {
     else if (user1Move.equals(ROCK)) {
 			if (user2Move.equals(SCISSORS)) {
 				player1wins++;
-				System.out.println("Player 1 Wins!!\n"+"Player 2 Looses...\n"+"Rock crushes scissors.\n");
+				System.out.println("helpers.Player 1 Wins!!\n"+"helpers.Player 2 Looses...\n"+"Rock crushes scissors.\n");
 			}
 	    else if (user2Move.equals(PAPER)){
-		    System.out.println("Player 2 Wins!!\n"+"Player 1 Looses...\n"+"Paper eats rock.\n");
+		    System.out.println("helpers.Player 2 Wins!!\n"+"helpers.Player 1 Looses...\n"+"Paper eats rock.\n");
 				player2wins++;
 			}
 			else{
@@ -36,11 +38,11 @@ public class RPS {
 		}
 		else if (user1Move.equals(PAPER)) {
     	if (user2Move.equals(ROCK)) {
-		  	System.out.println("Player 1 Wins!!\n"+"Player 2 Looses...\n"+"Paper eats rock.\n");
+		  	System.out.println("helpers.Player 1 Wins!!\n"+"helpers.Player 2 Looses...\n"+"Paper eats rock.\n");
 				player1wins++;
 			}
 	    else if (user2Move.equals(SCISSORS)){
-		    System.out.println("Player 2 Wins!!\n"+"Player 1 Looses...\n"+"Scissor cuts paper.\n");
+		    System.out.println("helpers.Player 2 Wins!!\n"+"helpers.Player 1 Looses...\n"+"Scissor cuts paper.\n");
 				player2wins++;
 			}
 			else {
@@ -49,11 +51,11 @@ public class RPS {
     }
     else if (user1Move.equals(SCISSORS)) {
 	  	if (user2Move.equals(PAPER)) {
-		  	System.out.println("Player 1 Wins!!\n"+"Player 2 Looses...\n"+"Scissor cuts paper.\n");
+		  	System.out.println("helpers.Player 1 Wins!!\n"+"helpers.Player 2 Looses...\n"+"Scissor cuts paper.\n");
 				player1wins++;
 			}
 	    else if (user2Move.equals(ROCK)) {
-		  	System.out.println("Player 2 Wins!!\n"+"Player 1 Looses...\n"+"Rock crushes scissors.\n");
+		  	System.out.println("helpers.Player 2 Wins!!\n"+"helpers.Player 1 Looses...\n"+"Rock crushes scissors.\n");
 				player2wins++;
 			}
 			else {
@@ -67,14 +69,14 @@ public class RPS {
 	// User's move
 	public static String getUser1Move(){
 		Scanner scanner = new Scanner(System.in);
-		System.out.println("\nPlayer 1 choice: ");
+		System.out.println("\nhelpers.Player 1 choice: ");
 		String input = scanner.next().toUpperCase();
 			return input;
 	}
 
 	public static String getUser2Move(){
 		Scanner scanner = new Scanner(System.in);
-	  System.out.println("Player 2 choice: ");
+	  System.out.println("helpers.Player 2 choice: ");
 		String input = scanner.next().toUpperCase();
     	return input;
   }
@@ -86,8 +88,8 @@ public class RPS {
 				+"Rock = R, Paper= P, and Scissors = S\n");
 		do {
 			getResult(getUser1Move(), getUser2Move());
-			System.out.println("Player 1 scores: "+ player1wins);
-			System.out.println("Player 2 scores: "+ player2wins);
+			System.out.println("helpers.Player 1 scores: "+ player1wins);
+			System.out.println("helpers.Player 2 scores: "+ player2wins);
 			System.out.println("---Want to play again? Y/N---");
 			Scanner scanner = new Scanner(System.in);
 			String play = scanner.next().toUpperCase();

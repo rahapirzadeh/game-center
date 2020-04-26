@@ -1,13 +1,11 @@
+package networking;
+
 import java.io.BufferedReader;
-import java.io.DataOutputStream;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.Scanner;
 
 /**
- * ClientListener.java
+ * networking.ClientListener.java
  *
  * <p>This class runs on the client end and just
  * displays any text received from the server.
@@ -15,19 +13,19 @@ import java.util.Scanner;
  */
 
 public class ClientListener implements Runnable { //reference: https://github.com/ChapmanCPSC353/mtchat
-  private Socket connectionSock = null;
+  private Socket connectionSocket;
 
   ClientListener(Socket sock) {
-    this.connectionSock = sock;
+    this.connectionSocket = sock;
   }
 
   /**
-   * Gets message from server and dsiplays it to the user.
+   * Gets message from server and displays it to the user.
    */
   public void run() {
     try {
       BufferedReader serverInput = new BufferedReader(
-          new InputStreamReader(connectionSock.getInputStream()));
+          new InputStreamReader(connectionSocket.getInputStream()));
       while (true) {
         // Get data sent from the server
         String serverText = serverInput.readLine();
@@ -35,8 +33,8 @@ public class ClientListener implements Runnable { //reference: https://github.co
           System.out.println(serverText);
         } else {
           // Connection was lost
-          System.out.println("Closing connection for socket " + connectionSock);
-          connectionSock.close();
+          System.out.println("Closing connection for socket " + connectionSocket);
+          connectionSocket.close();
           break;
         }
       }
@@ -44,4 +42,4 @@ public class ClientListener implements Runnable { //reference: https://github.co
       System.out.println("Error: " + e.toString());
     }
   }
-} // ClientListener for MtClient
+} // networking.ClientListener for MtClient

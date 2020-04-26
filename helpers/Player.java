@@ -1,3 +1,5 @@
+package helpers;
+
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Player {
@@ -8,7 +10,17 @@ public class Player {
 
   public Player() {
     this.playerID = count.incrementAndGet();
-    this.username = "";
+    this.username = "helpers.Player " + this.playerID;
+  }
+
+  public Player(int playerID) {
+    this.playerID = playerID;
+    this.username = "helpers.Player " + playerID;
+  }
+
+  public Player(int playerID, String username) {
+    this.playerID = playerID;
+    this.username = username;
   }
 
   public Player(String username) {
