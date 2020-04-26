@@ -360,8 +360,8 @@ public class Hangman extends Game {
   }
 
   public void printWelcomeMessage() {
-    outToSystemAndPW("Hello, and welcome to games.Hangman! In this game, the computer will generate "
-        + "a word or phrase, and you must guess it by selecting letters! "
+    outToSystemAndPW("Hello, and welcome to games.Hangman! In this game, the computer will "
+        + "generate a word or phrase, and you must guess it by selecting letters! "
         + "\nGuess the word or phrase within a certain number of guesses, or you lose!");
   }
 
