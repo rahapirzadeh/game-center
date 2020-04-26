@@ -60,7 +60,7 @@ public abstract class Game {
     if(scanner.hasNextLine()) {
       input = scanner.nextLine();
     }
-    return input.strip().toLowerCase();
+    return scanner.next().toLowerCase();
   }
 
   public String promptUserPlayAgain() {
