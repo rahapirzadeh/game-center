@@ -39,7 +39,7 @@ public class FileIO {
       System.out.println("File not found; an error occurred.");
       e.printStackTrace();
     } catch (IOException e) {
-      System.out.println("IOException occured.");
+      System.out.println("IOException occurred.");
       e.printStackTrace();
     }
     return data;
