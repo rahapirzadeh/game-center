@@ -1,4 +1,5 @@
-//package games;
+package games;
+
 import java.util.Scanner;
 
 public class RPS {
