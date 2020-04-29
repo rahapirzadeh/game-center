@@ -19,14 +19,36 @@ java Client
 Enter *localhost* for the server address to connect to
 
 #### Raha
-Rock, Paper, Scissors code is playable. Next sprint will include networking features
+Rock, Paper, Scissors code allows players to..
+* Play through multiple rounds
+* Switch between turns
+* Gain points for wins
+
+Next sprint will include..
+* Networking features
+
+Contributions:
+* RPS.java
+* Portion of networking code
+
+Next sprint will include networking features
 
 #### Jonathan
-Right now, tik tac toe displays the board, and allows player input. Next sprint will include working win conditions and proper networking features
+Right now, tik tac toe
+* Displays the board
+* Allows player input
+
+Next sprint will include..
+* Working win conditions
+* Proper networking features
+
+Contributions:
+* TicTacToe.java
+* Portion of networking code
 
 #### Brandon
 Currently, users can..
-* Play through multiple rounds of Hangman
+* Play through multiple rounds
 * Receive game statistics
 * Gain points for correct guesses
 
@@ -38,7 +60,7 @@ Next sprint should include..
 Contributions:
 * Dockerfile
 * Hangman.java and helper files associated with it
-* Portion of networking
+* Portion of networking code
 
 References:
 * https://stackoverflow.com/questions/24305830/java-auto-increment-id
