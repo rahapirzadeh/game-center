@@ -1,11 +1,11 @@
 # Game Center
 ## Jonathan Bahm, Brandon Fabre, Raha Pirzadeh
 ### CPSC 353
-Raha: Rock, Paper, Scissors 
+Raha: Rock, Paper, Scissors code
 
-Jonathan: Tik tac toe 
+Jonathan: Tik tac toe code
 
-Brandon: Hangman
+Brandon: Hangman code
 
 
 References:
