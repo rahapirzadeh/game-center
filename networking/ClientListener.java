@@ -13,19 +13,17 @@ import java.net.Socket;
  */
 
 public class ClientListener implements Runnable { //reference: https://github.com/ChapmanCPSC353/mtchat
-  private Socket connectionSocket;
+  private Socket clientSocket;
 
   ClientListener(Socket sock) {
-    this.connectionSocket = sock;
+    this.clientSocket = sock;
   }
 
-  /**
-   * Gets message from server and displays it to the user.
-   */
+  // Gets message from server and displays it to the user.
   public void run() {
     try {
       BufferedReader serverInput = new BufferedReader(
-          new InputStreamReader(connectionSocket.getInputStream()));
+          new InputStreamReader(clientSocket.getInputStream()));
       while (true) {
         // Get data sent from the server
         String serverText = serverInput.readLine();
@@ -33,8 +31,8 @@ public class ClientListener implements Runnable { //reference: https://github.co
           System.out.println(serverText);
         } else {
           // Connection was lost
-          System.out.println("Closing connection for socket " + connectionSocket);
-          connectionSocket.close();
+          System.out.println("Closing connection for socket " + clientSocket);
+          clientSocket.close();
           break;
         }
       }
@@ -42,4 +40,4 @@ public class ClientListener implements Runnable { //reference: https://github.co
       System.out.println("Error: " + e.toString());
     }
   }
-} // networking.ClientListener for MtClient
+}

@@ -1,6 +1,7 @@
 package networking;
 
 import helpers.Player;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
@@ -13,32 +14,27 @@ public class Client { //reference: https://github.com/ChapmanCPSC353/mtchat
     BufferedReader inFromClient = new BufferedReader(new InputStreamReader(System.in));
     System.out.println("What would you like to be your username?");
     String username = inFromClient.readLine();
-    Player player = new Player(2, username);
+    Player p = new Player(username);
     System.out.println("What is the IP of the host you'd like to connect to?");
     String hostname = inFromClient.readLine();
     int port = 7654;
 
     System.out.printf("Connecting to %s on port %d...%n", hostname, port);
     try (
-      Socket connectionSocket = new Socket(hostname, port);
-      PrintWriter out = new PrintWriter(connectionSocket.getOutputStream(), true);
-      BufferedReader in = new BufferedReader(new InputStreamReader(connectionSocket.getInputStream()));
+      Socket clientSocket = new Socket(hostname, port);
+      PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
     ) {
+      p.setOutFromPlayer(out);
       System.out.println("Connection made.");
-      System.out.println("Waiting for host to select game mode.");
-      // Start conversation with server
-      String fromHost, fromClient;
 
-      // Read input from the keyboard and send it to host
-      // Quit with CTRL+C
-      //TODO add exit functionality/cmd
-      while ((fromHost = in.readLine()) != null) {
-        System.out.println("Player 1: " + fromHost);
-        fromClient = inFromClient.readLine();
-        if (fromClient != null) {
-          System.out.println("Player 2: " + fromClient);
-          out.println(fromClient);
-        }
+      // Start a thread to listen and display data sent to the server
+      ClientListener listener = new ClientListener(clientSocket);
+      new Thread(listener).start();
+
+      String clientInput;
+      while ((clientInput = inFromClient.readLine()) != null) {
+        out.print(p);
+        out.println(clientInput);
       }
     } catch (UnknownHostException e) {
       System.out.println("Don't know about host " + hostname);

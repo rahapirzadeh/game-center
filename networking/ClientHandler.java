@@ -15,26 +15,23 @@ import java.util.ArrayList;
  *
  */
 public class ClientHandler implements Runnable { //reference: https://github.com/ChapmanCPSC353/mtchat
-  private Socket connectionSocket;
+  private Socket clientSocket;
   private ArrayList<Socket> socketList;
 
   ClientHandler(Socket socket, ArrayList<Socket> socketList) {
-    this.connectionSocket = socket;
+    this.clientSocket = socket;
     this.socketList = socketList;  // Keep reference to master list
   }
 
-  /**
-   * received input from a client.
-   * sends it to other clients.
-   */
+  // Receives input from a client and sends it to other clients
   public void run() {
     try {
-      System.out.println("Connection made with socket " + connectionSocket);
+      System.out.println("Connection made with socket " + clientSocket);
+
       BufferedReader clientInput = new BufferedReader(
-          new InputStreamReader(connectionSocket.getInputStream()));
+          new InputStreamReader(clientSocket.getInputStream()));
       while (true) {
         // Get data sent from a client
-        int playerID = clientInput.read();
         String data = clientInput.readLine();
         String clientUsername = data.split(":")[0];
         String clientMsg = data.split(":")[1].strip();
@@ -45,24 +42,24 @@ public class ClientHandler implements Runnable { //reference: https://github.com
           // to all other clients except the one
           // that sent us this information
           for (Socket s : socketList) {
-            if (s != connectionSocket) {
+            if (s != clientSocket) {
               DataOutputStream clientOutput = new DataOutputStream(s.getOutputStream());
               clientOutput.writeBytes(clientUsername + ": " + clientMsg + "\n");
             }
           }
         } else {
           // Connection was lost
-          System.out.println("Closing connection for socket " + connectionSocket);
+          System.out.println("Closing connection for socket " + clientSocket);
           // Remove from arraylist
-          socketList.remove(connectionSocket);
-          connectionSocket.close();
+          socketList.remove(clientSocket);
+          clientSocket.close();
           break;
         }
       }
     } catch (Exception e) {
       System.out.println("Error: " + e.toString());
       // Remove from arraylist
-      socketList.remove(connectionSocket);
+      socketList.remove(clientSocket);
     }
   }
 } // networking.ClientHandler for MtServer.java
