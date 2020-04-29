@@ -1,5 +1,4 @@
 package games;
-
 import java.util.Scanner;
 
 public class RPS {
@@ -11,7 +10,7 @@ public class RPS {
   static int player1wins = 0;
   static int player2wins = 0;
 
-  // Main method
+  /** Main method. */
   public static void main(String[] args) {
     rps();
   }
@@ -27,13 +26,10 @@ public class RPS {
         System.out.println("Player 1 Wins!!\n" + "Player 2 Looses...\n"
             + "Rock crushes scissors.\n");
         player1wins++;
-
       } else if (user2Move.equals(PAPER)) {
         System.out.println("Player 2 Wins!!\n" + "Player 1 Looses...\n"
             + "Paper eats rock.\n");
         player2wins++;
-      } else {
-        System.out.println("Invalid input player 2.\n");
       }
     } else if (user1Move.equals(PAPER)) {
       if (user2Move.equals(ROCK)) {
@@ -44,8 +40,6 @@ public class RPS {
         System.out.println("Player 2 Wins!!\n" + "Player 1 Looses...\n"
             + "Scissor cuts paper.\n");
         player2wins++;
-      } else {
-        System.out.println("Invalid input player 2.\n");
       }
     } else if (user1Move.equals(SCISSORS)) {
       if (user2Move.equals(PAPER)) {
@@ -56,11 +50,7 @@ public class RPS {
         System.out.println("Player 2 Wins!!\n" + "Player 1 Looses...\n"
             + "Rock crushes scissors.\n");
         player2wins++;
-      } else {
-        System.out.println("Invalid input player 2.\n");
       }
-    } else {
-      System.out.println("Invalid input player 1.\n");
     }
   }
 
@@ -69,15 +59,31 @@ public class RPS {
     Scanner scanner = new Scanner(System.in);
     System.out.println("\nPlayer 1 choice: ");
     String input = scanner.next().toUpperCase();
+    while (checkInput(input) == false) {
+      System.out.println("Incorrect input player 1, try again: ");
+      input = scanner.next().toUpperCase();;
+    }
     return input;
   }
 
-  /** User 1 move. */
+  /** User 2 move. */
   public static String getUser2Move() {
     Scanner scanner = new Scanner(System.in);
     System.out.println("Player 2 choice: ");
     String input = scanner.next().toUpperCase();
+    while (checkInput(input) == false) {
+      System.out.println("Incorrect input player 2, try again: ");
+      input = scanner.next().toUpperCase();;
+    }
     return input;
+  }
+
+  /** check user inputs. */
+  public static boolean checkInput(String input) {
+    if (input.equals(ROCK) || input.equals(PAPER) || input.equals(SCISSORS)) {
+      return true;
+    }
+    return false;
   }
 
   /** rps menu. */
