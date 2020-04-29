@@ -1,7 +1,7 @@
 # Game Center
 ## CPSC 353 - Jonathan Bahm, Brandon Fabre, Raha Pirzadeh
 
-#### How to run
+### How to run
 To run Server.java build and run the Dockerfile with
 ```
 docker build -t game-center .
@@ -62,7 +62,7 @@ Contributions:
 * Hangman.java and helper files associated with it
 * Portion of networking code
 
-References:
+### References:
 * https://stackoverflow.com/questions/24305830/java-auto-increment-id
 * https://programming.guide/java/remove-trailing-comma-from-comma-separated-string.html
 * https://github.com/ChapmanCPSC353/mtchat
