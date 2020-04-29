@@ -1,8 +1,9 @@
 package helpers;
 
+import java.io.IOException;
 import java.util.Scanner;
 
-public abstract class Game {
+public abstract class Game implements Runnable {
 
   protected static final int WAITING = 0;
   protected static final int PLAYER1_RESPONDED = 1;
@@ -12,7 +13,6 @@ public abstract class Game {
   protected Turn currTurn;
   protected Player player1;
   protected Player player2;
-  protected String outputLine;
 
   public Game() {
     this.player1 = new Player();
@@ -20,10 +20,10 @@ public abstract class Game {
     this.currTurn = new Turn(player1);
   }
 
-  public abstract void play();
+  public abstract void run();
 
   public void switchTurn() {
-    if (getCurrTurn().getWhoseTurn().getPlayerID() == 1) {
+    if (getCurrTurn().getPlayer().getPlayerID() == 1) {
       setCurrTurn(new Turn(player2));
     } else {
       setCurrTurn(new Turn(player1));
@@ -38,30 +38,74 @@ public abstract class Game {
     return this.currTurn;
   }
 
-  public String getOutputLine() {
-    return outputLine;
+  public Player getPlayer1() {
+    return player1;
   }
 
-  public void setOutputLine(String outputLine) {
-    this.outputLine = outputLine;
+  public void setPlayer1(Player player1) {
+    this.player1 = player1;
+  }
+
+  public Player getPlayer2() {
+    return player2;
+  }
+
+  public void setPlayer2(Player player2) {
+    this.player2 = player2;
   }
 
   public void printWhoseTurn() {
-    if (getCurrTurn().getWhoseTurn().getPlayerID() == 1) {
+    if (getCurrTurn().getPlayer().getPlayerID() == 1) {
       System.out.print(player1.getUsername() + "'s helpers.Turn: ");
     } else {
       System.out.print(player2.getUsername() + "'s helpers.Turn: ");
     }
+    printToPlayerWithCurrTurn("Your helpers.Turn: ");
   }
 
-  public abstract String tick();
+  public abstract void tick();
+
+  public abstract String getMove() throws IOException;
 
   public abstract boolean hasPlayerWon();
 
   public abstract boolean hasPlayerLost();
 
-  public void returnToLobby() {
-    new Lobby().startLobby();
+  public void printToAllPlayers(String s) {
+    printToPlayer(s, player1);
+    printToPlayer(s, player2);
+  }
+
+  public void printlnToAllPlayers(String s) {
+    printlnToPlayer(s, player1);
+    printlnToPlayer(s, player2);
+  }
+
+  public void printToPlayerWithCurrTurn(String s) {
+    if (getCurrTurn().getPlayer().getPlayerID() == 1) {
+      player1.getOutFromPlayer().print(s);
+    } else {
+      player2.getOutFromPlayer().print(s);
+    }
+  }
+
+  public void printlnToPlayerWithCurrTurn(String s) {
+    if (getCurrTurn().getPlayer().getPlayerID() == 1) {
+      printlnToPlayer(s, player1);
+    } else {
+      printlnToPlayer(s, player2);
+    }
+  }
+
+  public void printToPlayer(String s, Player p) {
+    p.getOutFromPlayer().print(s);
+  }
+  public void printlnToPlayer(String s, Player p) {
+    if(p.getPlayerID() == 1) {
+      player1.getOutFromPlayer().println(s);
+    } else {
+      player2.getOutFromPlayer().println(s);
+    }
   }
 
   public String getUserInput() {

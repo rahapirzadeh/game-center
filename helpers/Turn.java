@@ -31,7 +31,7 @@ public class Turn {
     this.move = move;
   }
 
-  public Player getWhoseTurn() {
+  public Player getPlayer() {
     return this.player;
   }
 

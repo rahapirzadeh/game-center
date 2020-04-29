@@ -2,18 +2,24 @@ package games;
 
 import helpers.FileIO;
 import helpers.Game;
-import java.io.PrintWriter;
+
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
 
 public class Hangman extends Game {
-  public static void main(String[] args) {
-    Hangman hm = new Hangman();
-    hm.play();
-  }
 
-  private final PrintWriter out = new PrintWriter(System.out, true);
+  public static final String welcomeMessage =
+          "Hello, and welcome to games.Hangman! In this game, the computer will generate a word "
+          + "or phrase, and you must guess it by selecting letters! "
+          + "\nGuess the word or phrase within a certain number of guesses, or you lose!";
+  public static final String instructions =
+          "Guess multiple letters by separating them with commas (ex: 'a,s,d,f')."
+          + "\nGuess the whole word by typing in your entire guess (ex: 'computer').";
+  public static final String invalidGuess = "Sorry, that guess is invalid. Try again";
+  public static final String lossMessage = "Sorry.. you lost!";
+  public static final String winMessage = "Congratulations.. you won!";
 
   private static final int NUM_ALLOWED_INCORRECT_GUESSES = 8;
 
@@ -38,7 +44,7 @@ public class Hangman extends Game {
     Arrays.fill(correctlyGuessedLetters, '_'); // Indicates no correctly guessed letters
   }
 
-  public void play() {
+  public void run() {
     if (firstGame) {
       printWelcomeMessage();
       printInstructions();
@@ -47,15 +53,12 @@ public class Hangman extends Game {
     printGuessWord(); //TODO delete after debugging complete
     while (!hasPlayerWon() && !hasPlayerLost()) {
       tick();
-      checkIfGuessCorrect(getCurrGuess());
-      switchTurn();
     }
     roundFinish();
     if (promptUserPlayAgain().equalsIgnoreCase("y")) {
       newRound();
     } else {
       printGameStats();
-      returnToLobby();
     }
   }
 
@@ -288,7 +291,7 @@ public class Hangman extends Game {
     resetGuesses();
     resetCorrectlyGuessedLetters();
     firstGame = false;
-    play();
+    run();
   }
 
   public void correctGuess(char guess) {
@@ -319,7 +322,7 @@ public class Hangman extends Game {
   }
 
   public void printRoundStats() {
-    outToSystemAndPW("===== ROUND STATS ====="
+    System.out.println("===== ROUND STATS ====="
         + "\nPoints: " + getPoints()
         + "\nCurrent Win Streak: " + getWinStreak()
         + "\nTotal # of Guesses: " + getNumRoundTotalGuesses()
@@ -328,31 +331,30 @@ public class Hangman extends Game {
   }
 
   public void printGameStats() {
-    outToSystemAndPW("===== GAME STATS ====="
+    System.out.println("===== GAME STATS ====="
         + "\nTotal # of Rounds Played: " + getNumRoundsPlayed()
         + "\nTotal # of Rounds Won: " + getNumRoundsWon()
         + "\nTotal # of Rounds Lost: " + getNumRoundsLost());
   }
 
   public void printWinMessage() {
-    outToSystemAndPW("Congratulations.. you won!");
+    System.out.println(winMessage);
   }
 
   public void printLossMessage() {
-    outToSystemAndPW("Sorry.. you lost!");
+    System.out.println(lossMessage);
   }
 
   public void printGuessWord() {
-    outToSystemAndPW("The word was: " + getWordToGuess());
+    System.out.println("The word was: " + getWordToGuess());
   }
 
   public void printInvalidGuess() {
-    outToSystemAndPW("Sorry, that guess is invalid. Try again");
+    System.out.println(invalidGuess);
   }
 
   public void printInstructions() {
-    outToSystemAndPW("Guess multiple letters by separating them with commas (ex: 'a,s,d,f')."
-        + "\nGuess the whole word by typing in your entire guess (ex: 'computer').");
+    System.out.println(instructions);
 
     // TODO "\nFor a hint, type 'hint'." +
     // TODO "\nTo print these instructions again, type 'help'." +
@@ -360,27 +362,26 @@ public class Hangman extends Game {
   }
 
   public void printWelcomeMessage() {
-    outToSystemAndPW("Hello, and welcome to games.Hangman! In this game, the computer will "
-        + "generate a word or phrase, and you must guess it by selecting letters! "
-        + "\nGuess the word or phrase within a certain number of guesses, or you lose!");
+    System.out.println(welcomeMessage);
   }
 
   public void printGuessWordPrompt() {
-    outToSystemAndPW("Word: " + getGuessWordProgress());
+    System.out.println("Word: " + getGuessWordProgress());
   }
 
-  public void outToSystemAndPW(String data) {
-    //System.out.println(data);
-    out.println(data);
-  }
-
-  public String tick() {
-    String output = null;
-    printNumIncorrectGuessesRemaining();
-    printGuessWordPrompt();
+  public void tick() {
+    printlnToAllPlayers("You have " + (NUM_ALLOWED_INCORRECT_GUESSES - numRoundIncorrectGuesses)
+            + " incorrect guesses remaining.");
+    printlnToAllPlayers("Word: " + getGuessWordProgress());
     printWhoseTurn();
     setCurrGuess(getUserInput());
-    return "TEST OUTPUT";
+    printlnToAllPlayers(getCurrGuess());
+    checkIfGuessCorrect(getCurrGuess());
+    switchTurn();
+  }
+
+  public String getMove() throws IOException {
+    return getCurrTurn().getPlayer().getInFromPlayer().readLine();
   }
 
   public static void promptEnterKey() {

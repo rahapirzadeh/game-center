@@ -1,5 +1,4 @@
-package games;///Right now, this just displays the board, and allows player input
-//Next sprint will include working win conditions and proper networking features
+package games;//Next sprint will include working win conditions and proper networking features
 
 import java.util.Scanner;
 public class TicTacToe

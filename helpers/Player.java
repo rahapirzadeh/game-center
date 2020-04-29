@@ -1,5 +1,7 @@
 package helpers;
 
+import java.io.BufferedReader;
+import java.io.PrintWriter;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Player {
@@ -7,6 +9,8 @@ public class Player {
   private static final AtomicInteger count = new AtomicInteger(0); //reference: https://stackoverflow.com/questions/24305830/java-auto-increment-id
   private final int playerID;
   private String username;
+  private PrintWriter outFromPlayer;
+  private BufferedReader inFromPlayer;
 
   public Player() {
     this.playerID = count.incrementAndGet();
@@ -38,5 +42,21 @@ public class Player {
 
   public int getPlayerID() {
     return this.playerID;
+  }
+
+  public PrintWriter getOutFromPlayer() {
+    return outFromPlayer;
+  }
+
+  public void setOutFromPlayer(PrintWriter outFromPlayer) {
+    this.outFromPlayer = outFromPlayer;
+  }
+
+  public BufferedReader getInFromPlayer() {
+    return inFromPlayer;
+  }
+
+  public void setInFromPlayer(BufferedReader inFromPlayer) {
+    this.inFromPlayer = inFromPlayer;
   }
 }
