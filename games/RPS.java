@@ -61,7 +61,7 @@ public class RPS {
     String input = scanner.next().toUpperCase();
     while (checkInput(input) == false) {
       System.out.println("Incorrect input player 1, try again: ");
-      input = scanner.next().toUpperCase();;
+      input = scanner.next().toUpperCase();
     }
     return input;
   }
@@ -73,7 +73,7 @@ public class RPS {
     String input = scanner.next().toUpperCase();
     while (checkInput(input) == false) {
       System.out.println("Incorrect input player 2, try again: ");
-      input = scanner.next().toUpperCase();;
+      input = scanner.next().toUpperCase();
     }
     return input;
   }
