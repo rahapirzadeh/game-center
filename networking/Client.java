@@ -14,7 +14,6 @@ public class Client { //reference: https://github.com/ChapmanCPSC353/mtchat
     BufferedReader inFromClient = new BufferedReader(new InputStreamReader(System.in));
     System.out.println("What would you like to be your username?");
     String username = inFromClient.readLine();
-    Player p = new Player(username);
     System.out.println("What is the IP of the host you'd like to connect to?");
     String hostname = inFromClient.readLine();
     int port = 7654;
@@ -24,17 +23,16 @@ public class Client { //reference: https://github.com/ChapmanCPSC353/mtchat
       Socket clientSocket = new Socket(hostname, port);
       PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
     ) {
-      p.setOutFromPlayer(out);
       System.out.println("Connection made.");
 
       // Start a thread to listen and display data sent to the server
       ClientListener listener = new ClientListener(clientSocket);
       new Thread(listener).start();
+      out.println(username);
 
       String clientInput;
       while ((clientInput = inFromClient.readLine()) != null) {
-        out.print(p);
-        out.println(clientInput);
+        out.println(username + ": " + clientInput);
       }
     } catch (UnknownHostException e) {
       System.out.println("Don't know about host " + hostname);

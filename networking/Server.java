@@ -1,6 +1,7 @@
 package networking;
 
 import games.*;
+import helpers.Player;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -31,10 +32,7 @@ public class Server { //reference: https://github.com/ChapmanCPSC353/mtchat
     System.out.printf("Looking to host a game? Tell your friends to connect to %s%n", getPublicIP());
 
     System.out.println("What game would you like to play? \nEnter 'rps' for rock, paper, scissors, 'ttt' for tic tac toe, or 'hm' for hangman.");
-    selectGameMode(HM);
-    // Start game and handle game logic on server
-    Hangman hm = new Hangman();
-    Thread game = new Thread((Runnable) hm);
+    selectGameMode(serverIn.readLine());
 
     System.out.println("Waiting for players to connect on port 7654.");
 
@@ -42,22 +40,36 @@ public class Server { //reference: https://github.com/ChapmanCPSC353/mtchat
     try {
       ServerSocket serverSocket = new ServerSocket(7654);
 
+      Player p1 = new Player(1);
+      Player p2 = new Player(2);
+
       while (true) {
         // Accept connection from client
         Socket clientSocket = serverSocket.accept();
         System.out.println("Received connection.");
 
-        PrintWriter outToClient = new PrintWriter(clientSocket.getOutputStream(), true);
-        BufferedReader inFromClient = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+        PrintWriter clientOut = new PrintWriter(clientSocket.getOutputStream(), true);
+        BufferedReader clientIn = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
         socketList.add(clientSocket);
+        String playerUsername = clientIn.readLine();
 
-        // Send client socket and updated arraylist of sockets to networking.ClientHandler
+        if (socketList.size() == 1) {
+          p1.setUsername(playerUsername);
+          p1.setOutFromPlayer(clientOut);
+          p1.setInFromPlayer(clientIn);
+        } else if (socketList.size() == 2){
+          p2.setUsername(playerUsername);
+          p2.setOutFromPlayer(clientOut);
+          p2.setInFromPlayer(clientIn);
+        }
+
+        // Send client socket and updated arraylist of sockets to ClientHandler
         ClientHandler handler = new ClientHandler(clientSocket, this.socketList);
         new Thread(handler).start();
 
         if (socketList.size() == 2) {
-          // Start game
-          game.start();
+          // Start game and handle game logic on server
+          startGame(p1, p2);
         }
       }
 
@@ -91,7 +103,7 @@ public class Server { //reference: https://github.com/ChapmanCPSC353/mtchat
     }
   }
 
-  public void startGame() {
+  public void startGame(Player p1, Player p2) {
     if (this.gameMode.equals(RPS)) {
       RPS rps = new RPS();
       rps.rps();
@@ -99,20 +111,9 @@ public class Server { //reference: https://github.com/ChapmanCPSC353/mtchat
       TicTacToe ttt = new TicTacToe();
       ttt.TicTacToe();
     } else {
-      Hangman hm = new Hangman();
+      Hangman hm = new Hangman(p1, p2);
       hm.run();
     }
-  }
-
-  public String getGameMode() {
-    if (gameMode.equals(RPS)) {
-      return "Rock Paper Scissors";
-    } else if (gameMode.equals(TTT)) {
-      return "TicTacToe.";
-    } else if(gameMode.equals(HM)) {
-      System.out.println("Hangman");
-    }
-    return "nothing";
   }
 
   public void setGameMode(String gameMode) {
