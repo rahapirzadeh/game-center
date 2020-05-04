@@ -90,6 +90,10 @@ public abstract class Game implements Runnable {
     printlnToPlayer(s, getPlayerWithCurrTurn());
   }
 
+  public String getInputFromPlayerWithCurrTurn() throws IOException {
+      return getPlayerWithCurrTurn().getInFromPlayer().readLine();
+  }
+
   public void printlnToPlayer(String s, Player p) {
     if(p.getPlayerID() == 1) {
       getPlayer1().getOutFromPlayer().println(s);
@@ -105,10 +109,6 @@ public abstract class Game implements Runnable {
       input = scanner.nextLine();
     }
     return input.strip();
-  }
-
-  public String getInputFromPlayerWithCurrTurn() throws IOException {
-    return getPlayerWithCurrTurn().getInFromPlayer().readLine();
   }
 
   public String getInputFromPlayer1() throws IOException {
