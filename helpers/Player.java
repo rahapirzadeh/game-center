@@ -1,6 +1,7 @@
 package helpers;
 
 import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -14,22 +15,31 @@ public class Player {
 
   public Player() {
     this.playerID = count.incrementAndGet();
-    this.username = "helpers.Player " + this.playerID;
+    this.username = "Player " + this.playerID;
+    setNewPlayerIO();
   }
 
   public Player(int playerID) {
     this.playerID = playerID;
-    this.username = "helpers.Player " + playerID;
+    this.username = "Player " + playerID;
+    setNewPlayerIO();
   }
 
   public Player(int playerID, String username) {
     this.playerID = playerID;
     this.username = username;
+    setNewPlayerIO();
   }
 
   public Player(String username) {
     this.playerID = count.incrementAndGet();
     this.username = username;
+    setNewPlayerIO();
+  }
+
+  public void setNewPlayerIO() {
+    this.setOutFromPlayer(new PrintWriter(System.out, true));
+    this.setInFromPlayer(new BufferedReader(new InputStreamReader(System.in)));
   }
 
   public void setUsername(String username) {

@@ -1,6 +1,7 @@
 package helpers;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public abstract class Game implements Runnable {
@@ -13,21 +14,30 @@ public abstract class Game implements Runnable {
   protected Turn currTurn;
   protected Player player1;
   protected Player player2;
+  protected ArrayList<Player> playerList;
 
   public Game() {
     this.player1 = new Player();
     this.player2 = new Player();
     this.currTurn = new Turn(player1);
+    this.playerList = new ArrayList<Player>();
+    this.playerList.add(player1);
+    this.playerList.add(player2);
+  }
+
+  public Game(Player p1, Player p2) {
+    this.player1 = p1;
+    this.player2 = p2;
+    this.currTurn = new Turn(player1);
+    this.playerList = new ArrayList<Player>();
+    this.playerList.add(p1);
+    this.playerList.add(p2);
   }
 
   public abstract void run();
 
   public void switchTurn() {
-    if (getCurrTurn().getPlayer().getPlayerID() == 1) {
-      setCurrTurn(new Turn(player2));
-    } else {
-      setCurrTurn(new Turn(player1));
-    }
+    setCurrTurn(new Turn(getPlayerWithCurrTurn()));
   }
 
   public void setCurrTurn(Turn turn) {
@@ -54,57 +64,37 @@ public abstract class Game implements Runnable {
     this.player2 = player2;
   }
 
-  public void printWhoseTurn() {
+  public Player getPlayerWithCurrTurn() {
     if (getCurrTurn().getPlayer().getPlayerID() == 1) {
-      System.out.print(player1.getUsername() + "'s helpers.Turn: ");
-    } else {
-      System.out.print(player2.getUsername() + "'s helpers.Turn: ");
+      return getPlayer1();
     }
-    printToPlayerWithCurrTurn("Your helpers.Turn: ");
+    return getPlayer2();
   }
 
-  public abstract void tick();
+  public void printWhoseTurn() {
+    printlnToPlayerWithCurrTurn("Your turn: ");
+  }
 
-  public abstract String getMove() throws IOException;
+  public abstract void tick() throws IOException;
 
   public abstract boolean hasPlayerWon();
 
   public abstract boolean hasPlayerLost();
-
-  public void printToAllPlayers(String s) {
-    printToPlayer(s, player1);
-    printToPlayer(s, player2);
-  }
 
   public void printlnToAllPlayers(String s) {
     printlnToPlayer(s, player1);
     printlnToPlayer(s, player2);
   }
 
-  public void printToPlayerWithCurrTurn(String s) {
-    if (getCurrTurn().getPlayer().getPlayerID() == 1) {
-      player1.getOutFromPlayer().print(s);
-    } else {
-      player2.getOutFromPlayer().print(s);
-    }
-  }
-
   public void printlnToPlayerWithCurrTurn(String s) {
-    if (getCurrTurn().getPlayer().getPlayerID() == 1) {
-      printlnToPlayer(s, player1);
-    } else {
-      printlnToPlayer(s, player2);
-    }
+    printlnToPlayer(s, getPlayerWithCurrTurn());
   }
 
-  public void printToPlayer(String s, Player p) {
-    p.getOutFromPlayer().print(s);
-  }
   public void printlnToPlayer(String s, Player p) {
     if(p.getPlayerID() == 1) {
-      player1.getOutFromPlayer().println(s);
+      getPlayer1().getOutFromPlayer().println(s);
     } else {
-      player2.getOutFromPlayer().println(s);
+      getPlayer2().getOutFromPlayer().println(s);
     }
   }
 
@@ -117,8 +107,26 @@ public abstract class Game implements Runnable {
     return input.strip();
   }
 
+  public String getInputFromPlayerWithCurrTurn() throws IOException {
+    return getPlayerWithCurrTurn().getInFromPlayer().readLine();
+  }
+
+  public String getInputFromPlayer1() throws IOException {
+    return getPlayer1().getInFromPlayer().readLine();
+  }
+
+  public String getInputFromPlayer2() throws IOException {
+    return getPlayer2().getInFromPlayer().readLine();
+  }
+
   public String promptUserPlayAgain() {
     System.out.println("Would you like to play again? Enter 'y' to play again or 'n' to exit.");
     return getUserInput();
+  }
+
+  public static void promptEnterKey() {
+    System.out.println("Press Enter to continue...");
+    Scanner scanner = new Scanner(System.in);
+    scanner.nextLine();
   }
 }
