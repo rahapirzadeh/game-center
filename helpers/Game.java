@@ -77,9 +77,9 @@ public abstract class Game implements Runnable {
 
   public abstract void tick() throws IOException;
 
-  public abstract boolean hasPlayerWon();
+  //public abstract boolean hasPlayerWon();
 
-  public abstract boolean hasPlayerLost();
+  //public abstract boolean hasPlayerLost();
 
   public void printlnToAllPlayers(String s) {
     printlnToPlayer(s, player1);

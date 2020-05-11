@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
+
 public class Client { //reference: https://github.com/ChapmanCPSC353/mtchat
   public static void main(String[] args) throws IOException {
     BufferedReader inFromClient = new BufferedReader(new InputStreamReader(System.in));
@@ -28,11 +29,11 @@ public class Client { //reference: https://github.com/ChapmanCPSC353/mtchat
       // Start a thread to listen and display data sent to the server
       ClientListener listener = new ClientListener(clientSocket);
       new Thread(listener).start();
-      out.println(username);
+      System.out.println(username);
 
       String clientInput;
       while ((clientInput = inFromClient.readLine()) != null) {
-        out.println(username + ": " + clientInput);
+        System.out.println(username + ": " + clientInput);
       }
     } catch (UnknownHostException e) {
       System.out.println("Don't know about host " + hostname);

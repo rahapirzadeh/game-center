@@ -46,21 +46,24 @@ public class Server { //reference: https://github.com/ChapmanCPSC353/mtchat
       while (true) {
         // Accept connection from client
         Socket clientSocket = serverSocket.accept();
-        System.out.println("Received connection.");
+        System.out.println("okkk"); //eceived connection.
 
         PrintWriter clientOut = new PrintWriter(clientSocket.getOutputStream(), true);
         BufferedReader clientIn = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
         socketList.add(clientSocket);
+        System.out.println(socketList.size());
         String playerUsername = clientIn.readLine();
 
         if (socketList.size() == 1) {
           p1.setUsername(playerUsername);
           p1.setOutFromPlayer(clientOut);
           p1.setInFromPlayer(clientIn);
+          System.out.println("hi1");
         } else if (socketList.size() == 2){
           p2.setUsername(playerUsername);
           p2.setOutFromPlayer(clientOut);
           p2.setInFromPlayer(clientIn);
+          System.out.println("hi2");
         }
 
         // Send client socket and updated arraylist of sockets to ClientHandler
@@ -105,8 +108,8 @@ public class Server { //reference: https://github.com/ChapmanCPSC353/mtchat
 
   public void startGame(Player p1, Player p2) {
     if (this.gameMode.equals(RPS)) {
-      RPS rps = new RPS();
-      rps.rps();
+      RPS rps = new RPS(p1, p2);
+      rps.run();
     } else if (this.gameMode.equals(TTT)) {
       TicTacToe ttt = new TicTacToe();
       ttt.TicTacToe();
