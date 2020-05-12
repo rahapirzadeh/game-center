@@ -68,6 +68,7 @@ public class Hangman extends Game {
       newRound();
     } else {
       printGameStats();
+      System.exit(0);
     }
   }
 
@@ -330,10 +331,6 @@ public class Hangman extends Game {
 
   public void printInstructions() {
     printlnToAllPlayers(instructions);
-
-    // TODO "\nFor a hint, type 'hint'." +
-    // TODO "\nTo print these instructions again, type 'help'." +
-    // TODO "\nTo exit the game, type 'exit'.");
   }
 
   public void printWelcomeMessage() {
