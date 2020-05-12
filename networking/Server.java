@@ -23,8 +23,6 @@ public class Server { //reference: https://github.com/ChapmanCPSC353/mtchat
 
   private Player player1 = new Player(1);
   private Player player2 = new Player(2);
-  private PrintWriter clientOut;
-  private BufferedReader clientIn;
   private BufferedReader serverIn;
   private Socket clientSocket;
 
@@ -60,8 +58,8 @@ public class Server { //reference: https://github.com/ChapmanCPSC353/mtchat
   }
 
   public void setupPlayers() throws IOException {
-    clientOut = new PrintWriter(clientSocket.getOutputStream(), true);
-    clientIn = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+    PrintWriter clientOut = new PrintWriter(clientSocket.getOutputStream(), true);
+    BufferedReader clientIn = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 
     if (socketList.size() == 1) {
       player1.setUsername("Player 1");
@@ -73,7 +71,6 @@ public class Server { //reference: https://github.com/ChapmanCPSC353/mtchat
       player2.setInFromPlayer(clientIn);
     }
   }
-
   public void promptNewGame() throws IOException {
     System.out.println("What game would you like to play? \nEnter 'rps' for rock, paper, "
         + "scissors, 'ttt' for tic tac toe, or 'hm' for hangman. \nType 'exit' to stop playing.");
