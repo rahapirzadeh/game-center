@@ -3,6 +3,9 @@ package games;
 import helpers.Game;
 import helpers.Player;
 
+/**
+* This is a multiplayer Tic-Tac-Toe program.
+*/
 public class TicTacToe extends Game {
   private boolean gameOver = false;
   private int turns = 0;
@@ -12,17 +15,27 @@ public class TicTacToe extends Game {
       {false, false, false}};
   private int [] move = new int[2];
 
-  /*Default constructor*/
+  /**
+   * Default constructor.
+   */
   public TicTacToe() {
     super();
   }
 
-  /*Overloaded constructor*/
+  /**
+   * Constructs a new dual-player game instance of Tic-Tac-Toe using {@code p1} and {@code p2}.
+   * @param p1
+   *        Player 1
+   * @param p2
+   *        Player 2
+   */
   public TicTacToe(Player p1, Player p2) {
     super(p1, p2);
   }
 
-  /*Main game loop*/
+  /**
+   * Starts instance of Tic Tac Toe.
+   */
   public void run() {
     printBoard(board);
     while (gameOver == false) {
@@ -79,7 +92,11 @@ public class TicTacToe extends Game {
 
   }
 
-  /*Helper method to display the current board to the Players*/
+  /**
+   * Prints out the board for the player.
+   * @param board
+   *        Game Board
+   */
   public void printBoard(String[][] board) {
     printlnToAllPlayers("   1 " + " 2 " + " 3 ");
     String newLine = " ";
@@ -92,7 +109,11 @@ public class TicTacToe extends Game {
     }
   }
 
-  /*Runs the process of the player making a move*/
+  /**
+   * Takes the player's input to make a move.
+   * @param player
+   *        Gets the number of the player making the move
+   */
   public int[] makeMove(int player) {
     String input = "";
     printWhoseTurn();
@@ -115,7 +136,11 @@ public class TicTacToe extends Game {
     return move;
   }
 
-  /*Validates player input for making a move */
+  /**
+   * Validates the players input for a move.
+   * @param input
+   *        the move provided by the player
+   */
   public static boolean checkInput(String input) {
     if (input.equals("1") || input.equals("2") || input.equals("3")) {
       return true;
@@ -123,7 +148,11 @@ public class TicTacToe extends Game {
     return false;
   }
 
-  /*Validates player input for playing another round */
+  /**
+   * Validates the players input for voting to play another game.
+   * @param input
+   *        the vote provided by the player
+   */
   public static boolean vote(String input) {
     if (input.equals("1") || input.equals("2")) {
       return true;
@@ -131,7 +160,13 @@ public class TicTacToe extends Game {
     return false;
   }
 
-  /*Compares board to valid win/loss/tie conditions for TicTacToe*/
+  /**
+   * Compares the board to valid Tic-Tac-Toe win conditions.
+   * @param board
+   *        The game board
+   * @param isPlaced
+   *        Booleans representing if a move has been made at a given location on the board
+   */
   public boolean hasPlayerWon(String[][] board, boolean[][] isPlaced) {
 
     //Checks the
@@ -248,7 +283,9 @@ public class TicTacToe extends Game {
     return false;
   }
 
-  /*Resets all variables to default values for a new game*/
+  /**
+   * Resets all game variables back to default state.
+   */
   public void restartGame() {
     gameOver = false;
     turns = 0;
@@ -257,7 +294,9 @@ public class TicTacToe extends Game {
     move = new int[2];
   }
 
-  /*Method for playing a full game*/
+  /**
+   * Method for playing a full game.
+   */
   public void tick() {
     restartGame();
     run();
