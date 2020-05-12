@@ -1,8 +1,7 @@
 package games;//Next sprint will include working win conditions and proper networking features
 
 import java.util.Scanner;
-public class TicTacToe
-{
+public class TicTacToe extends Game{
 
 
     public static void main(String[] args){
@@ -20,7 +19,7 @@ public class TicTacToe
       while(gameOver == false){
         move = makeMove(1);
         while(isPlaced[move[0]-1][move[1]-1] == true){
-          System.out.println("Someone already took that square, enter a different move");
+          printlnToAllPlayers("Someone already took that square, enter a different move");
           move = makeMove(1);
         }
         board[move[0]-1][move[1]-1] = "X";
@@ -31,7 +30,7 @@ public class TicTacToe
         if(gameOver == false){
           move = makeMove(2);
           while(isPlaced[move[0]-1][move[1]-1] == true){
-            System.out.println("Someone already took that square, enter a different move");
+            printlnToAllPlayers("Someone already took that square, enter a different move");
             move = makeMove(2);
           }
           board[move[0]-1][move[1]-1] = "O";
@@ -46,30 +45,47 @@ public class TicTacToe
     }
 
     public static void printBoard(String[][] board){
-      System.out.println("   1 " + " 2 " + " 3 ");
+      printlnToAllPlayers("   1 " + " 2 " + " 3 ");
+      String newLine = " ";
       for(int i = 0; i < 3; i++){
-          System.out.print((i+1) + " ");
+          newLine = " ";
         for(int j = 0; j < 3; j++){
-          System.out.print("[" + board[i][j] + "]");
+          newLine = newLine + "[" + board[i][j] + "]";
         }
-        System.out.print("\n\r");
+        printlnToAllPlayers(newLine);
       }
     }
 
     public static int[] makeMove(int player){
-      Scanner in = new Scanner(System.in);
-      System.out.println("helpers.Player " + player + " Enter the row:");
-      String input = in.nextLine();
+      String input = "";
+      printlnToAllPlayers("Player " + player + " Enter the row:");
+      if(player == 1){
+        input = getInputFromPlayer1();
+      }else if(player == 2){
+        input = getInputFromPlayer2();
+      }
       while(checkInput(input) == false){
         System.out.println("Error: Invalid Input. Must be 1, 2 or 3");
-        input = in.nextLine();
+        if(player == 1){
+          input = getInputFromPlayer1();
+        }else if(player == 2){
+          input = getInputFromPlayer2();
+        }
       }
       int row = Integer.parseInt(input);
-      System.out.println("helpers.Player " + player + " Enter the col:");
-      input = in.nextLine();
+      printlnToAllPlayers("Player " + player + " Enter the col:");
+      if(player == 1){
+        input = getInputFromPlayer1();
+      }else if(player == 2){
+        input = getInputFromPlayer2();
+      }
       while(checkInput(input) == false){
         System.out.println("Error: Invalid Input. Must be 1, 2 or 3");
-        input = in.nextLine();
+        if(player == 1){
+          input = getInputFromPlayer1();
+        }else if(player == 2){
+          input = getInputFromPlayer2();
+        }
       }
       int col = Integer.parseInt(input);
       int[] move = {row, col};
@@ -83,18 +99,18 @@ public class TicTacToe
       return false;
     }
 
-    public static boolean checkWin(String[][] board){
+    public static boolean hasPlayerWon(String[][] board){
       //Checks the
       //[-][-][-]
       //[ ][ ][ ]
       //[ ][ ][ ]
       //Win condition
       if(board[0][0].equals("X") && board[0][1].equals("X") && board[0][2].equals("X")){
-        System.out.println("helpers.Game Over! helpers.Player 1 wins!");
+        printlnToAllPlayers("Game Over! Player 1 wins!");
         return true;
       }
       if(board[0][0].equals("O") && board[0][1].equals("O") && board[0][2].equals("O")){
-        System.out.println("helpers.Game Over! helpers.Player 2 wins!");
+        printlnToAllPlayers("Game Over! Player 2 wins!");
         return true;
       }
       //Checks the
@@ -103,11 +119,11 @@ public class TicTacToe
       //[ ][ ][ ]
       //Win condition
       if(board[1][0].equals("X") && board[1][1].equals("X") && board[1][2].equals("X")){
-        System.out.println("helpers.Game Over! helpers.Player 1 wins!");
+        printlnToAllPlayers("Game Over! Player 1 wins!");
         return true;
       }
       if(board[1][0].equals("O") && board[1][1].equals("O") && board[1][2].equals("O")){
-        System.out.println("helpers.Game Over! helpers.Player 2 wins!");
+        printlnToAllPlayers("Game Over! Player 2 wins!");
         return true;
       }
       //Checks the
@@ -116,11 +132,11 @@ public class TicTacToe
       //[-][-][-]
       //Win condition
       if(board[2][0].equals("X") && board[2][1].equals("X") && board[2][2].equals("X")){
-        System.out.println("helpers.Game Over! helpers.Player 1 wins!");
+        printlnToAllPlayers("Game Over! Player 1 wins!");
         return true;
       }
       if(board[2][0].equals("O") && board[2][1].equals("O") && board[2][2].equals("O")){
-        System.out.println("helpers.Game Over! helpers.Player 2 wins!");
+        printlnToAllPlayers("Game Over! Player 2 wins!");
         return true;
       }
       //Checks the
@@ -129,11 +145,11 @@ public class TicTacToe
       //[-][ ][ ]
       //Win condition
       if(board[0][0].equals("X") && board[1][0].equals("X") && board[2][0].equals("X")){
-        System.out.println("helpers.Game Over! helpers.Player 1 wins!");
+        printlnToAllPlayers("Game Over! Player 1 wins!");
         return true;
       }
       if(board[0][0].equals("O") && board[1][0].equals("O") && board[2][0].equals("O")){
-        System.out.println("helpers.Game Over! helpers.Player 2 wins!");
+        printlnToAllPlayers("Game Over! Player 2 wins!");
         return true;
       }
       //Checks the
@@ -142,11 +158,11 @@ public class TicTacToe
       //[ ][-][ ]
       //Win condition
       if(board[0][1].equals("X") && board[1][1].equals("X") && board[2][1].equals("X")){
-        System.out.println("helpers.Game Over! helpers.Player 1 wins!");
+        printlnToAllPlayers("Game Over! Player 1 wins!");
         return true;
       }
       if(board[0][1].equals("O") && board[1][1].equals("O") && board[2][1].equals("O")){
-        System.out.println("helpers.Game Over! helpers.Player 2 wins!");
+        printlnToAllPlayers("Game Over! Player 2 wins!");
         return true;
       }
       //Checks the
@@ -155,11 +171,11 @@ public class TicTacToe
       //[ ][ ][-]
       //Win condition
       if(board[0][2].equals("X") && board[1][2].equals("X") && board[2][2].equals("X")){
-        System.out.println("helpers.Game Over! helpers.Player 1 wins!");
+        printlnToAllPlayers("Game Over! Player 1 wins!");
         return true;
       }
       if(board[0][2].equals("O") && board[1][2].equals("O") && board[2][2].equals("O")){
-        System.out.println("helpers.Game Over! helpers.Player 2 wins!");
+        printlnToAllPlayers("Game Over! Player 2 wins!");
         return true;
       }
       //Checks the
@@ -168,11 +184,11 @@ public class TicTacToe
       //[ ][ ][-]
       //Win condition
       if(board[0][0].equals("X") && board[1][1].equals("X") && board[2][2].equals("X")){
-        System.out.println("helpers.Game Over! helpers.Player 1 wins!");
+        printlnToAllPlayers("Game Over! Player 1 wins!");
         return true;
       }
       if(board[0][0].equals("O") && board[1][1].equals("O") && board[2][2].equals("O")){
-        System.out.println("helpers.Game Over! helpers.Player 2 wins!");
+        printlnToAllPlayers("Game Over! Player 2 wins!");
         return true;
       }
       //Checks the
@@ -181,16 +197,19 @@ public class TicTacToe
       //[-][ ][ ]
       //Win condition
       if(board[2][0].equals("X") && board[1][1].equals("X") && board[0][2].equals("X")){
-        System.out.println("helpers.Game Over! helpers.Player 1 wins!");
+        printlnToAllPlayers("Game Over! Player 1 wins!");
         return true;
       }
       if(board[2][0].equals("O") && board[1][1].equals("O") && board[0][2].equals("O")){
-        System.out.println("helpers.Game Over! helpers.Player 2 wins!");
+        printlnToAllPlayers("Game Over! Player 2 wins!");
         return true;
       }
       return false;
 
     }
+  public void tick() throws IOException {
+    TicTacToe();
+  }
 
 
 
