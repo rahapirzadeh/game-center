@@ -55,7 +55,6 @@ public class Hangman extends Game {
       printWelcomeMessage();
       printInstructions();
     }
-    printGuessWord(); //TODO delete after debugging complete
     while (!hasPlayerWon() && !hasPlayerLost()) {
       try {
         tick();
