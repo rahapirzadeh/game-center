@@ -20,20 +20,20 @@ public class Client { //reference: https://github.com/ChapmanCPSC353/mtchat
     int port = 7654;
 
     System.out.printf("Connecting to %s on port %d...%n", hostname, port);
-    try (
+    try {
       Socket clientSocket = new Socket(hostname, port);
       PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
-    ) {
+
       System.out.println("Connection made.");
 
       // Start a thread to listen and display data sent to the server
       ClientListener listener = new ClientListener(clientSocket);
       new Thread(listener).start();
-      System.out.println(username);
+      out.println(username);
 
       String clientInput;
       while ((clientInput = inFromClient.readLine()) != null) {
-        System.out.println(username + ": " + clientInput);
+        out.println(username + ": " + clientInput);
       }
     } catch (UnknownHostException e) {
       System.out.println("Don't know about host " + hostname);

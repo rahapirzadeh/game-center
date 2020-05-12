@@ -46,7 +46,7 @@ public class Server { //reference: https://github.com/ChapmanCPSC353/mtchat
       while (true) {
         // Accept connection from client
         Socket clientSocket = serverSocket.accept();
-        System.out.println("okkk"); //eceived connection.
+        System.out.println("received connection."); //
 
         PrintWriter clientOut = new PrintWriter(clientSocket.getOutputStream(), true);
         BufferedReader clientIn = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
@@ -58,12 +58,10 @@ public class Server { //reference: https://github.com/ChapmanCPSC353/mtchat
           p1.setUsername(playerUsername);
           p1.setOutFromPlayer(clientOut);
           p1.setInFromPlayer(clientIn);
-          System.out.println("hi1");
         } else if (socketList.size() == 2){
           p2.setUsername(playerUsername);
           p2.setOutFromPlayer(clientOut);
           p2.setInFromPlayer(clientIn);
-          System.out.println("hi2");
         }
 
         // Send client socket and updated arraylist of sockets to ClientHandler
