@@ -4,8 +4,7 @@
 ### Tik, Tac, Toe
 Two players are able to
 * Play through multiple rounds
-* Receive game statistics
-* Gain points for wins
+
 
 ## First Sprint
 TTT displays the board and allows for two players to input their play.
@@ -17,3 +16,4 @@ Networking portion of game is coming together and TTT implements the new methods
 Contributions:
 * TicTacToe.java
 * Portion of networking code
+* Checkstyle compliant
