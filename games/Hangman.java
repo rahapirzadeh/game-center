@@ -260,6 +260,7 @@ public class Hangman extends Game {
     if (hasPlayerWon()) {
       playerWin();
     } else {
+      playerLoss();
       printGuessWord();
     }
     incrementNumRoundsPlayed();
