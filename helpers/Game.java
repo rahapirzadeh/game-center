@@ -77,8 +77,16 @@ public abstract class Game implements Runnable {
     return getPlayer2();
   }
 
+  public Player getPlayerWithoutCurrTurn() {
+    if (getCurrTurn().getPlayer().getPlayerID() == 1) {
+      return getPlayer2();
+    }
+    return getPlayer1();
+  }
+
   public void printWhoseTurn() {
     printlnToPlayerWithCurrTurn("Your turn: ");
+    printlnToPlayerWithoutCurrTurn("Opponent's turn..");
   }
 
   public abstract void tick() throws IOException;
@@ -94,6 +102,10 @@ public abstract class Game implements Runnable {
 
   public void printlnToPlayerWithCurrTurn(String s) {
     printlnToPlayer(s, getPlayerWithCurrTurn());
+  }
+
+  public void printlnToPlayerWithoutCurrTurn(String s) {
+    printlnToPlayer(s, getPlayerWithoutCurrTurn());
   }
 
   public void printlnToPlayer(String s, Player p) {
@@ -146,8 +158,8 @@ public abstract class Game implements Runnable {
   }
 
   public String promptUserPlayAgain() {
-    System.out.println("Would you like to play again? Enter 'y' to play again or 'n' to exit.");
-    return getUserInput();
+    printlnToPlayer("Would you like to play again? Enter 'y' to play again or 'n' to exit.", player1);
+    return getInputFromPlayer1();
   }
 
   public static void promptEnterKey() {
