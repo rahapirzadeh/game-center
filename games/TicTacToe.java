@@ -1,7 +1,7 @@
 package games;//Next sprint will include working win conditions and proper networking features
 
 import java.util.Scanner;
-import helpers.game;
+import helpers.Game;
 public class TicTacToe extends Game{
 
 
