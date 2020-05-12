@@ -1,6 +1,9 @@
 package games;
 
-import helpers.*;
+import helpers.FileIO;
+import helpers.Game;
+import helpers.Player;
+import helpers.StringManipulation;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Random;
@@ -21,7 +24,7 @@ public class Hangman extends Game {
   private static final int NUM_ALLOWED_INCORRECT_GUESSES = 8;
 
   private String wordToGuess;
-  private String currGuess;
+  private String currGuess = "";
   private int points;
   private int numRoundTotalGuesses;
   private int numRoundCorrectGuesses;
@@ -31,13 +34,11 @@ public class Hangman extends Game {
   private int numRoundsWon;
   private int numRoundsLost;
   private char[] correctlyGuessedLetters;
-  private boolean firstGame;
+  private boolean firstGame = true;
 
   public Hangman() {
     super();
     selectWordToGuess();
-    currGuess = "";
-    firstGame = true;
     correctlyGuessedLetters = new char[wordToGuess.length()];
     Arrays.fill(correctlyGuessedLetters, '_'); // Indicates no correctly guessed letters
   }
@@ -45,8 +46,6 @@ public class Hangman extends Game {
   public Hangman(Player p1, Player p2) {
     super(p1, p2);
     selectWordToGuess();
-    currGuess = "";
-    firstGame = true;
     correctlyGuessedLetters = new char[wordToGuess.length()];
     Arrays.fill(correctlyGuessedLetters, '_'); // Indicates no correctly guessed letters
   }
