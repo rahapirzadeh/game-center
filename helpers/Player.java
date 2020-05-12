@@ -10,8 +10,9 @@ public class Player {
   private static final AtomicInteger count = new AtomicInteger(0); //reference: https://stackoverflow.com/questions/24305830/java-auto-increment-id
   private final int playerID;
   private String username;
-  private PrintWriter outFromPlayer;
+  private PrintWriter outToPlayer;
   private BufferedReader inFromPlayer;
+  private boolean isReady;
 
   public Player() {
     this.playerID = count.incrementAndGet();
@@ -38,7 +39,7 @@ public class Player {
   }
 
   public void setNewPlayerIO() {
-    this.setOutFromPlayer(new PrintWriter(System.out, true));
+    this.setOutToPlayer(new PrintWriter(System.out, true));
     this.setInFromPlayer(new BufferedReader(new InputStreamReader(System.in)));
   }
 
@@ -54,12 +55,12 @@ public class Player {
     return this.playerID;
   }
 
-  public PrintWriter getOutFromPlayer() {
-    return outFromPlayer;
+  public PrintWriter getOutToPlayer() {
+    return outToPlayer;
   }
 
-  public void setOutFromPlayer(PrintWriter outFromPlayer) {
-    this.outFromPlayer = outFromPlayer;
+  public void setOutToPlayer(PrintWriter outToPlayer) {
+    this.outToPlayer = outToPlayer;
   }
 
   public BufferedReader getInFromPlayer() {
@@ -68,5 +69,13 @@ public class Player {
 
   public void setInFromPlayer(BufferedReader inFromPlayer) {
     this.inFromPlayer = inFromPlayer;
+  }
+
+  public boolean isReady() {
+    return isReady;
+  }
+
+  public void setReady(boolean ready) {
+    isReady = ready;
   }
 }

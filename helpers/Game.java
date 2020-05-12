@@ -110,9 +110,9 @@ public abstract class Game implements Runnable {
 
   public void printlnToPlayer(String s, Player p) {
     if(p.getPlayerID() == 1) {
-      getPlayer1().getOutFromPlayer().println(s);
+      getPlayer1().getOutToPlayer().println(s);
     } else {
-      getPlayer2().getOutFromPlayer().println(s);
+      getPlayer2().getOutToPlayer().println(s);
     }
   }
 

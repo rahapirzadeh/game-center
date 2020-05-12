@@ -63,11 +63,11 @@ public class Server { //reference: https://github.com/ChapmanCPSC353/mtchat
 
     if (socketList.size() == 1) {
       player1.setUsername("Player 1");
-      player1.setOutFromPlayer(clientOut);
+      player1.setOutToPlayer(clientOut);
       player1.setInFromPlayer(clientIn);
     } else if (socketList.size() == 2) {
       player2.setUsername("Player 2");
-      player2.setOutFromPlayer(clientOut);
+      player2.setOutToPlayer(clientOut);
       player2.setInFromPlayer(clientIn);
     }
   }
