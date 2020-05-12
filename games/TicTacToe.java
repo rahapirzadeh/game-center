@@ -1,14 +1,15 @@
 package games;//Next sprint will include working win conditions and proper networking features
 
 import java.util.Scanner;
+import helpers.game;
 public class TicTacToe extends Game{
 
 
     public static void main(String[] args){
-      TicTacToe();
+      run();
     }
 
-    public static void TicTacToe(){
+    public static void run(){
       boolean gameOver = false;
       int turns = 0;
       String[][] board = {{"-", "-", "-"}, {"-", "-", "-"}, {"-", "-", "-"}};
@@ -44,7 +45,7 @@ public class TicTacToe extends Game{
 
     }
 
-    public static void printBoard(String[][] board){
+    public void printBoard(String[][] board){
       printlnToAllPlayers("   1 " + " 2 " + " 3 ");
       String newLine = " ";
       for(int i = 0; i < 3; i++){
@@ -56,7 +57,7 @@ public class TicTacToe extends Game{
       }
     }
 
-    public static int[] makeMove(int player){
+    public int[] makeMove(int player){
       String input = "";
       printlnToAllPlayers("Player " + player + " Enter the row:");
       if(player == 1){
@@ -99,7 +100,7 @@ public class TicTacToe extends Game{
       return false;
     }
 
-    public static boolean hasPlayerWon(String[][] board){
+    public boolean hasPlayerWon(String[][] board){
       //Checks the
       //[-][-][-]
       //[ ][ ][ ]
