@@ -1,9 +1,6 @@
 package games;
 
-import helpers.FileIO;
-import helpers.Game;
-import helpers.Player;
-import helpers.StringManipulation;
+import helpers.*;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Random;
