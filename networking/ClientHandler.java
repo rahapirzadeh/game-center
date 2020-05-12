@@ -3,6 +3,8 @@ package networking;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 
@@ -28,23 +30,19 @@ public class ClientHandler implements Runnable { //reference: https://github.com
     try {
       System.out.println("Connection made with socket " + clientSocket);
 
+      DataOutputStream clientOutput = new DataOutputStream(clientSocket.getOutputStream());
       BufferedReader clientInput = new BufferedReader(
           new InputStreamReader(clientSocket.getInputStream()));
       while (true) {
         // Get data sent from a client
-        String data = clientInput.readLine();
-        String clientUsername = data.split(":")[0];
-        String clientMsg = data.split(":")[1].strip();
-        if (clientMsg != null) { //TODO add condition to see if player id is equal to curr turn's player id
-
-          System.out.printf("%s: %s%n", clientUsername, clientMsg);
-          // helpers.Turn around and output this data
+        String clientMsg = clientInput.readLine();
+        if (clientMsg != null) {
+          // Turn around and output this data
           // to all other clients except the one
           // that sent us this information
           for (Socket s : socketList) {
             if (s != clientSocket) {
-              DataOutputStream clientOutput = new DataOutputStream(s.getOutputStream());
-              clientOutput.writeBytes(clientUsername + ": " + clientMsg + "\n");
+              clientOutput.writeBytes(clientMsg + "\n");
             }
           }
         } else {
@@ -58,7 +56,6 @@ public class ClientHandler implements Runnable { //reference: https://github.com
       }
     } catch (Exception e) {
       System.out.println("Error: " + e.toString());
-      // Remove from arraylist
       socketList.remove(clientSocket);
     }
   }

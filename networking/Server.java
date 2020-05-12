@@ -20,14 +20,17 @@ public class Server { //reference: https://github.com/ChapmanCPSC353/mtchat
   private static final String NC = "nc";
   private static final String EXIT = "exit";
 
-  private ArrayList<Socket> socketList;
+  private ArrayList<Socket> socketList = new ArrayList<Socket>();
   private String gameMode = NC;
 
-  public Server() {
-    socketList = new ArrayList<Socket>();
-  }
+  public Server() {}
 
   private void getConnection() throws IOException {
+    ServerSocket server = new ServerSocket(7654);
+
+    Player p1 = new Player(1);
+    Player p2 = new Player(2);
+
     BufferedReader serverIn = new BufferedReader(new InputStreamReader(System.in));
     System.out.printf("Looking to host a game? Tell your friends to connect to %s%n", getPublicIP());
 
@@ -37,46 +40,33 @@ public class Server { //reference: https://github.com/ChapmanCPSC353/mtchat
     System.out.println("Waiting for players to connect on port 7654.");
 
     // Wait for a connection from the client
-    try {
-      ServerSocket serverSocket = new ServerSocket(7654);
+    while (true) {
+      // Accept connection from client
+      Socket clientSocket = server.accept();
+      socketList.add(clientSocket);
+      System.out.println("Received connection.");
 
-      Player p1 = new Player(1);
-      Player p2 = new Player(2);
+      PrintWriter clientOut = new PrintWriter(clientSocket.getOutputStream(), true);
+      BufferedReader clientIn = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 
-      while (true) {
-        // Accept connection from client
-        Socket clientSocket = serverSocket.accept();
-        System.out.println("received connection."); //
-
-        PrintWriter clientOut = new PrintWriter(clientSocket.getOutputStream(), true);
-        BufferedReader clientIn = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-        socketList.add(clientSocket);
-        System.out.println(socketList.size());
-        String playerUsername = clientIn.readLine();
-
-        if (socketList.size() == 1) {
-          p1.setUsername(playerUsername);
-          p1.setOutFromPlayer(clientOut);
-          p1.setInFromPlayer(clientIn);
-        } else if (socketList.size() == 2){
-          p2.setUsername(playerUsername);
-          p2.setOutFromPlayer(clientOut);
-          p2.setInFromPlayer(clientIn);
-        }
-
-        // Send client socket and updated arraylist of sockets to ClientHandler
-        ClientHandler handler = new ClientHandler(clientSocket, this.socketList);
-        new Thread(handler).start();
-
-        if (socketList.size() == 2) {
-          // Start game and handle game logic on server
-          startGame(p1, p2);
-        }
+      if (socketList.size() == 1) {
+        p1.setUsername("Player 1");
+        p1.setOutFromPlayer(clientOut);
+        p1.setInFromPlayer(clientIn);
+      } else if (socketList.size() == 2){
+        p2.setUsername("Player 2");
+        p2.setOutFromPlayer(clientOut);
+        p2.setInFromPlayer(clientIn);
       }
 
-    } catch (IOException e) {
-      System.out.println("Exception caught when listening for a connection.");
-      System.out.println(e.getMessage());
+      // Send server socket, client socket and updated arraylist of sockets to ClientHandler
+//        ClientHandler handler = new ClientHandler(clientSocket, this.socketList);
+//        new Thread(handler).start();
+
+      if (socketList.size() == 2) {
+        // Start game and handle game logic on server
+        startGame(p1, p2);
+      }
     }
   }
 
@@ -110,15 +100,11 @@ public class Server { //reference: https://github.com/ChapmanCPSC353/mtchat
       rps.run();
     } else if (this.gameMode.equals(TTT)) {
       TicTacToe ttt = new TicTacToe();
-      ttt.TicTacToe();
+      ttt.run();
     } else {
       Hangman hm = new Hangman(p1, p2);
       hm.run();
     }
-  }
-
-  public void setGameMode(String gameMode) {
-    this.gameMode = gameMode;
   }
 
   public static void main(String[] args) throws IOException {
