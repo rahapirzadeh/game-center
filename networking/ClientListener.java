@@ -3,6 +3,7 @@ package networking;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.Socket;
+import java.net.SocketException;
 
 /**
  * networking.ClientListener.java
@@ -36,6 +37,9 @@ public class ClientListener implements Runnable { //reference: https://github.co
           break;
         }
       }
+    } catch (SocketException e) {
+      System.out.println("Host ended the game and closed the server.");
+      System.exit(0);
     } catch (Exception e) {
       System.out.println("Error: " + e.toString());
     }
