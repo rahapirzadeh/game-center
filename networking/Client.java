@@ -19,6 +19,10 @@ public class Client { //reference: https://github.com/ChapmanCPSC353/mtchat
   public void connect() {
     try {
       clientSocket = new Socket(serverHostname, 7654);
+      System.out.println("Connection made.");
+      // Start a thread to listen and display data sent to the server
+      ClientListener listener = new ClientListener(clientSocket);
+      new Thread(listener).start();
     } catch (UnknownHostException e) {
       System.out.println("Unknown host " + serverHostname + ": " + e.getStackTrace());
     } catch (IOException e) {
@@ -35,13 +39,7 @@ public class Client { //reference: https://github.com/ChapmanCPSC353/mtchat
     }
   }
 
-  public void play() throws IOException {
-    System.out.println("Connection made.");
-
-    // Start a thread to listen and display data sent to the server
-    ClientListener listener = new ClientListener(clientSocket);
-    new Thread(listener).start();
-
+  public void start() throws IOException {
     String clientInput;
     while ((clientInput = in.readLine()) != null) {
       out.println(clientInput);
@@ -56,6 +54,6 @@ public class Client { //reference: https://github.com/ChapmanCPSC353/mtchat
     Client client = new Client(args[0]);
     client.connect();
     client.setupClientIO();
-    client.play();
+    client.start();
   }
 }
