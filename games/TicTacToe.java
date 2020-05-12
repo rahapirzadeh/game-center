@@ -65,7 +65,7 @@ public class TicTacToe extends Game{
         input = getInputFromPlayer2();
       }
       while(checkInput(input) == false){
-        System.out.println("Error: Invalid Input. Must be 1, 2 or 3");
+        printlnToAllPlayers("Error: Invalid Input. Must be 1, 2 or 3", );
         if(player == 1){
           input = getInputFromPlayer1();
         }else if(player == 2){
@@ -80,7 +80,7 @@ public class TicTacToe extends Game{
         input = getInputFromPlayer2();
       }
       while(checkInput(input) == false){
-        System.out.println("Error: Invalid Input. Must be 1, 2 or 3");
+        printlnToAllPlayers("Error: Invalid Input. Must be 1, 2 or 3");
         if(player == 1){
           input = getInputFromPlayer1();
         }else if(player == 2){
