@@ -23,7 +23,7 @@ public class RPS extends Game {
   static int player2wins = 0;
   private String currPlay;
 
-  /** method to get both players.*/
+  /** method to pass in both players.*/
   public RPS(Player p1, Player p2) {
     super(p1, p2);
     currPlay = "";
@@ -130,10 +130,8 @@ public class RPS extends Game {
     }
   }
 
-  /** uses tick method.*/
+  /** method to play one round of the game.*/
   public void tick() throws IOException {
-    getUser1Move();
-    getUser2Move();
     hasPlayerWon(getUser1Move(), getUser2Move());
     printlnToAllPlayers("Player 1 scores: " + player1wins);
     printlnToAllPlayers("Player 2 scores: " + player2wins);
