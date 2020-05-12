@@ -28,7 +28,7 @@ public class TicTacToe extends Game{
         board[move[0]-1][move[1]-1] = "X";
         isPlaced[move[0]-1][move[1]-1] = true;
         printBoard(board);
-        gameOver = checkWin(board);
+        gameOver = hasPlayerWon(board, isPlaced);
 
         if(gameOver == false){
           move = makeMove(2);
@@ -40,7 +40,7 @@ public class TicTacToe extends Game{
           isPlaced[move[0]-1][move[1]-1] = true;
           printBoard(board);
           turns++;
-          gameOver = checkWin(board);
+          gameOver = hasPlayerWon(board, isPlaced);
         }
 
       }
@@ -102,7 +102,7 @@ public class TicTacToe extends Game{
       return false;
     }
 
-    public boolean hasPlayerWon(String[][] board boolean[][] isPlaced){
+    public boolean hasPlayerWon(String[][] board, boolean[][] isPlaced){
 
       //Checks the
       //[-][-][-]
