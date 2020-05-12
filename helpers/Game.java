@@ -37,7 +37,13 @@ public abstract class Game implements Runnable {
   public abstract void run();
 
   public void switchTurn() {
-    setCurrTurn(new Turn(getPlayerWithCurrTurn()));
+    Player playerWithNextTurn;
+    if (getPlayerWithCurrTurn().getPlayerID() == 1) {
+      playerWithNextTurn = getPlayer2();
+    } else {
+      playerWithNextTurn = getPlayer1();
+    }
+    setCurrTurn(new Turn(playerWithNextTurn));
   }
 
   public void setCurrTurn(Turn turn) {
@@ -90,10 +96,6 @@ public abstract class Game implements Runnable {
     printlnToPlayer(s, getPlayerWithCurrTurn());
   }
 
-  public String getInputFromPlayerWithCurrTurn() throws IOException {
-      return getPlayerWithCurrTurn().getInFromPlayer().readLine();
-  }
-
   public void printlnToPlayer(String s, Player p) {
     if(p.getPlayerID() == 1) {
       getPlayer1().getOutFromPlayer().println(s);
@@ -111,12 +113,36 @@ public abstract class Game implements Runnable {
     return input.strip();
   }
 
-  public String getInputFromPlayer1() throws IOException {
-    return getPlayer1().getInFromPlayer().readLine();
+  public String getInputFromPlayerWithCurrTurn() {
+    String playerInput = "";
+    try {
+      playerInput = getPlayerWithCurrTurn().getInFromPlayer().readLine();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+    return playerInput;
   }
 
-  public String getInputFromPlayer2() throws IOException {
-    return getPlayer2().getInFromPlayer().readLine();
+  public String getInputFromPlayer1() {
+    String playerInput = "";
+    try {
+      playerInput = getPlayer1().getInFromPlayer().readLine();
+    } catch (IOException e) {
+      System.out.println("Error when getting player 1 input: ");
+      e.printStackTrace();
+    }
+    return playerInput;
+  }
+
+  public String getInputFromPlayer2() {
+    String playerInput = "";
+    try {
+      playerInput = getPlayer2().getInFromPlayer().readLine();
+    } catch (IOException e) {
+      System.out.println("Error when getting player 1 input: ");
+      e.printStackTrace();
+    }
+    return playerInput;
   }
 
   public String promptUserPlayAgain() {
