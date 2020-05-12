@@ -4,7 +4,7 @@
 ### Tik, Tac, Toe
 Two players are able to
 * Play through multiple rounds
-
+* Switch between turns
 
 ## First Sprint
 TTT displays the board and allows for two players to input their play.
