@@ -2,20 +2,22 @@ package games;//Next sprint will include working win conditions and proper netwo
 
 import java.util.Scanner;
 import helpers.Game;
+
 public class TicTacToe extends Game{
+    private boolean gameOver = false;
+    private int turns = 0;
+    private String[][] board = {{"-", "-", "-"}, {"-", "-", "-"}, {"-", "-", "-"}};
+    private boolean[][] isPlaced = {{false, false, false}, {false, false, false}, {false, false, false}};
+    private int [] move = new int[2];
 
-
-    public static void main(String[] args){
-      run();
+    public TicTacToe(){
+      super();
+    }
+    public TicTacToe(Player p1, Player p2){
+      super(p1, p2);
     }
 
-    public static void run(){
-      boolean gameOver = false;
-      int turns = 0;
-      String[][] board = {{"-", "-", "-"}, {"-", "-", "-"}, {"-", "-", "-"}};
-      boolean[][] isPlaced = {{false, false, false}, {false, false, false}, {false, false, false}};
-      int [] move = new int[2];
-
+    public void run(){
       printBoard(board);
       while(gameOver == false){
         move = makeMove(1);
@@ -66,7 +68,7 @@ public class TicTacToe extends Game{
         input = getInputFromPlayer2();
       }
       while(checkInput(input) == false){
-        printlnToAllPlayers("Error: Invalid Input. Must be 1, 2 or 3", );
+        printlnToAllPlayers("Error: Invalid Input. Must be 1, 2 or 3");
         if(player == 1){
           input = getInputFromPlayer1();
         }else if(player == 2){
@@ -209,7 +211,7 @@ public class TicTacToe extends Game{
 
     }
   public void tick() throws IOException {
-    TicTacToe();
+    run();
   }
 
 
