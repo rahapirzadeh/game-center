@@ -1,7 +1,7 @@
 package games;//Next sprint will include working win conditions and proper networking features
 
 import java.util.Scanner;
-import helpers.Game;
+import helpers.*;
 
 public class TicTacToe extends Game{
     private boolean gameOver = false;
@@ -102,7 +102,8 @@ public class TicTacToe extends Game{
       return false;
     }
 
-    public boolean hasPlayerWon(String[][] board){
+    public boolean hasPlayerWon(String[][] board boolean[][] isPlaced){
+
       //Checks the
       //[-][-][-]
       //[ ][ ][ ]
@@ -207,10 +208,18 @@ public class TicTacToe extends Game{
         printlnToAllPlayers("Game Over! Player 2 wins!");
         return true;
       }
-      return false;
 
+      if((isPlaced[0][0] == true) && (isPlaced[0][1] == true) && (isPlaced[0][2] == true)
+      && (isPlaced[1][0] == true) && (isPlaced[1][1] == true) && (isPlaced[1][2] == true)
+      && (isPlaced[2][0] == true) && (isPlaced[2][1] == true) && (isPlaced[2][2] == true)){
+        printlnToAllPlayers("All spaces have been filled with no winner! Game Over!");
+        return true;
+      }
+      return false;
     }
-  public void tick() throws IOException {
+
+
+  public void tick(){
     run();
   }
 
