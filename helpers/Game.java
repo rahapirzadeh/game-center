@@ -4,6 +4,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * The Game class implements the functionalty for the games.
+ */
 public abstract class Game implements Runnable {
 
   protected static final int WAITING = 0;
@@ -16,7 +19,9 @@ public abstract class Game implements Runnable {
   protected Player player2;
   protected ArrayList<Player> playerList;
 
-  /** method to pass in one player.*/
+  /**
+  * Constructs a new instance of game.
+  */
   public Game() {
     this.player1 = new Player();
     this.player2 = new Player();
@@ -26,7 +31,13 @@ public abstract class Game implements Runnable {
     this.playerList.add(player2);
   }
 
-  /** method to pass in both players.*/
+  /**
+   * Constructs a new instance of game using {@code p1} and {@code p2}.
+   * @param p1
+   *        Player 1
+   * @param p2
+   *        Player 2
+   */
   public Game(Player p1, Player p2) {
     this.player1 = p1;
     this.player2 = p2;
@@ -36,10 +47,14 @@ public abstract class Game implements Runnable {
     this.playerList.add(p2);
   }
 
-  /** method to pass in both players.*/
+  /**
+   *Constructs a new single-player game instance of Hangman.
+   */
   public abstract void run();
 
-  /** method to switch player turns.*/
+  /**
+   * Switches player turns.
+   */
   public void switchTurn() {
     Player playerWithNextTurn;
     if (getPlayerWithCurrTurn().getPlayerID() == 1) {
@@ -50,37 +65,55 @@ public abstract class Game implements Runnable {
     setCurrTurn(new Turn(playerWithNextTurn));
   }
 
-  /** method to set the current turn .*/
+  /**
+   * Sets the current player turn.
+   */
   public void setCurrTurn(Turn turn) {
     this.currTurn = turn;
   }
 
-  /** method to get the current turn.*/
+  /**
+   * Gets the current player turn.
+   * @return current turn
+   */
   public Turn getCurrTurn() {
     return this.currTurn;
   }
 
-  /** method to get player 1.*/
+  /**
+   * Gets player 1.
+   * @return player 1
+   */
   public Player getPlayer1() {
     return player1;
   }
 
-  /** method to set player 1.*/
+  /**
+   * Construct new instance to set player 1.
+   */
   public void setPlayer1(Player player1) {
     this.player1 = player1;
   }
 
-  /** method to get player 2.*/
+  /**
+   * Gets player 2.
+   * @return player 2
+   */
   public Player getPlayer2() {
     return player2;
   }
 
-  /** method to set player 2.*/
+  /**
+   * Construct new instance to set player 2.
+   */
   public void setPlayer2(Player player2) {
     this.player2 = player2;
   }
 
-  /** method to get the player with the current turn.*/
+  /**
+   * Method to get the player with the current turn.
+   * @return getPlayer
+   */
   public Player getPlayerWithCurrTurn() {
     if (getCurrTurn().getPlayer().getPlayerID() == 1) {
       return getPlayer1();
@@ -88,7 +121,10 @@ public abstract class Game implements Runnable {
     return getPlayer2();
   }
 
-  /** method to get the player without the current turn.*/
+  /**
+   * Method to get the player with the current turn.
+   * @return getPlayer
+   */
   public Player getPlayerWithoutCurrTurn() {
     if (getCurrTurn().getPlayer().getPlayerID() == 1) {
       return getPlayer2();
@@ -96,32 +132,55 @@ public abstract class Game implements Runnable {
     return getPlayer1();
   }
 
-  /** method to print whose turn.*/
+  /**
+   * Prints to the players if its their turn or their opponents.
+   */
   public void printWhoseTurn() {
     printlnToPlayerWithCurrTurn("Your turn: ");
     printlnToPlayerWithoutCurrTurn("Opponent's turn..");
   }
 
-  /** method to play one round of the game.*/
+  /**
+   * Plays through one round of a game.
+   * @throws IOException wwhen player input cannot be reached
+   */
   public abstract void tick() throws IOException;
 
-  /** method to print to all players.*/
+  /**
+   * Prints line to all players.
+   * @param s
+   *        string being printed
+   */
   public void printlnToAllPlayers(String s) {
     printlnToPlayer(s, player1);
     printlnToPlayer(s, player2);
   }
 
-  /** method to print to player with current turn.*/
+  /**
+   * Prints line to player with current turn.
+   * @param s
+   *        string being printed
+   */
   public void printlnToPlayerWithCurrTurn(String s) {
     printlnToPlayer(s, getPlayerWithCurrTurn());
   }
 
-  /** method to print to player without current turn.*/
+  /**
+   * Prints line to player without current turn.
+   * @param s
+   *        string being printed
+   */
   public void printlnToPlayerWithoutCurrTurn(String s) {
     printlnToPlayer(s, getPlayerWithoutCurrTurn());
   }
 
-  /** method to print to specified player.*/
+  /**
+   * Prints line to specified player.
+   * @param s
+   *        string being printed
+   * @param p
+   *        player being printed to
+   */
   public void printlnToPlayer(String s, Player p) {
     if (p.getPlayerID() == 1) {
       getPlayer1().getOutToPlayer().println(s);
@@ -130,7 +189,10 @@ public abstract class Game implements Runnable {
     }
   }
 
-  /** method to get user input.*/
+  /**
+   * Gets the user input.
+   * @return input.strip()
+   */
   public String getUserInput() {
     String input = "";
     Scanner scanner = new Scanner(System.in);
@@ -140,7 +202,10 @@ public abstract class Game implements Runnable {
     return input;
   }
 
-  /** method to get input form user with current turn.*/
+  /**
+   * Gets the user input form user with current turn.
+   * @return playerInput
+   */
   public String getInputFromPlayerWithCurrTurn() {
     String playerInput = "";
     try {
@@ -151,7 +216,10 @@ public abstract class Game implements Runnable {
     return playerInput;
   }
 
-  /** method to get input from player 1.*/
+  /**
+   * Gets the input from player 1.
+   * @return playerInput
+   */
   public String getInputFromPlayer1() {
     String playerInput = "";
     try {
@@ -163,7 +231,10 @@ public abstract class Game implements Runnable {
     return playerInput;
   }
 
-  /** method to get input from player 2.*/
+  /**
+   * Gets the input from player 2.
+   * @return playerInput
+   */
   public String getInputFromPlayer2() {
     String playerInput = "";
     try {
@@ -174,18 +245,14 @@ public abstract class Game implements Runnable {
     }
     return playerInput;
   }
-
-  /** method to ask host to playe again.*/
+  
+  /**
+   * Asks player 1 to play again.
+   * @return getInputFromPlayer1()
+   */
   public String promptUserPlayAgain() {
     printlnToPlayer("Would you like to play again?"
         + "Enter 'y' to play again or 'n' to exit.", player1);
     return getInputFromPlayer1();
-  }
-
-  /** method to pomt enter key.*/
-  public static void promptEnterKey() {
-    System.out.println("Press Enter to continue...");
-    Scanner scanner = new Scanner(System.in);
-    scanner.nextLine();
   }
 }
