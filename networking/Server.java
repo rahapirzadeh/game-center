@@ -18,12 +18,10 @@ import java.util.ArrayList;
  * connections from clients, which represent players. The host starts the server and then can
  * share the IP to players who wish to connect.
  *
- * <p> All game logic is handled on the server, which is in charge of running the current game,
+ * <p>All game logic is handled on the server, which is in charge of running the current game,
  * and the host may select a game mode or close the server as they wish.
  */
 public class Server { //reference: https://github.com/ChapmanCPSC353/mtchat
-
-  private static final int PORT = 2000;
 
   private static final String RPS = "rps";
   private static final String HM = "hm";
@@ -31,6 +29,7 @@ public class Server { //reference: https://github.com/ChapmanCPSC353/mtchat
   private static final String NC = "nc";
   private static final String EXIT = "exit";
 
+  private int serverPort;
   private Player player1 = new Player(1);
   private Player player2 = new Player(2);
   private BufferedReader serverIn;
@@ -39,7 +38,9 @@ public class Server { //reference: https://github.com/ChapmanCPSC353/mtchat
   private ArrayList<Socket> socketList = new ArrayList<Socket>();
   private String gameMode = NC;
 
-  public Server() {}
+  public Server(int serverPort) {
+    this.serverPort = serverPort;
+  }
 
   /**
    * Starts server and opens port for incoming connections.
@@ -47,14 +48,15 @@ public class Server { //reference: https://github.com/ChapmanCPSC353/mtchat
    */
   public void startServer() throws IOException {
     try (
-        ServerSocket server = new ServerSocket(PORT);
+        ServerSocket server = new ServerSocket(serverPort);
     ) {
       serverIn = new BufferedReader(new InputStreamReader(System.in));
-      System.out.printf("Hosting a game? Tell your friends to connect to %s%n", getPublicIP());
+      System.out.printf("Hosting a game? Tell your friends to connect to %s on port %d%n",
+              getPublicIP(), serverPort);
 
       promptForGameMode();
 
-      System.out.println("Waiting for players to connect on port " + PORT);
+      System.out.println("Waiting for players to connect on port " + serverPort);
 
       // Wait for a connection from the client
       while (true) {
@@ -68,7 +70,7 @@ public class Server { //reference: https://github.com/ChapmanCPSC353/mtchat
   }
 
   /**
-   * Accepts client connections to {@code server} and adds client socket to {@code socketList}
+   * Accepts client connections to {@code server} and adds client socket to {@code socketList}.
    * @param server
    *        the server accepting connections
    * @throws IOException  when server cannot accept client connection
@@ -112,7 +114,7 @@ public class Server { //reference: https://github.com/ChapmanCPSC353/mtchat
   /**
    * Starts selected game mode with player 1 and player 2 once both players have connected.
    *
-   * Game logic is handled on the server.
+   * <p>Game logic is handled on the server.
    */
   public void play() {
     if (socketList.size() == 2) {
@@ -155,7 +157,7 @@ public class Server { //reference: https://github.com/ChapmanCPSC353/mtchat
   }
 
   /**
-   * Starts appropriate game given selected game mode
+   * Starts appropriate game given selected game mode.
    * @param p1
    *        player 1
    * @param p2
@@ -175,12 +177,12 @@ public class Server { //reference: https://github.com/ChapmanCPSC353/mtchat
   }
 
   /**
-   * Starts server
+   * Starts server.
    * @param args
    *        command line arguments
    * @throws IOException  when server is unable to be started
    */
   public static void main(String[] args) throws IOException {
-    new Server().startServer();
+    new Server(Integer.parseInt(args[0])).startServer();
   }
 }

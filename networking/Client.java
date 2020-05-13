@@ -2,22 +2,21 @@ package networking;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.io.PrintWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
 /**
  * The client class allows players to connect to a server given a hostname and port.
  *
- * <p> Allows players to send input to the server, which will be used as commands
+ * <p>Allows players to send input to the server, which will be used as commands
  * to run the logic flow of the game server.
  */
 public class Client { //reference: https://github.com/ChapmanCPSC353/mtchat
 
-  private static final int PORT = 2000;
-
   private String serverHostname;
+  private int serverPort;
   private Socket clientSocket;
   private BufferedReader in;
   private PrintWriter out;
@@ -28,8 +27,9 @@ public class Client { //reference: https://github.com/ChapmanCPSC353/mtchat
    *        hostname of server client will attempt to connect to
    * @throws IOException  when server hostname is unreachable
    */
-  public Client(String serverHostname) throws IOException {
+  public Client(String serverHostname, int serverPort) throws IOException {
     this.serverHostname = serverHostname;
+    this.serverPort = serverPort;
   }
 
   /**
@@ -37,8 +37,8 @@ public class Client { //reference: https://github.com/ChapmanCPSC353/mtchat
    */
   public void connect() {
     try {
-      System.out.println("Connecting to server " + serverHostname + " on port " + PORT);
-      clientSocket = new Socket(serverHostname, PORT);
+      System.out.println("Connecting to server " + serverHostname + " on port " + serverPort);
+      clientSocket = new Socket(serverHostname, serverPort);
       System.out.println("Connection made.");
       // Start a thread to listen and display data sent to the server
       ClientListener listener = new ClientListener(clientSocket);
@@ -64,7 +64,7 @@ public class Client { //reference: https://github.com/ChapmanCPSC353/mtchat
 
   /**
    * Receives and prints client input while client is sending input.
-   * @throws IOException
+   * @throws IOException  when client input cannot be reached
    */
   public void start() throws IOException {
     String clientInput;
@@ -80,11 +80,12 @@ public class Client { //reference: https://github.com/ChapmanCPSC353/mtchat
    * @throws IOException  when client is unable to connect to server
    */
   public static void main(String[] args) throws IOException {
-    if (args.length != 1) {
-      System.out.println("Pass in the server IP as a command line argument");
+    if (args.length != 2) {
+      System.out.println("Pass in the server IP and port as command line arguments, "
+              + "separated by a space.");
       return;
     }
-    Client client = new Client(args[0]);
+    Client client = new Client(args[0], Integer.parseInt(args[1]));
     client.connect();
     client.setupClientIO();
     client.start();
