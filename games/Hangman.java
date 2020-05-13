@@ -212,7 +212,7 @@ public class Hangman extends Game {
   }
 
   /**
-   * Returns progress of guess word, with underscores indicating unguessed letters.Displays progress of guess word to player(s)
+   * Returns progress of guess word, with underscores indicating unguessed letters. Displays progress of guess word to player(s)
    *
    * Converts guesses to string format and adds space after each letter in string for improved readability.
    *
