@@ -7,6 +7,9 @@ import helpers.StringManipulation;
 import java.io.IOException;
 import java.util.Scanner;
 
+/**
+* This is a multi player Rock Paper Scissors program.
+*/
 public class RPS extends Game {
 
   public static final String welcomeMessage =
@@ -23,14 +26,22 @@ public class RPS extends Game {
   static int player2wins = 0;
   private String currPlay;
 
-  /** method to pass in both players.*/
+  /**
+   * Constructs a new dual-player game instance of RPS using {@code p1} and {@code p2}.
+   * @param p1
+   *        Player 1
+   * @param p2
+   *        Player 2
+   */
   public RPS(Player p1, Player p2) {
     super(p1, p2);
     currPlay = "";
     firstGame = true;
   }
 
-  /** runs rps.*/
+  /**
+   * Starts instance of Hangman game.
+   */
   public void run() {
     if (firstGame) {
       printWelcomeMessage();
@@ -48,7 +59,9 @@ public class RPS extends Game {
     }
   }
 
-  /** prints welcome message.*/
+  /**
+  * prints welcome message to players.
+  */
   public void printWelcomeMessage() {
     printlnToAllPlayers(welcomeMessage);
   }
@@ -59,7 +72,11 @@ public class RPS extends Game {
     run();
   }
 
-  /** gets user 1 inputs.*/
+  /**
+   * Gets player 1 inputs.
+   * @return player 1 input
+   * @throws IOException when this exceptional condition happens
+   */
   public String getUser1Move() throws IOException {
     printlnToPlayer("\nPlayer 1 choice: ", player1);
     String input = getInputFromPlayer1().toUpperCase();
@@ -71,7 +88,11 @@ public class RPS extends Game {
     return input;
   }
 
-  /** gets user 2 inputs.*/
+  /**
+  * Gets player 2 inputs.
+  * @return player 2 input
+  * @throws IOException when this exceptional condition happens
+  */
   public String getUser2Move() throws IOException {
     printlnToPlayer("\nPlayer 2 choice: ", player2);
     String input = getInputFromPlayer2().toUpperCase();
@@ -83,7 +104,12 @@ public class RPS extends Game {
     return input;
   }
 
-  /** check user inputs.*/
+  /**
+  * Checks players input.
+  * @param input
+  *        the players input
+  * @return {@code true} if string equals to one of the choices; {@code false} otherwise
+  */
   public static boolean checkInput(String input) {
     if (input.equals(ROCK) || input.equals(PAPER) || input.equals(SCISSORS)) {
       return true;
@@ -91,7 +117,11 @@ public class RPS extends Game {
     return false;
   }
 
-  /** Get the game Result.*/
+  /**
+   * Returns whether the player has/have won.
+   * A player wins if their play beats their opponents.
+   * Player wins increments
+   */
   public void hasPlayerWon(String user1Move, String user2Move) {
 
     if (user1Move.equals(user2Move)) {
@@ -130,7 +160,10 @@ public class RPS extends Game {
     }
   }
 
-  /** method to play one round of the game.*/
+  /**
+   * Plays through one round of RPS game.
+   * @throws IOException when this exceptional condition happens
+   */
   public void tick() throws IOException {
     hasPlayerWon(getUser1Move(), getUser2Move());
     printlnToAllPlayers("Player 1 scores: " + player1wins);
