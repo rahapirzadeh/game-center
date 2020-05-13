@@ -23,6 +23,8 @@ import java.util.ArrayList;
  */
 public class Server { //reference: https://github.com/ChapmanCPSC353/mtchat
 
+  private static final int PORT = 2000;
+
   private static final String RPS = "rps";
   private static final String HM = "hm";
   private static final String TTT = "ttt";
@@ -40,19 +42,19 @@ public class Server { //reference: https://github.com/ChapmanCPSC353/mtchat
   public Server() {}
 
   /**
-   * Starts server and opens port {@code 7654} for incoming connections.
+   * Starts server and opens port for incoming connections.
    * @throws IOException  when server cannot be hosted on given port
    */
   public void startServer() throws IOException {
     try (
-        ServerSocket server = new ServerSocket(7654);
+        ServerSocket server = new ServerSocket(PORT);
     ) {
       serverIn = new BufferedReader(new InputStreamReader(System.in));
       System.out.printf("Hosting a game? Tell your friends to connect to %s%n", getPublicIP());
 
       promptForGameMode();
 
-      System.out.println("Waiting for players to connect on port 7654.");
+      System.out.println("Waiting for players to connect on port " + PORT);
 
       // Wait for a connection from the client
       while (true) {

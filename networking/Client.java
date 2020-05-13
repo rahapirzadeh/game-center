@@ -15,6 +15,8 @@ import java.net.UnknownHostException;
  */
 public class Client { //reference: https://github.com/ChapmanCPSC353/mtchat
 
+  private static final int PORT = 2000;
+
   private String serverHostname;
   private Socket clientSocket;
   private BufferedReader in;
@@ -35,7 +37,8 @@ public class Client { //reference: https://github.com/ChapmanCPSC353/mtchat
    */
   public void connect() {
     try {
-      clientSocket = new Socket(serverHostname, 7654);
+      System.out.println("Connecting to server " + serverHostname + " on port " + PORT);
+      clientSocket = new Socket(serverHostname, PORT);
       System.out.println("Connection made.");
       // Start a thread to listen and display data sent to the server
       ClientListener listener = new ClientListener(clientSocket);
