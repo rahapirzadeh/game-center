@@ -1,22 +1,32 @@
 # Game Center
-## CPSC 353 - Jonathan Bahm, Brandon Fabre, Raha Pirzadeh
+###### CPSC 353 - Jonathan Bahm, Brandon Fabre, Raha Pirzadeh
 
-### How to run
-To run Server.java build and run the Dockerfile with
+This project allows users to host a game server complete with turn-based games like Hangman, Rock Paper Scissors, and Tic Tac Toe, and invite friends to connect for a simple yet fun two-player experience.
+
+### How to build
+Navigate to the game-center directory and build all .java files with
 ```
 docker build -t game-center .
-docker run game-center
 ```
 
-Then, in two separate command prompts, compile and run Client.java with
+### Server/Host
+In the same command prompt, run
 ```
-cd networking/
-javac Client.java
-java Client
+java -cp /classFiles; Server {PORT}
 ```
-(Open separate command prompt and repeat steps)
+**Make sure that whatever port the host uses is open via port-forwarding.**
 
-Enter *localhost* for the server address to connect to
+### Clients
+Then, in another command prompt, run Client.java with
+```
+java -cp /classFiles; Client {HOSTNAME} {PORT}
+```
+Open a separate command prompt and run another instance of Client.java, if you'd like to support both players of the game.
+Once both players have connected, the host (whoever is running Server.java) must choose a game mode for the game to start. Then, play away!
+
+### Notices:
+* Server is overloaded with error messages if one client disconnects before Server is closed
+* Dockerfile only builds the necessary java files, but does not run Client or Server
 
 ### References:
 * https://stackoverflow.com/questions/24305830/java-auto-increment-id
