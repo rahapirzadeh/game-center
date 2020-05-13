@@ -8,6 +8,9 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.Random;
 
+/**
+* This is a single or two player Hangman program.
+*/
 public class Hangman extends Game {
 
   public static final String welcomeMessage =
@@ -107,7 +110,8 @@ public class Hangman extends Game {
   }
 
   /**
-   * Resets {@code correctlyGuessedLetters} to all underscores, indicating no letters have been correctly guessed.
+   * Resets {@code correctlyGuessedLetters} to all underscores,
+   * indicating no letters have been correctly guessed.
    */
   public void resetCorrectlyGuessedLetters() {
     correctlyGuessedLetters = new char[wordToGuess.length()];
@@ -204,7 +208,7 @@ public class Hangman extends Game {
   }
 
   /**
-   * Returns character array of letters that have already been guessed which appear in the guess word.
+   * Returns character array of letters that have already been guessed and appear in the guess word.
    * @return  the array of characters correctly guessed by the player(s)
    */
   public char[] getCorrectlyGuessedLetters() {
@@ -212,11 +216,13 @@ public class Hangman extends Game {
   }
 
   /**
-   * Returns progress of guess word, with underscores indicating unguessed letters. Displays progress of guess word to player(s)
+   * Returns progress of guess word, with underscores indicating unguessed letters.
+   * Displays progress of guess word to player(s)
    *
-   * Converts guesses to string format and adds space after each letter in string for improved readability.
+   * <p>Converts guesses to string format.
+   * Adds space after each letter in string for improved readability.
    *
-   * Examples of guess word progress print statements are in the following table.
+   * <p>Examples of guess word progress print statements are in the following table.
    *
    * <table class="plain">
    * <thead>
@@ -258,8 +264,9 @@ public class Hangman extends Game {
    * @return  progress of guess word in string format, with underscores indicating unguessed letters
    */
   public String getGuessWordProgress() {
+    // Converts guesses to string form
     return StringManipulation.convertStringToUnderscores(
-            StringManipulation.charArrayToString(getCorrectlyGuessedLetters())) // Converts guesses to string form
+            StringManipulation.charArrayToString(getCorrectlyGuessedLetters()))
             .replaceAll("\\B", " "); // Adds space after each letter for improved readability
   }
 
@@ -320,9 +327,9 @@ public class Hangman extends Game {
   }
 
   /**
-   * Determines whether {@code guess} is a correct guess
+   * Determines whether {@code guess} is a correct guess.
    *
-   * A correct guess can be a character that appears in the guess word, multiple characters
+   * <p>A correct guess can be a character that appears in the guess word, multiple characters
    * separated by commas that appear in the guess word, or the entire guess word itself
    * @param guess
    *        the player's current guess
@@ -348,9 +355,10 @@ public class Hangman extends Game {
   /**
    * Assert whether a character guess is correct.
    *
-   * If the guess is correct, {@link Hangman#correctGuess(char)} is called. Else, {@link Hangman#incorrectGuess()} is called.
+   * <p>If the guess is correct, {@link Hangman#correctGuess(char)} is called.
+   * Else, {@link Hangman#incorrectGuess()} is called.
    *
-   * A character guess is considered correct if it appears in the guess word and has not
+   * <p>A character guess is considered correct if it appears in the guess word and has not
    * already been guessed.
    * @param c
    *        the character guessed
@@ -366,9 +374,10 @@ public class Hangman extends Game {
   /**
    * Assert whether a string guess is correct.
    *
-   * If the guess is correct, {@link Hangman#correctGuess(String)} is called. Else, {@link Hangman#incorrectGuess()} is called.
+   * <p>If the guess is correct, {@link Hangman#correctGuess(String)} is called.
+   * Else, {@link Hangman#incorrectGuess()} is called.
    *
-   * A character guess is considered correct if it is equal to the guess word, ignoring case.
+   * <p>A character guess is considered correct if it is equal to the guess word, ignoring case.
    * @param s
    *        the string guessed
    */
@@ -406,7 +415,7 @@ public class Hangman extends Game {
   }
 
   /**
-   * Adds correctly guessed letter to character array of correctly guess letters
+   * Adds correctly guessed letter to character array of correctly guess letters.
    * @param c
    *        the correctly guessed letter
    */
@@ -421,7 +430,7 @@ public class Hangman extends Game {
   /**
    * Returns whether the player(s) has/have won.
    *
-   * A player or players win(s) if their current guess is equal to the guess word, ignoring case,
+   * <p>A player or players win(s) if their current guess is equal to the guess word, ignoring case,
    * or if the character array of correctly guessed letters in string form is equal to the
    * guess word, ignoring case.
    * @return  {@code true} if player(s) has/have met win conditions; {@code false} otherwise
@@ -435,7 +444,7 @@ public class Hangman extends Game {
   /**
    * Returns whether the player(s) has/have won.
    *
-   * A player or players lose(s) if the number of incorrect guesses in the current round is
+   * <p>A player or players lose(s) if the number of incorrect guesses in the current round is
    * equal to the number of allowed incorrect guesses.
    * @return  {@code true} if player(s) has/have lost; {@code false} otherwise
    */
@@ -467,7 +476,7 @@ public class Hangman extends Game {
    * Finishes the round and runs {@code playerWin} or {@code playerLoss} method, depending on
    * whether player(s) won or lost.
    *
-   * Prints the guess word, increments the number of rounds
+   * <p>Prints the guess word, increments the number of rounds
    * played by 1, and prints round statistics.
    */
   public void roundFinish() {
@@ -484,7 +493,7 @@ public class Hangman extends Game {
   /**
    * Starts a new round.
    *
-   * Sets new random guess word, resets number of previous total, correct, and incorrect guesses
+   * <p>Sets new random guess word, resets number of previous total, correct, and incorrect guesses
    * and correctly guessedLetters, sets {@code firstGame} to false, indicating that this is at
    * least the second game played, and starts a new round.
    */
@@ -499,7 +508,8 @@ public class Hangman extends Game {
   /**
    * Indicates that a letter has been correctly guessed.
    *
-   * Increments number of total and correct guesses by 1, adds letter to correct letter guesses character
+   * <p>Increments number of total and correct guesses by 1.
+   * Adds letter to correct letter guesses character
    * array, and increments the player's or players' points by 1.
    * @param guess
    *        the character guessed
@@ -514,7 +524,7 @@ public class Hangman extends Game {
   /**
    * Indicates that the guess word has been correctly guessed.
    *
-   * Increments number of total guesses and correct guesses by 1.
+   * <p>Increments number of total guesses and correct guesses by 1.
    * @param guess
    *        the string guessed
    */
@@ -526,7 +536,7 @@ public class Hangman extends Game {
   /**
    * Indicates that a guess was incorrect.
    *
-   * Increments number of total and incorrect guesses by 1.
+   * <p>Increments number of total and incorrect guesses by 1.
    */
   public void incorrectGuess() {
     incrementNumTotalGuesses();
@@ -565,49 +575,49 @@ public class Hangman extends Game {
   }
 
   /**
-   * Prints win message to player(s)
+   * Prints win message to player(s).
    */
   public void printWinMessage() {
     printlnToAllPlayers(winMessage);
   }
 
   /**
-   * Prints loss message to player(s)
+   * Prints loss message to player(s).
    */
   public void printLossMessage() {
     printlnToAllPlayers(lossMessage);
   }
 
   /**
-   * Prints guess word to player(s)
+   * Prints guess word to player(s).
    */
   public void printGuessWord() {
     printlnToAllPlayers("The word was: " + getWordToGuess());
   }
 
   /**
-   * Prints invalid guess message to player(s)
+   * Prints invalid guess message to player(s).
    */
   public void printInvalidGuess() {
     System.out.println(invalidGuess);
   }
 
   /**
-   * Prints instructions to player(s)
+   * Prints instructions to player(s).
    */
   public void printInstructions() {
     printlnToAllPlayers(instructions);
   }
 
   /**
-   * Prints welcome message to player(s)
+   * Prints welcome message to player(s).
    */
   public void printWelcomeMessage() {
     printlnToAllPlayers(welcomeMessage);
   }
 
   /**
-   * Displays progress of guess word to player(s)
+   * Displays progress of guess word to player(s).
    */
   public void printGuessWordPrompt() {
     printlnToAllPlayers("Word: " + getGuessWordProgress());
@@ -615,7 +625,7 @@ public class Hangman extends Game {
 
   /**
    * Plays through one round of Hangman game.
-   * @throws IOException
+   * @throws IOException when player input cannot be reached
    */
   public void tick() throws IOException {
     printNumIncorrectGuessesRemaining();
