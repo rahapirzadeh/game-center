@@ -3,6 +3,9 @@
 
 This project allows users to host a game server complete with turn-based games like Hangman, Rock Paper Scissors, and Tic Tac Toe, and invite friends to connect for a simple yet fun two-player experience.
 
+### Javadocs
+To view the javadocs for this project which has complete documentation on all classes, enter the *javadocs* directory and open index.html in a new browser tab.
+
 ### How to build
 Navigate to the game-center directory and build all .java files with
 ```
