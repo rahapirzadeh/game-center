@@ -1,10 +1,18 @@
 package networking;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.io.IOException;
 import java.net.Socket;
-import java.net.SocketException;
 import java.net.UnknownHostException;
 
+/**
+ * The client class allows players to connect to a server given a hostname and port.
+ *
+ * <p> Allows players to send input to the server, which will be used as commands
+ * to run the logic flow of the game server.
+ */
 public class Client { //reference: https://github.com/ChapmanCPSC353/mtchat
 
   private String serverHostname;
@@ -12,11 +20,19 @@ public class Client { //reference: https://github.com/ChapmanCPSC353/mtchat
   private BufferedReader in;
   private PrintWriter out;
 
+  /**
+   * Constructs new instance of {@code Client} and sets a server hostname to connect to.
+   * @param serverHostname
+   *        hostname of server client will attempt to connect to
+   * @throws IOException  when server hostname is unreachable
+   */
   public Client(String serverHostname) throws IOException {
     this.serverHostname = serverHostname;
   }
 
-  /** method to connect client to server.*/
+  /**
+   * Attempts to connect to server given hostname and port.
+   */
   public void connect() {
     try {
       clientSocket = new Socket(serverHostname, 7654);
@@ -31,7 +47,9 @@ public class Client { //reference: https://github.com/ChapmanCPSC353/mtchat
     }
   }
 
-  /** method to start up client .*/
+  /**
+   * Sets input and output of new client.
+   */
   public void setupClientIO() {
     try {
       in = new BufferedReader(new InputStreamReader(System.in));
@@ -41,7 +59,10 @@ public class Client { //reference: https://github.com/ChapmanCPSC353/mtchat
     }
   }
 
-  /** method to start recieving client input.*/
+  /**
+   * Receives and prints client input while client is sending input.
+   * @throws IOException
+   */
   public void start() throws IOException {
     String clientInput;
     while ((clientInput = in.readLine()) != null) {
@@ -49,7 +70,12 @@ public class Client { //reference: https://github.com/ChapmanCPSC353/mtchat
     }
   }
 
-  /** main method for client.*/
+  /**
+   * Attempts to connect client to server and set up client IO.
+   * @param args
+   *        command line arguments
+   * @throws IOException  when client is unable to connect to server
+   */
   public static void main(String[] args) throws IOException {
     if (args.length != 1) {
       System.out.println("Pass in the server IP as a command line argument");

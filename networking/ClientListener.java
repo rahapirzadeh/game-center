@@ -6,21 +6,22 @@ import java.net.Socket;
 import java.net.SocketException;
 
 /**
- * networking.ClientListener.java
- *
- * <p>This class runs on the client end and just
- * displays any text received from the server.
- *
+ * This class runs on the client end and just displays any text received from the server.
  */
-
 public class ClientListener implements Runnable { //reference: https://github.com/ChapmanCPSC353/mtchat
   private Socket clientSocket;
 
-  ClientListener(Socket sock) {
-    this.clientSocket = sock;
+  /**
+   * Constructs new {@code ClientListener} for given client socket.
+   * @param socket
+   */
+  ClientListener(Socket socket) {
+    this.clientSocket = socket;
   }
 
-  // Gets message from server and displays it to the user.
+  /**
+   * Gets message from server and displays it to the user.
+   */
   public void run() {
     try {
       BufferedReader serverInput = new BufferedReader(

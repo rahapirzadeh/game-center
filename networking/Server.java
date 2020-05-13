@@ -13,6 +13,14 @@ import java.net.Socket;
 import java.net.URL;
 import java.util.ArrayList;
 
+/**
+ * The server class starts and opens a server on a specified port, then allows 2 incoming
+ * connections from clients, which represent players. The host starts the server and then can
+ * share the IP to players who wish to connect.
+ *
+ * <p> All game logic is handled on the server, which is in charge of running the current game,
+ * and the host may select a game mode or close the server as they wish.
+ */
 public class Server { //reference: https://github.com/ChapmanCPSC353/mtchat
 
   private static final String RPS = "rps";
@@ -33,7 +41,7 @@ public class Server { //reference: https://github.com/ChapmanCPSC353/mtchat
 
   /**
    * Starts server and opens port {@code 7654} for incoming connections.
-   * @throws IOException
+   * @throws IOException  when server cannot be hosted on given port
    */
   public void startServer() throws IOException {
     try (
@@ -61,7 +69,7 @@ public class Server { //reference: https://github.com/ChapmanCPSC353/mtchat
    * Accepts client connections to {@code server} and adds client socket to {@code socketList}
    * @param server
    *        the server accepting connections
-   * @throws IOException
+   * @throws IOException  when server cannot accept client connection
    */
   public void acceptConnections(ServerSocket server) throws IOException {
     clientSocket = server.accept();
@@ -71,7 +79,7 @@ public class Server { //reference: https://github.com/ChapmanCPSC353/mtchat
 
   /**
    * Set up client input and output streams and usernames for players 1 and 2.
-   * @throws IOException
+   * @throws IOException  when inputs and outputs for players 1 and 2 cannot be set
    */
   public void setupPlayers() throws IOException {
     PrintWriter clientOut = new PrintWriter(clientSocket.getOutputStream(), true);
@@ -91,7 +99,7 @@ public class Server { //reference: https://github.com/ChapmanCPSC353/mtchat
 
   /**
    * Prompts user to select game mode or exit the game.
-   * @throws IOException
+   * @throws IOException  when input from server cannot be read
    */
   public void promptForGameMode() throws IOException {
     System.out.println("What game would you like to play? \nEnter 'rps' for rock, paper, "
@@ -113,7 +121,7 @@ public class Server { //reference: https://github.com/ChapmanCPSC353/mtchat
   /**
    * Gets host IP address to share with clients looking to connect.
    * @return  the IP address of host
-   * @throws IOException
+   * @throws IOException  when stream from url cannot be read
    */
   public static String getPublicIP() throws IOException { //reference: https://stackoverflow.com/questions/2939218/getting-the-external-ip-address-in-java
     URL whatsMyIP = new URL("http://checkip.amazonaws.com");
@@ -168,7 +176,7 @@ public class Server { //reference: https://github.com/ChapmanCPSC353/mtchat
    * Starts server
    * @param args
    *        command line arguments
-   * @throws IOException
+   * @throws IOException  when server is unable to be started
    */
   public static void main(String[] args) throws IOException {
     new Server().startServer();
