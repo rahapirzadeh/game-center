@@ -31,25 +31,24 @@ public class Server { //reference: https://github.com/ChapmanCPSC353/mtchat
 
   public Server() {}
 
-  /** Start server.*/
-  public void getConnection() throws IOException {
+  /**
+   * Starts server and opens port {@code 7654} for incoming connections.
+   * @throws IOException
+   */
+  public void startServer() throws IOException {
     try (
         ServerSocket server = new ServerSocket(7654);
     ) {
       serverIn = new BufferedReader(new InputStreamReader(System.in));
       System.out.printf("Hosting a game? Tell your friends to connect to %s%n", getPublicIP());
 
-      promptNewGame();
+      promptForGameMode();
 
       System.out.println("Waiting for players to connect on port 7654.");
 
       // Wait for a connection from the client
       while (true) {
-        // Accept connection from client
-        clientSocket = server.accept();
-        socketList.add(clientSocket);
-        System.out.println("Received connection.");
-
+        acceptConnections(server);
         setupPlayers();
         play();
       }
@@ -58,7 +57,22 @@ public class Server { //reference: https://github.com/ChapmanCPSC353/mtchat
     }
   }
 
-  /** method to connect and set up players .*/
+  /**
+   * Accepts client connections to {@code server} and adds client socket to {@code socketList}
+   * @param server
+   *        the server accepting connections
+   * @throws IOException
+   */
+  public void acceptConnections(ServerSocket server) throws IOException {
+    clientSocket = server.accept();
+    socketList.add(clientSocket);
+    System.out.println("Received connection.");
+  }
+
+  /**
+   * Set up client input and output streams and usernames for players 1 and 2.
+   * @throws IOException
+   */
   public void setupPlayers() throws IOException {
     PrintWriter clientOut = new PrintWriter(clientSocket.getOutputStream(), true);
     BufferedReader clientIn = new BufferedReader(
@@ -75,28 +89,43 @@ public class Server { //reference: https://github.com/ChapmanCPSC353/mtchat
     }
   }
 
-  /** Promt game menu.*/
-  public void promptNewGame() throws IOException {
+  /**
+   * Prompts user to select game mode or exit the game.
+   * @throws IOException
+   */
+  public void promptForGameMode() throws IOException {
     System.out.println("What game would you like to play? \nEnter 'rps' for rock, paper, "
         + "scissors, 'ttt' for tic tac toe, or 'hm' for hangman. \nType 'exit' to stop playing.");
     selectGameMode(serverIn.readLine());
   }
 
-  /** Start game and handle game logic on server.*/
+  /**
+   * Starts selected game mode with player 1 and player 2 once both players have connected.
+   *
+   * Game logic is handled on the server.
+   */
   public void play() {
     if (socketList.size() == 2) {
       startGame(player1, player2);
     }
   }
 
-  /** method to get IP address from user.*/
+  /**
+   * Gets host IP address to share with clients looking to connect.
+   * @return  the IP address of host
+   * @throws IOException
+   */
   public static String getPublicIP() throws IOException { //reference: https://stackoverflow.com/questions/2939218/getting-the-external-ip-address-in-java
     URL whatsMyIP = new URL("http://checkip.amazonaws.com");
     BufferedReader br = new BufferedReader(new InputStreamReader(whatsMyIP.openStream()));
     return br.readLine();
   }
 
-  /**method to select game.*/
+  /**
+   * Selects and sets current gamemode and prints to server what game mode has been selected.
+   * @param input
+   *        the selected game mode
+   */
   public void selectGameMode(String input) {
     if (input.equalsIgnoreCase(RPS)) {
       this.gameMode = RPS;
@@ -115,7 +144,13 @@ public class Server { //reference: https://github.com/ChapmanCPSC353/mtchat
     }
   }
 
-  /** method to start game when both players connect.*/
+  /**
+   * Starts appropriate game given selected game mode
+   * @param p1
+   *        player 1
+   * @param p2
+   *        player 2
+   */
   public void startGame(Player p1, Player p2) {
     if (this.gameMode.equals(RPS)) {
       RPS rps = new RPS(p1, p2);
@@ -129,8 +164,13 @@ public class Server { //reference: https://github.com/ChapmanCPSC353/mtchat
     }
   }
 
-  /** main method.*/
+  /**
+   * Starts server
+   * @param args
+   *        command line arguments
+   * @throws IOException
+   */
   public static void main(String[] args) throws IOException {
-    new Server().getConnection();
+    new Server().startServer();
   }
 }
