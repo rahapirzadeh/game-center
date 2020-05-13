@@ -20,3 +20,4 @@ Contributions:
 * Dockerfile
 * Hangman.java and helper files associated with it
 * Portion of networking code
+* Checkstyle compliant

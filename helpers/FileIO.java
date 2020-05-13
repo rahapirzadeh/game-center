@@ -5,9 +5,17 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
+/**
+* This program reads from a file.
+*/
 public class FileIO {
 
-  /** method to read from a file.*/
+  /**
+  * Method to read from a file.
+  * @param fileName
+  *        the file name
+  *     If file is not found, then FileNotFoundException
+  */
   public static void readFromFile(String fileName) {
     String line = "";
     try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
@@ -24,7 +32,14 @@ public class FileIO {
     }
   }
 
-  /** method to get a line from a file.*/
+  /**
+  * Method to get a line from a file.
+  *
+  * <p>@param fileName
+  *        the file name
+  * @param lineIndex
+  *        the line number
+  */
   public static String getLineFromFile(String fileName, int lineIndex) {
     String line = "";
     String data = "";
