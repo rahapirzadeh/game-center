@@ -10,13 +10,17 @@ public class TicTacToe extends Game{
     private boolean[][] isPlaced = {{false, false, false}, {false, false, false}, {false, false, false}};
     private int [] move = new int[2];
 
+    /*Default constructor*/
     public TicTacToe(){
       super();
     }
+
+    /*Overloaded constructor*/
     public TicTacToe(Player p1, Player p2){
       super(p1, p2);
     }
 
+    /*Main game loop*/
     public void run(){
       printBoard(board);
       while(gameOver == false){
@@ -44,11 +48,36 @@ public class TicTacToe extends Game{
           gameOver = hasPlayerWon(board, isPlaced);
           switchTurn();
         }
-
+      }
+      String choice1 = "";
+      printlnToPlayerWithCurrTurn("Do you want to play again? Enter 1(YES) or 2(NO)");
+      while(vote(choice1) == false){
+        printlnToPlayerWithCurrTurn("Error: Invalid Input. Must be 1 or 2");
+        choice1 = getInputFromPlayerWithCurrTurn();
+      }
+      switchTurn();
+      String choice2 = "";
+      printlnToPlayerWithCurrTurn("Do you want to play again? Enter 1(YES) or 2(NO)");
+      while(vote(choice1) == false){
+        printlnToPlayerWithCurrTurn("Error: Invalid Input. Must be 1 or 2");
+        choice2 = getInputFromPlayerWithCurrTurn();
+      }
+      if(choice1.equals(choice2)){
+        if(choice1.equals("1")){
+          printlnToAllPlayers("Both players voted YES! Restarting Game...");
+          tick();
+        }else{
+          printlnToAllPlayers("Both players voted No! Exiting...");
+          System.exit(0);
+        }
+      }else{
+        printlnToAllPlayers("One player voted Yes and one voted No... Exiting...");
+        System.exit(0);
       }
 
     }
 
+    /*Helper method to display the current board to the Players*/
     public void printBoard(String[][] board){
       printlnToAllPlayers("   1 " + " 2 " + " 3 ");
       String newLine = " ";
@@ -61,6 +90,7 @@ public class TicTacToe extends Game{
       }
     }
 
+    /*Runs the process of the player making a move*/
     public int[] makeMove(int player){
       String input = "";
       printWhoseTurn();
@@ -82,6 +112,7 @@ public class TicTacToe extends Game{
       return move;
     }
 
+    /*Validates player input for making a move */
     public static boolean checkInput(String input){
       if(input.equals("1") || input.equals("2") || input.equals("3")){
         return true;
@@ -89,6 +120,15 @@ public class TicTacToe extends Game{
       return false;
     }
 
+    /*Validates player input for playing another round */
+    public static boolean vote(String input){
+      if(input.equals("1") || input.equals("2")){
+        return true;
+      }
+      return false;
+    }
+
+    /*Compares board to valid win/loss/tie conditions for TicTacToe*/
     public boolean hasPlayerWon(String[][] board, boolean[][] isPlaced){
 
       //Checks the
@@ -205,8 +245,18 @@ public class TicTacToe extends Game{
       return false;
     }
 
+  /*Resets all variables to default values for a new game*/
+  public void restartGame(){
+    gameOver = false;
+    turns = 0;
+    board = {{"-", "-", "-"}, {"-", "-", "-"}, {"-", "-", "-"}};
+    [][] isPlaced = {{false, false, false}, {false, false, false}, {false, false, false}};
+    [] move = new int[2];
+  }
 
+  /*Method for playing a full game*/
   public void tick(){
+    restartGame();
     run();
   }
 
