@@ -31,6 +31,7 @@ public class Server { //reference: https://github.com/ChapmanCPSC353/mtchat
 
   public Server() {}
 
+  /** Start server.*/
   public void getConnection() throws IOException {
     try (
         ServerSocket server = new ServerSocket(7654);
@@ -57,9 +58,11 @@ public class Server { //reference: https://github.com/ChapmanCPSC353/mtchat
     }
   }
 
+  /** method to connect and set up players .*/
   public void setupPlayers() throws IOException {
     PrintWriter clientOut = new PrintWriter(clientSocket.getOutputStream(), true);
-    BufferedReader clientIn = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+    BufferedReader clientIn = new BufferedReader(
+         new InputStreamReader(clientSocket.getInputStream()));
 
     if (socketList.size() == 1) {
       player1.setUsername("Player 1");
@@ -71,25 +74,29 @@ public class Server { //reference: https://github.com/ChapmanCPSC353/mtchat
       player2.setInFromPlayer(clientIn);
     }
   }
+
+  /** Promt game menu.*/
   public void promptNewGame() throws IOException {
     System.out.println("What game would you like to play? \nEnter 'rps' for rock, paper, "
         + "scissors, 'ttt' for tic tac toe, or 'hm' for hangman. \nType 'exit' to stop playing.");
     selectGameMode(serverIn.readLine());
   }
 
+  /** Start game and handle game logic on server.*/
   public void play() {
     if (socketList.size() == 2) {
-      // Start game and handle game logic on server
       startGame(player1, player2);
     }
   }
 
+  /** method to get IP address from user.*/
   public static String getPublicIP() throws IOException { //reference: https://stackoverflow.com/questions/2939218/getting-the-external-ip-address-in-java
     URL whatsMyIP = new URL("http://checkip.amazonaws.com");
     BufferedReader br = new BufferedReader(new InputStreamReader(whatsMyIP.openStream()));
     return br.readLine();
   }
 
+  /**method to select game.*/
   public void selectGameMode(String input) {
     if (input.equalsIgnoreCase(RPS)) {
       this.gameMode = RPS;
@@ -108,6 +115,7 @@ public class Server { //reference: https://github.com/ChapmanCPSC353/mtchat
     }
   }
 
+  /** method to start game when both players connect.*/
   public void startGame(Player p1, Player p2) {
     if (this.gameMode.equals(RPS)) {
       RPS rps = new RPS(p1, p2);
@@ -121,6 +129,7 @@ public class Server { //reference: https://github.com/ChapmanCPSC353/mtchat
     }
   }
 
+  /** main method.*/
   public static void main(String[] args) throws IOException {
     new Server().getConnection();
   }

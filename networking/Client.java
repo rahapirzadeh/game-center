@@ -16,6 +16,7 @@ public class Client { //reference: https://github.com/ChapmanCPSC353/mtchat
     this.serverHostname = serverHostname;
   }
 
+  /** method to connect client to server.*/
   public void connect() {
     try {
       clientSocket = new Socket(serverHostname, 7654);
@@ -30,6 +31,7 @@ public class Client { //reference: https://github.com/ChapmanCPSC353/mtchat
     }
   }
 
+  /** method to start up client .*/
   public void setupClientIO() {
     try {
       in = new BufferedReader(new InputStreamReader(System.in));
@@ -39,6 +41,7 @@ public class Client { //reference: https://github.com/ChapmanCPSC353/mtchat
     }
   }
 
+  /** method to start recieving client input.*/
   public void start() throws IOException {
     String clientInput;
     while ((clientInput = in.readLine()) != null) {
@@ -46,6 +49,7 @@ public class Client { //reference: https://github.com/ChapmanCPSC353/mtchat
     }
   }
 
+  /** main method for client.*/
   public static void main(String[] args) throws IOException {
     if (args.length != 1) {
       System.out.println("Pass in the server IP as a command line argument");
