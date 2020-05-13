@@ -22,18 +22,19 @@ public class TicTacToe extends Game{
       while(gameOver == false){
         move = makeMove(1);
         while(isPlaced[move[0]-1][move[1]-1] == true){
-          printWhoseTurn("Someone already took that square, enter a different move");
+          printlnToPlayerWithCurrTurn("Someone already took that square, enter a different move");
           move = makeMove(1);
         }
         board[move[0]-1][move[1]-1] = "X";
         isPlaced[move[0]-1][move[1]-1] = true;
         printBoard(board);
         gameOver = hasPlayerWon(board, isPlaced);
+        switchTurn();
 
         if(gameOver == false){
           move = makeMove(2);
           while(isPlaced[move[0]-1][move[1]-1] == true){
-            printWhoseTurn("Someone already took that square, enter a different move");
+            printlnToPlayerWithCurrTurn("Someone already took that square, enter a different move");
             move = makeMove(2);
           }
           board[move[0]-1][move[1]-1] = "O";
@@ -41,6 +42,7 @@ public class TicTacToe extends Game{
           printBoard(board);
           turns++;
           gameOver = hasPlayerWon(board, isPlaced);
+          switchTurn();
         }
 
       }
@@ -61,17 +63,18 @@ public class TicTacToe extends Game{
 
     public int[] makeMove(int player){
       String input = "";
-      printWhoseTurn("Player " + player + " Enter the row:");
+      printWhoseTurn();
+      printlnToPlayerWithCurrTurn("Enter the row: ");
       input = getInputFromPlayerWithCurrTurn();
       while(checkInput(input) == false){
-        printWhoseTurn("Error: Invalid Input. Must be 1, 2 or 3");
+        printlnToPlayerWithCurrTurn("Error: Invalid Input. Must be 1, 2 or 3");
         input = getInputFromPlayerWithCurrTurn();
       }
       int row = Integer.parseInt(input);
-      printWhoseTurn("Player " + player + " Enter the col:");
+      printlnToPlayerWithCurrTurn("Enter the col:");
       input = getInputFromPlayerWithCurrTurn();
       while(checkInput(input) == false){
-        printWhoseTurn("Error: Invalid Input. Must be 1, 2 or 3");
+        printlnToPlayerWithCurrTurn("Error: Invalid Input. Must be 1, 2 or 3");
         input = getInputFromPlayerWithCurrTurn();
       }
       int col = Integer.parseInt(input);
