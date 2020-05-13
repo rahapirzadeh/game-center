@@ -75,7 +75,7 @@ public class RPS extends Game {
   /**
    * Gets player 1 inputs.
    * @return player 1 input
-   * @throws IOException when this exceptional condition happens
+   * @throws IOException when player input cannot be reached
    */
   public String getUser1Move() throws IOException {
     printlnToPlayer("\nPlayer 1 choice: ", player1);
@@ -91,7 +91,7 @@ public class RPS extends Game {
   /**
   * Gets player 2 inputs.
   * @return player 2 input
-  * @throws IOException when this exceptional condition happens
+  * @throws IOException when player input cannot be reached
   */
   public String getUser2Move() throws IOException {
     printlnToPlayer("\nPlayer 2 choice: ", player2);
@@ -162,7 +162,7 @@ public class RPS extends Game {
 
   /**
    * Plays through one round of RPS game.
-   * @throws IOException when this exceptional condition happens
+   * @throws IOException wwhen player input cannot be reached
    */
   public void tick() throws IOException {
     hasPlayerWon(getUser1Move(), getUser2Move());
