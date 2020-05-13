@@ -249,9 +249,9 @@ public class TicTacToe extends Game{
   public void restartGame(){
     gameOver = false;
     turns = 0;
-    board = {{"-", "-", "-"}, {"-", "-", "-"}, {"-", "-", "-"}};
-    [][] isPlaced = {{false, false, false}, {false, false, false}, {false, false, false}};
-    [] move = new int[2];
+    board = new String[][]{{"-", "-", "-"}, {"-", "-", "-"}, {"-", "-", "-"}};
+    isPlaced = new boolean[][]{{false, false, false}, {false, false, false}, {false, false, false}};
+    move = new int[2];
   }
 
   /*Method for playing a full game*/
