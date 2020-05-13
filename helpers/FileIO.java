@@ -33,13 +33,13 @@ public class FileIO {
   }
 
   /**
-  * Method to get a line from a file.
-  *
-  * <p>@param fileName
-  *        the file name
-  * @param lineIndex
-  *        the line number
-  */
+   * Gets a line from a file given an index.
+   * @param fileName
+   *        the file name
+   * @param lineIndex
+   *        the line number
+   * @return  the contents of that line
+   */
   public static String getLineFromFile(String fileName, int lineIndex) {
     String line = "";
     String data = "";

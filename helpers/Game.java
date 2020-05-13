@@ -67,6 +67,8 @@ public abstract class Game implements Runnable {
 
   /**
    * Sets the current player turn.
+   * @param turn
+   *        current turn of player
    */
   public void setCurrTurn(Turn turn) {
     this.currTurn = turn;
@@ -74,6 +76,7 @@ public abstract class Game implements Runnable {
 
   /**
    * Gets the current player turn.
+   *
    * @return current turn
    */
   public Turn getCurrTurn() {
@@ -82,6 +85,7 @@ public abstract class Game implements Runnable {
 
   /**
    * Gets player 1.
+   *
    * @return player 1
    */
   public Player getPlayer1() {
@@ -90,6 +94,8 @@ public abstract class Game implements Runnable {
 
   /**
    * Construct new instance to set player 1.
+   * @param player1
+   *        player 1's object
    */
   public void setPlayer1(Player player1) {
     this.player1 = player1;
@@ -105,6 +111,8 @@ public abstract class Game implements Runnable {
 
   /**
    * Construct new instance to set player 2.
+   * @param player2
+   *        player 2's object
    */
   public void setPlayer2(Player player2) {
     this.player2 = player2;

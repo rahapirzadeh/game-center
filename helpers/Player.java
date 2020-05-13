@@ -94,24 +94,26 @@ public class Player {
   }
 
   /**
-  * Gets output to print to player.
-  */
+   * Returns {@code PrintWriter} object from player
+   * @return this player's {@code PrintWriter} object
+   */
   public PrintWriter getOutToPlayer() {
     return outToPlayer;
   }
 
   /**
-  * Prints the output to the player.
+  * Sets the {@code PrintWriter} of this player
   * @param outToPlayer
-  *        string to print to player
+  *        player's new {@code PrintWriter}
   */
   public void setOutToPlayer(PrintWriter outToPlayer) {
     this.outToPlayer = outToPlayer;
   }
 
   /**
-  * Gets the input from a player.
-  */
+   * Gets {@code BufferedReader} object from player
+   * @return this player's {@code BufferedReader} object
+   */
   public BufferedReader getInFromPlayer() {
     return inFromPlayer;
   }

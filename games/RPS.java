@@ -122,6 +122,14 @@ public class RPS extends Game {
    * A player wins if their play beats their opponents.
    * Player wins increments
    */
+  /**
+   * Returns whether the player has/have won. A player wins if their play beats their opponent's.
+   * Increments player's wins by 1.
+   * @param user1Move
+   *        player 1's move (r, p, or s)
+   * @param user2Move
+   *        player 2's move (r, p, or s)
+   */
   public void hasPlayerWon(String user1Move, String user2Move) {
 
     if (user1Move.equals(user2Move)) {

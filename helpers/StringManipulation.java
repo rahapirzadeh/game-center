@@ -10,7 +10,8 @@ public class StringManipulation {
   * Replaces all underscores to underscore and space '_ '
   * Extra space is for readability purposes and to distinguish different underscores.
   * @param s
-  *        the inputed player choice
+  *        the inputted player choice
+  * @return {@code s} with all letters converted to underscores
   */
   public static String convertStringToUnderscores(String s) {
     return s.replaceAll("[_]", "_ ");
@@ -20,6 +21,7 @@ public class StringManipulation {
   * method to return a string when user inputs.
   * @param arr
   *        array that turns into string
+  * @return string generated from parsing character array
   */
   public static String charArrayToString(char[] arr) {
     String s = "";
@@ -30,9 +32,10 @@ public class StringManipulation {
   }
 
   /**
-  * method seperates letters from user input when seperated with commas.
+  * method separates letters from user input when separated with commas.
   * @param s
-  *        string that is seperated by commas 
+  *        string that is separated by commas
+   * @return  the character array generated from parsing {@code s}
   */
   public static char[] parseCommaSeparatedValue(String s) {
     s = s.replaceAll(",", "").replaceAll("\\s+", ""); //reference: https://programming.guide/java/remove-trailing-comma-from-comma-separated-string.html

@@ -113,6 +113,7 @@ public class TicTacToe extends Game {
    * Takes the player's input to make a move.
    * @param player
    *        Gets the number of the player making the move
+   * @return  move for the player's current turn
    */
   public int[] makeMove(int player) {
     String input = "";
@@ -140,6 +141,7 @@ public class TicTacToe extends Game {
    * Validates the players input for a move.
    * @param input
    *        the move provided by the player
+   * @return  whether input was either 1, 2, 3, or not
    */
   public static boolean checkInput(String input) {
     if (input.equals("1") || input.equals("2") || input.equals("3")) {
@@ -152,6 +154,7 @@ public class TicTacToe extends Game {
    * Validates the players input for voting to play another game.
    * @param input
    *        the vote provided by the player
+   * @return whether the players voted to play again or not
    */
   public static boolean vote(String input) {
     if (input.equals("1") || input.equals("2")) {
@@ -166,6 +169,7 @@ public class TicTacToe extends Game {
    *        The game board
    * @param isPlaced
    *        Booleans representing if a move has been made at a given location on the board
+   * @return  whether the player has won or not
    */
   public boolean hasPlayerWon(String[][] board, boolean[][] isPlaced) {
 

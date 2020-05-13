@@ -24,7 +24,9 @@ public class Client { //reference: https://github.com/ChapmanCPSC353/mtchat
   /**
    * Constructs new instance of {@code Client} and sets a server hostname to connect to.
    * @param serverHostname
-   *        hostname of server client will attempt to connect to
+   *        hostname of server the client will attempt to connect to
+   * @param serverPort
+   *        port of server the client will attempt to connect to
    * @throws IOException  when server hostname is unreachable
    */
   public Client(String serverHostname, int serverPort) throws IOException {

@@ -225,6 +225,7 @@ public class Hangman extends Game {
    * <p>Examples of guess word progress print statements are in the following table.
    *
    * <table class="plain">
+   * <caption style="display:none">Examples of print guess word progress statements</caption>
    * <thead>
    * <tr>
    *   <th scope="col">Print Result</th>
