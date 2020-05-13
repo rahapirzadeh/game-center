@@ -6,10 +6,12 @@ import java.io.FileReader;
 import java.io.IOException;
 
 public class FileIO {
+
+  /** method to read from a file.*/
   public static void readFromFile(String fileName) {
     String line = "";
     try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
-      while ((line = br.readLine())!= null) {
+      while ((line = br.readLine()) != null) {
         System.out.println(line);
       }
       br.close();
@@ -22,13 +24,14 @@ public class FileIO {
     }
   }
 
-  public static String getLineFromFile (String fileName, int lineIndex) {
+  /** method to get a line from a file.*/
+  public static String getLineFromFile(String fileName, int lineIndex) {
     String line = "";
     String data = "";
     try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
       int lineCounter = 0;
       while ((line = br.readLine()) != null) {
-        if(lineCounter == lineIndex) {
+        if (lineCounter == lineIndex) {
           data = line;
           return data;
         }

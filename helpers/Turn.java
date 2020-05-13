@@ -9,36 +9,39 @@ public class Turn {
   private final Player player;
   private String move;
 
+  /** method to pass in a turn.*/
   public Turn() {
     this.turnID = count.incrementAndGet();
     this.player = new Player();
     this.move = "";
   }
 
+  /** method to pass in a turn to a player.*/
   public Turn(Player player) {
     this.turnID = count.incrementAndGet();
     this.player = player;
     this.move = "";
   }
 
+  /** method to play a turn for a player.*/
   public Turn(Player player, String move) {
     this.turnID = count.incrementAndGet();
     this.player = player;
     this.move = move;
   }
-
+  /** method to set player move.*/
   public void setMove(String move) {
     this.move = move;
   }
-
+  /** method to get player.*/
   public Player getPlayer() {
     return this.player;
   }
-
+  /** method to turn id.*/
   public int getTurnID() {
     return this.turnID;
   }
-
+  /** method to get player move.*/
   public String getMove() {
     return this.move;
   }
