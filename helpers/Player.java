@@ -5,6 +5,9 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.concurrent.atomic.AtomicInteger;
 
+/**
+ * The player class deals with naming the player and getting and sending input.
+ */
 public class Player {
 
   private static final AtomicInteger count = new AtomicInteger(0); //reference: https://stackoverflow.com/questions/24305830/java-auto-increment-id
@@ -12,84 +15,113 @@ public class Player {
   private String username;
   private PrintWriter outToPlayer;
   private BufferedReader inFromPlayer;
-  private boolean isReady;
 
-  /** method to pass in a player.*/
+  /**
+  * Constructs a new instance of a player.
+  */
   public Player() {
     this.playerID = count.incrementAndGet();
     this.username = "Player " + this.playerID;
     setNewPlayerIO();
   }
 
-  /** method to pass in both players.*/
+  /**
+  * Constructs a new instance of a player with an ID.
+  * @param playerID
+  *        player id for both players
+  */
   public Player(int playerID) {
     this.playerID = playerID;
     this.username = "Player " + playerID;
     setNewPlayerIO();
   }
 
-  /** method to pass in both players.*/
+  /**
+  * Constructs a new instance of a player with an ID and username.
+  * @param playerID
+  *        player id for both players
+  * @param username
+  *        username of players
+  */
   public Player(int playerID, String username) {
     this.playerID = playerID;
     this.username = username;
     setNewPlayerIO();
   }
 
-  /** method to pass in both players.*/
+  /**
+  * Constructs a new instance of a player with a username.
+  * @param username
+  *        username of players
+  */
   public Player(String username) {
     this.playerID = count.incrementAndGet();
     this.username = username;
     setNewPlayerIO();
   }
 
-  /** method to set new player.*/
+  /**
+  * Prints output to player and gets input from player.
+  */
   public void setNewPlayerIO() {
     this.setOutToPlayer(new PrintWriter(System.out, true));
     this.setInFromPlayer(new BufferedReader(new InputStreamReader(System.in)));
   }
 
-  /** method to set player username.*/
+  /**
+  * Sets the username of the player.
+  * @param username
+  *        player username
+  */
   public void setUsername(String username) {
     this.username = username;
   }
 
-  /** method to get player username.*/
+  /**
+  * Gets the username of a player.
+  * @return the username of the player
+  */
   public String getUsername() {
     return this.username;
   }
 
-  /** method to get player id.*/
+  /**
+  * Gets the ID of a player.
+  * @return the ID of the player
+  */
   public int getPlayerID() {
     return this.playerID;
   }
 
-  /** method to print output to player.*/
+  /**
+  * Gets output to print to player.
+  */
   public PrintWriter getOutToPlayer() {
     return outToPlayer;
   }
 
-  /** method to get output to player.*/
+  /**
+  * Prints the output to the player.
+  * @param outToPlayer
+  *        string to print to player
+  */
   public void setOutToPlayer(PrintWriter outToPlayer) {
     this.outToPlayer = outToPlayer;
   }
 
-  /** method to read in from player.*/
+  /**
+  * Gets the input from a player.
+  */
   public BufferedReader getInFromPlayer() {
     return inFromPlayer;
   }
 
-  /** method to set input from player.*/
+  /**
+  * Sets the input from the player.
+  * @param inFromPlayer
+  *        string from player
+  */
   public void setInFromPlayer(BufferedReader inFromPlayer) {
     this.inFromPlayer = inFromPlayer;
-  }
-
-  /** method to return if player is ready.*/
-  public boolean isReady() {
-    return isReady;
-  }
-
-  /** method to get if player is ready.*/
-  public void setReady(boolean ready) {
-    isReady = ready;
   }
 }

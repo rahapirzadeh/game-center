@@ -28,7 +28,7 @@ public class Turn {
   }
 
   /**
-  * Constructs a new instance of a game turn for a player.
+  * Constructs a new instance of a game turn for a player with a move.
   * @param player
   *        player
   * @param move
