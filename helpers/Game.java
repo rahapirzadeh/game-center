@@ -137,7 +137,7 @@ public abstract class Game implements Runnable {
     if (scanner.hasNextLine()) {
       input = scanner.nextLine();
     }
-    return input.strip();
+    return input;
   }
 
   /** method to get input form user with current turn.*/
