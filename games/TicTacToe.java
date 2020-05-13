@@ -1,4 +1,4 @@
-package games;//Next sprint will include working win conditions and proper networking features
+package games;
 
 import java.util.Scanner;
 import helpers.*;
@@ -22,7 +22,7 @@ public class TicTacToe extends Game{
       while(gameOver == false){
         move = makeMove(1);
         while(isPlaced[move[0]-1][move[1]-1] == true){
-          printlnToAllPlayers("Someone already took that square, enter a different move");
+          printWhoseTurn("Someone already took that square, enter a different move");
           move = makeMove(1);
         }
         board[move[0]-1][move[1]-1] = "X";
@@ -33,7 +33,7 @@ public class TicTacToe extends Game{
         if(gameOver == false){
           move = makeMove(2);
           while(isPlaced[move[0]-1][move[1]-1] == true){
-            printlnToAllPlayers("Someone already took that square, enter a different move");
+            printWhoseTurn("Someone already took that square, enter a different move");
             move = makeMove(2);
           }
           board[move[0]-1][move[1]-1] = "O";
@@ -61,34 +61,18 @@ public class TicTacToe extends Game{
 
     public int[] makeMove(int player){
       String input = "";
-      printlnToAllPlayers("Player " + player + " Enter the row:");
-      if(player == 1){
-        input = getInputFromPlayer1();
-      }else if(player == 2){
-        input = getInputFromPlayer2();
-      }
+      printWhoseTurn("Player " + player + " Enter the row:");
+      input = getInputFromPlayerWithCurrTurn();
       while(checkInput(input) == false){
-        printlnToAllPlayers("Error: Invalid Input. Must be 1, 2 or 3");
-        if(player == 1){
-          input = getInputFromPlayer1();
-        }else if(player == 2){
-          input = getInputFromPlayer2();
-        }
+        printWhoseTurn("Error: Invalid Input. Must be 1, 2 or 3");
+        input = getInputFromPlayerWithCurrTurn();
       }
       int row = Integer.parseInt(input);
-      printlnToAllPlayers("Player " + player + " Enter the col:");
-      if(player == 1){
-        input = getInputFromPlayer1();
-      }else if(player == 2){
-        input = getInputFromPlayer2();
-      }
+      printWhoseTurn("Player " + player + " Enter the col:");
+      input = getInputFromPlayerWithCurrTurn();
       while(checkInput(input) == false){
-        printlnToAllPlayers("Error: Invalid Input. Must be 1, 2 or 3");
-        if(player == 1){
-          input = getInputFromPlayer1();
-        }else if(player == 2){
-          input = getInputFromPlayer2();
-        }
+        printWhoseTurn("Error: Invalid Input. Must be 1, 2 or 3");
+        input = getInputFromPlayerWithCurrTurn();
       }
       int col = Integer.parseInt(input);
       int[] move = {row, col};
